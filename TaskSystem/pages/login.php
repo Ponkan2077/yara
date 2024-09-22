@@ -33,7 +33,9 @@
            // $userObj->email = $email;
 
             if($userObj->login()){
-                header("locaiton: $path2");
+                echo "You are connected!";
+                header("location: /yara/TaskSystem/index.html");
+                echo "You are connected!!";
             }
             else {
                 echo "Something went wrong";

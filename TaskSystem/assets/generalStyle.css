@@ -231,11 +231,12 @@ header {
 }
 
 .inputl {
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 1.25rem;
     border: 1px solid black;
     height: 2.3rem;
     margin-top:2px;
+    padding-left: 10px;
 }
 
 .submitBtn {

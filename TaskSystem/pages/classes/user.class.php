@@ -41,7 +41,13 @@ $path .= "/yara/TaskSystem/pages/database.php";
          $query->bindParam(':password', $this->password);
          $query->bindParam(':email', $this->email);
 
-        $query->execute();
+        if($query->execute()){
+            return true;
+        }
+
+       else {
+        return false;
+       }
     }
 }
 ?>
