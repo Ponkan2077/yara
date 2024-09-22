@@ -1,0 +1,41 @@
+<?php 
+ include_once '../database.php';
+
+ class user {
+    public $username = '';
+    public $password = '';
+
+    public $email = '';
+    protected $db = '';
+
+    function __construct(){
+        $this->db = new database();
+    }
+
+    function login(){
+        $sql  = "Select username, password from user where username = :username AND password = :password;";
+    $query = $this->db->connect()->prepare($sql);
+     $data = null;
+
+     $query->bindParam(':username', $this->username);
+     $query->bindParam(':password', $this->password);
+    if($query->execute()){
+        $data = $query->fetch();
+    }
+
+    return $data;
+
+ }
+
+    function signUp() {
+        $sql = "Insert into user (username,email,password) values (:username, :password, :email);";
+        
+        $query = $this->db->connect()->prepare($sql);
+         $query->bindParam(':username', $this->username);
+         $query->bindParam(':password', $this->password);
+         $query->bindParam(':email', $this->email);
+
+        $query->execute();
+    }
+}
+?>

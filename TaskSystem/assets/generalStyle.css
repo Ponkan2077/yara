@@ -193,5 +193,20 @@ header {
     font-size: 24px;
  }
 
+ /* login and signUp */
+
+/*login*/
+.formWrapper {
+    position: relative;
+    display: flex;
+    width: 500px;
+    height: 500px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+}
+
 
 
