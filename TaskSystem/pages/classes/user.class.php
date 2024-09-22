@@ -17,8 +17,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
     function login(){
         $sql  = "Select username, password from user where username = :username AND password = :password;";
     $query = $this->db->connect()->prepare($sql);
-     $data = null;
-
+     
      $query->bindParam(':username', $this->username);
      $query->bindParam(':password', $this->password);
     if($query->execute()){
