@@ -8,10 +8,9 @@
     protected $connection;
 
     function connect(){
-        if ($this->connection === null) {
+        
             $this->connection = new PDO("mysql:host=$this->host;dbname=$this->dbname",$this->user, $this->pass);
             return $this->connection;
-        }
     }
    }
 ?>

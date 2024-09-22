@@ -1,5 +1,7 @@
 <?php 
- include_once '../database.php';
+$path = $_SERVER['DOCUMENT_ROOT'];
+$path .= "/yara/TaskSystem/pages/database.php";
+ include_once $path;
 
  class user {
     public $username = '';
@@ -20,10 +22,10 @@
      $query->bindParam(':username', $this->username);
      $query->bindParam(':password', $this->password);
     if($query->execute()){
-        $data = $query->fetch();
+       return true;
+    } else {
+        return false;
     }
-
-    return $data;
 
  }
 

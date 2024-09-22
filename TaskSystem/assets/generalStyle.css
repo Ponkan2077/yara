@@ -196,17 +196,60 @@ header {
  /* login and signUp */
 
 /*login*/
+.wraplogin{
+    height: 100vh;
+}
 .formWrapper {
     position: relative;
     display: flex;
     width: 500px;
     height: 500px;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     top: 50%;
     left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 20px;
+    background-color: white;
 }
 
+.formWrapper .logo {
+    margin-top: 1.25rem;
+}
+.formWrapper .logo span {
+    color: #5463FF;
+}
+.formWrapper form {
+    width: 90%;
+}
+.formInput {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.25rem;
+    margin-top: 1.2rem;
+
+}
+
+.inputl {
+    border-radius: 20px;
+    font-size: 1.25rem;
+    border: 1px solid black;
+    height: 2.3rem;
+    margin-top:2px;
+}
+
+.submitBtn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.btnform {
+    color: #FF1818;
+    background-color:#FFC300;
+    font-size: 1.3rem;
+    padding: 13px 40px 13px 40px;
+    border-radius: 20px;
+}
 
 
