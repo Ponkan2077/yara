@@ -20,8 +20,13 @@ $path .= "/yara/TaskSystem/pages/database.php";
      
      $query->bindParam(':username', $this->username);
      $query->bindParam(':password', $this->password);
+     $data = null;
     if($query->execute()){
-       return true;
+
+       $count = $query->rowCount();
+       if($count == 1){
+        return true;
+       }
     } else {
         return false;
     }
