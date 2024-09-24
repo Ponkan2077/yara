@@ -1,4 +1,8 @@
 <?php
+      session_start();
+      $_SESSION['id'] ='';
+      $_SESSION['username'] ='';
+      $_SESSION['password'] ='';
      $path2 = $path1 = $path = $_SERVER['DOCUMENT_ROOT'];
      $path .= "/yara/TaskSystem/pages/classes/user.class.php";
      $path1 .= "/yara/TaskSystem/assets/function.php";
@@ -8,7 +12,8 @@
 
      $username = $password = "";//$email = "";
      $usernameErr = $passwordErr = ""; //$emailErr = "";
-     
+    
+
      if($_SERVER['REQUEST_METHOD'] == "POST"){
         $username = clean_input($_POST['username']);
         $password = clean_input(($_POST['password']));
@@ -33,9 +38,12 @@
            // $userObj->email = $email;
 
             if($userObj->login()){
-                echo "You are connected!";
-                header("location: /yara/TaskSystem/index.html");
-                echo "You are connected!!";
+                $_SESSION['username'] = $userObj->username;
+                $_SESSION['password'] = $userObj->password;
+                $_SESSION['id'] = $userObj->id;
+                if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['id'])){
+                    header("location: /yara/TaskSystem/index.html");
+                }
             }
             else {
                 echo "Something went wrong";

@@ -8,6 +8,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
     public $password = '';
 
     public $email = '';
+
+    public $id;
     protected $db = '';
 
     function __construct(){
@@ -15,7 +17,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
     }
 
     function login(){
-        $sql  = "Select username, password from user where username = :username AND password = :password;";
+        $sql  = "Select user_id,username, password from user where username = :username AND password = :password; limit 1";
     $query = $this->db->connect()->prepare($sql);
      
      $query->bindParam(':username', $this->username);
@@ -25,8 +27,10 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
        $count = $query->rowCount();
        if($count == 1){
-        return true;
-       }
+         $data = $query->fetch();
+         $this->id = $data['user_id'];
+         return true;
+         }
     } else {
         return false;
     }
@@ -48,6 +52,10 @@ $path .= "/yara/TaskSystem/pages/database.php";
        else {
         return false;
        }
+    }
+
+    function fetchId($username, $password) {
+        $sql = "Select id from user where username = :username and password = :password;";
     }
 }
 ?>
