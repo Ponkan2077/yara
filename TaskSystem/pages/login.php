@@ -1,19 +1,17 @@
 <?php
-      session_start();
-      $_SESSION['id'] ='';
-      $_SESSION['username'] ='';
-      $_SESSION['password'] ='';
-     $path2 = $path1 = $path = $_SERVER['DOCUMENT_ROOT'];
+session_start();
+     $pathindex = $path1 = $path = $_SERVER['DOCUMENT_ROOT'];
      $path .= "/yara/TaskSystem/pages/classes/user.class.php";
      $path1 .= "/yara/TaskSystem/assets/function.php";
-     $path2 .= "/yara/TaskSystem/index.html";
+     $pathindex .= "/yara/TaskSystem/index.php";
      require_once $path;
      require_once $path1;
+     $loginErr='';
 
      $username = $password = "";//$email = "";
      $usernameErr = $passwordErr = ""; //$emailErr = "";
     
-
+      $userObj = new user();
      if($_SERVER['REQUEST_METHOD'] == "POST"){
         $username = clean_input($_POST['username']);
         $password = clean_input(($_POST['password']));
@@ -32,17 +30,12 @@
         //}
 
         if(empty($usernameErr) && empty($passwordErr)){ //&& empty($emailErr)){
-            $userObj = new user();
-            $userObj->username = $username;
-            $userObj->password = $password;
            // $userObj->email = $email;
 
-            if($userObj->login()){
-                $_SESSION['username'] = $userObj->username;
-                $_SESSION['password'] = $userObj->password;
-                $_SESSION['id'] = $userObj->id;
-                if(isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['id'])){
-                    header("location: /yara/TaskSystem/index.html");
+            if($userObj->login($username,$password)){
+                $_SESSION['user'] = $userObj->fetch($username);
+                if($_SESSION['user']['is_admin'] || $_SESSION['user']['is_user']){
+                    header('location: ../index.php');
                 }
             }
             else {
@@ -68,6 +61,14 @@
     <div class="formWrapper">
     <div class="logo">
         <span>Logo</span>
+    </div>
+    <div class="signUpLoginBtnWrapper">
+        <div class="loginBtnWrapper">
+            <button class="loginBtn"><a href="#">LogIn</a></button>
+        </div>
+        <div class="signUpBtnWrapper">
+            <button class="signUpBtn"><a href="./signUp.php">SignUp</a></button>
+        </div>
     </div>
     <form action="" method="POST">
         <div class="formInput">

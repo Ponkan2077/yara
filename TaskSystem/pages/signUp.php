@@ -5,7 +5,8 @@
      $path2 .= "/yara/TaskSystem/index.html";
      require_once $path;
      require_once $path1;
-
+     
+     $userObj = new user();
      $username = $password = $email = "";
      $usernameErr = $passwordErr = $emailErr = "";
      
@@ -27,7 +28,6 @@
         }
 
         if(empty($usernameErr) && empty($passwordErr)&& empty($emailErr)){
-            $userObj = new user();
             $userObj->username = $username;
             $userObj->password = $password;
             $userObj->email = $email;
@@ -60,6 +60,14 @@
     <div class="logo">
         <span>Logo</span>
     </div>
+    <div class="signUpLoginBtnWrapper">
+        <div class="loginBtnWrapper">
+            <button class="loginBtn"><a href="login.php">LogIn</a></button>
+        </div>
+        <div class="signUpBtnWrapper">
+            <button class="signUpBtn"><a href="#">SignUp</a></button>
+        </div>
+    </div>
     <form action="" method="POST">
         <div class="formInput">
         <label for="username">Username:</label>
@@ -76,7 +84,7 @@
         <input type="email" name="email" id="email" class="inputl">
         </div>
         <div class="submitBtn">
-        <input type="submit" value="LogIn" class="btnform">
+        <input type="submit" value="SignUp" class="btnform">
         </div>
         </form>
         </div>

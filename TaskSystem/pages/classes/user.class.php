@@ -9,6 +9,9 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
     public $email = '';
 
+    public $is_admin = false;
+    public $is_user = true;
+
     public $id;
     protected $db = '';
 
@@ -16,35 +19,31 @@ $path .= "/yara/TaskSystem/pages/database.php";
         $this->db = new database();
     }
 
-    function login(){
-        $sql  = "Select user_id,username, password from user where username = :username AND password = :password; limit 1";
+    function login($username,$password){
+        $sql  = "Select user_id,username, password from user where username = :username limit 1;";
     $query = $this->db->connect()->prepare($sql);
      
-     $query->bindParam(':username', $this->username);
-     $query->bindParam(':password', $this->password);
-     $data = null;
-    if($query->execute()){
-
-       $count = $query->rowCount();
-       if($count == 1){
-         $data = $query->fetch();
-         $this->id = $data['user_id'];
-         return true;
-         }
-    } else {
-        return false;
-    }
-
+     $query->bindParam(':username', $username);
+     if($query->execute()){
+        $data  =  $query->fetch();
+        if($data && password_verify($password,$data['password'])){
+            return true;
+        } 
+       return true;
+     }
+     return false;
  }
 
     function signUp() {
-        $sql = "Insert into user (username,email,password) values (:username, :password, :email);";
+        $sql = "Insert into user (username,email,password,is_admin,is_user) values (:username, :email, :password, :is_admin,:is_user);";
         
         $query = $this->db->connect()->prepare($sql);
          $query->bindParam(':username', $this->username);
-         $query->bindParam(':password', $this->password);
+         $hash = password_hash($this->password,PASSWORD_DEFAULT);
+         $query->bindParam(':password', $hash);
          $query->bindParam(':email', $this->email);
-
+         $query->bindParam(':is_admin', $this->is_admin);
+        $query->bindParam(':is_user', $this->is_user);
         if($query->execute()){
             return true;
         }
@@ -54,8 +53,16 @@ $path .= "/yara/TaskSystem/pages/database.php";
        }
     }
 
-    function fetchId($username, $password) {
-        $sql = "Select id from user where username = :username and password = :password;";
+    function fetch($username){
+         $sql = "Select * from user where username = :username limit 1;";
+
+         $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':username', $username);
+        $data = null;
+        if($query->execute()){
+           $data = $query->fetch();
+        }
+        return $data;
+ 
     }
 }
-?>

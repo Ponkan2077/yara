@@ -195,7 +195,6 @@ header {
 
  /* login and signUp */
 
-/*login*/
 .wraplogin{
     height: 100vh;
 }
@@ -219,6 +218,46 @@ header {
 .formWrapper .logo span {
     color: #5463FF;
 }
+
+.signUpLoginBtnWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin-top: 15px;
+}
+
+.loginBtnWrapper, .signUpBtnWrapper {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+}
+.loginBtnWrapper {
+    border-radius: 10px;
+    background-color: #5463FF;
+}
+
+.signUpBtn, .loginBtn{
+    font-size: 2rem;
+    background-color:  transparent;
+    width: 100%;
+    padding: 5px 0px;
+}
+
+.signUpBtn a, .loginBtn a{
+    text-decoration: none;
+}
+
+.loginBtn a {
+    color: #FFC300;
+}
+
+.loginBtn {
+    color: black;
+}
+
 .formWrapper form {
     width: 90%;
 }
