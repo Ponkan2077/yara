@@ -16,11 +16,12 @@ body{
 
 header {
     grid-area: headerArea;
+
 }
 
 aside {
     grid-area: asideArea;
-    background-color:  #ECECEC;
+    background-color:  #ffffff;
 }
 
 main {
@@ -31,11 +32,13 @@ main {
     display: grid;
     width: 100vw;
     height: 100vh;
-    grid-template-columns: 250px auto auto auto ;
+    grid-template-columns: 250px auto  ;
+    grid-template-rows: 100px auto ;
     grid-template-areas: 
-    'asideArea   headerArea headerArea headerArea'
-    'asideArea    mainArea mainArea mainArea'
-    'asideArea   mainArea mainArea mainArea';
+    'asideArea   headerArea headerArea'
+    'asideArea    mainArea mainArea'
+    /*'asideArea   mainArea mainArea mainArea'
+    'asideArea   mainArea mainArea mainArea'*/;
 }
 
 img, video {
@@ -45,12 +48,12 @@ img, video {
 }
 
 /* General Positioning */
-.mainWrapper {
-    margin-left: 60px;
+.dashMainSection {
+    margin-left: 40px;
 }
 
 .head {
-    margin-left: 60px;
+    margin-left: 40px;
 }
 
 /* index/dashboard style*/
@@ -72,7 +75,7 @@ header {
 }
 
 .right {
-    margin-right: 5%;
+    margin-right: 3%;
 }
 
 .logo span {
@@ -291,5 +294,140 @@ header {
     padding: 13px 40px 13px 40px;
     border-radius: 20px;
 }
+
+/* DashBoard or Index.php */
+.dashMainSection {
+    margin-right: 3%;
+}
+
+.dashMainTopWrapper {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 1%;
+    height: 90%;
+}
+
+.dashRightWrapper {
+    width: 49.5%;
+}
+
+.dashLeftWrapper {
+    width: 49.5%;
+    height: inherit;
+    display: flex;
+    align-items: center;
+}
+
+.dashTaskWrapper {
+    display: flex;
+    flex-direction: column;
+    width:95%;
+    height: 50rem;
+    background-color: white;
+    border-radius: 20px;
+    font-size: 1.25rem;
+}
+
+.labelTaskGraph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.taskGraphWrapper {
+    width: 85%;
+    height: 25rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.dashTaskWrapper span {
+    margin-left: 20px;
+}
+
+.labelTaskGraph span {
+    margin-left: 0px;
+}
+
+.dashTaskWrapper span:first-child {
+   margin-top: 1rem;
+}
+
+.dashLeftBottomWrapper{
+    display: flex;
+    flex-direction: row;
+}
+
+.dashDeadlines, .dashRecent {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.dashAct, .dashDead {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    margin-left: 20px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+/* right */
+
+.dashRightWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dashTopRightWrapper{
+    height: 65%;
+    background-color: #ECECEC;
+    border-radius: 20px;
+}
+
+.dashMainSection {
+    margin-right: 3%;
+}
+
+.dashPieGraph {
+    margin-top: 0.8rem;
+}
+
+.dashBarGraph {
+    margin-top: 0.8rem;
+}
+.dashPieGraph span {
+    margin-left: 0.8rem;
+}
+
+.dashBarGraph {
+    margin-left: 0.8rem;
+}
+
+.dashBottomRightWrapper{
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 20px;
+    row-gap: 6rem;
+}
+
+.dashLeaderboard {
+    margin-top: 0.5rem;
+    margin-left: 0.8rem;
+}
+
+.leaderboardWrapper {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin-top: 0.5rem;
+}
+
 
 
