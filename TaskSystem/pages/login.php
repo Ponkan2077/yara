@@ -10,6 +10,18 @@ session_start();
 
      $username = $password = "";//$email = "";
      $usernameErr = $passwordErr = ""; //$emailErr = "";
+
+     session_start();
+
+
+     if(isset($_SESSION['account'])){
+         if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
+             header('location: login.php');
+         }
+         else {
+             header('location: login.php');
+         }
+     } 
     
       $userObj = new user();
      if($_SERVER['REQUEST_METHOD'] == "POST"){

@@ -205,7 +205,7 @@ header {
     position: relative;
     display: flex;
     width: 500px;
-    height: 500px;
+    height: 550px;
     align-items: center;
     flex-direction: column;
     top: 50%;
@@ -429,5 +429,160 @@ header {
     margin-top: 0.5rem;
 }
 
+/* TASK page */
+.taskMainSection {
+    margin-left: 3%;
+    margin-right: 3%;
+}
 
+.tasks {
+    display: flex;
+    flex-direction: column;
+}
+.categoryTask {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 40rem;
+    width: 20%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
 
+.tasks span {
+    align-self: center;
+    font-size: 1.5rem;
+    margin-top: 15px;
+}
+
+.taskHolder {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.taskHolder label {
+    font-size: 1.25rem;
+}
+.addCategoryBtn, .addTaskBtn {
+    background-color: #FFC300;
+    padding: 10px 25px;
+    border-radius: 20px;
+}
+
+.addTaskWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.addTaskBtn {
+    font-size: 1rem;
+}
+
+.addTaskBtn a {
+    text-decoration: none;
+    color: #FF1818;
+}
+
+.addCategoryBtn a{
+    color:#FF1818;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+/* add Category */
+
+.categoryModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 300px;
+    height: 350px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.modalWrapper {
+    position: absolute;
+    display: none;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color:  rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.categoryModal .logo {
+    display: flex;
+    flex-direction: row;
+}
+
+.formModal {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 90%;
+    margin-top: 30px;
+}
+
+.close {
+    float: right;
+    color: black;
+    font-size: 1.8rem;
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.close:hover,
+.close:focus {
+  color: #5463FF;
+  text-decoration: none;
+  cursor: pointer;
+}
+.categoryModal .logo span {
+    color: #5463FF;
+}
+
+.addCategoryBtn {
+    color: #FF1818;
+}
+/* add Task */
+.taskDescription, .taskTitle, .taskDueDate {
+    display: flex;
+    flex-direction: column;
+}
+
+.addTaskForm label {
+   margin-bottom: 5px;
+}
+
+ .btnFormR {
+    color: #FF1818;
+    background-color: #FFC300;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.field {
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 5px 0px;
+    padding: 10px 10px;
+    font-size: 1rem;
+}
+
+.formBtnWrapper {
+    display: flex;
+    justify-content: center;
+}

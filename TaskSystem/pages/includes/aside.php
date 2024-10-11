@@ -2,7 +2,7 @@
 <div class="asideWrapper">
         
     <div class="menuHome">
-        <a href="/yara/TaskSystem/index.html">Menu</a>
+        <a href="/yara/TaskSystem/index.php">Menu</a>
     </div>
     <nav class="asideNav">
          <ul>
