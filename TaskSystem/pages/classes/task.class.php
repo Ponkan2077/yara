@@ -48,18 +48,50 @@ $path .= "/yara/TaskSystem/pages/database.php";
         return false;
      }
 
-     function addCategory(){
-        $sql = "INSERT INTO category (name) VALUES (:name);";
+     function addCategory($category){
+        $sql = "INSERT INTO category (name) VALUES (:category);";
 
         $query = $this->db->connect()->prepare($sql);
 
-        $query->bindParam('name', $this->name);
+        $query->bindParam('category', $category);
 
         if($query->execute()){
             return true;
         }
 
         return false;
+     }
+
+     function getCategory(){
+        $sql = "Select * from category;";
+
+        $query = $this->db->connect()->prepare($sql);
+
+        $data = null;
+        if ($query->execute()){
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            return $data;
+        }
+
+        return false;
+
+     }
+
+     function getTask($category_id){
+        $sql = "Select * from task inner join category  where task.category_id = category.category.id;";
+
+        $query = $this->db->connect()->prepare($sql);
+         
+        $data = null;
+        if ($query->execute()){
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            return $data;
+        }
+
+        return false;
+
      }
 
 

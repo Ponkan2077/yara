@@ -1,3 +1,6 @@
+<?php
+    $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
+?>
 
 <div class="asideWrapper">
         
@@ -13,6 +16,6 @@
          </ul>
     </nav>
     <div class="logout">
-        <button class="logoutBtn" type="submit">Log Out</button>
+        <button class="logoutBtn" type="submit" id="logOut">LogOut</button>
     </div>
     </div>

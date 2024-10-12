@@ -8,3 +8,9 @@ for (let link of asideLinks) {
     }
 }
 
+var logOutBtn =document.getElementById('logOut');
+
+        logOutBtn.addEventListener("click", () => {
+            window.location.href = "/yara/TaskSystem/pages/login.php";
+        })
+

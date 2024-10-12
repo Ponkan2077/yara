@@ -1,8 +1,7 @@
 <?php
 
-$path = $_SERVER['DOCUMENT_ROOT'];
-$path .= '/yara/TaskSystem/';
 session_start();
+$path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
 
 
 if(isset($_SESSION['account'])){
@@ -107,23 +106,11 @@ if(isset($_SESSION['account'])){
        </section>
     </main>
     <aside>
-        <div class="asideWrapper">
-        
-        <div class="menuHome">
-            <a href="#">Menu</a>
-        </div>
-        <nav class="asideNav">
-             <ul>
-                <li class="dashboard"><a data-active="home" href="#">DASHBOARD</a></li>
-                <li class="reports"><a  data-active ="report"   href="./pages/report.php">REPORTS</a></li>
-                <li class="settings"><a data-active = "setting" href="./pages/setting.php">SETTINGS</a></li>
-                <li class="tasks"><a  data-active ="task" href="./pages/task.php">TASKS</a></li>
-             </ul>
-        </nav>
-        <div class="logout">
-            <button class="logoutBtn" type="submit">Log Out</button>
-        </div>
-        </div>
+    <?php 
+        $path .= "/yara/TaskSystem/pages/includes/aside.php";
+        include_once($path);
+        $path = $pathSave;
+        ?> 
     </aside>
 </div>
 <script type="text/javascript"  src="./assets/script/script.js"></script>

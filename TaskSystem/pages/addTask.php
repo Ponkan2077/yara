@@ -6,7 +6,6 @@
      $path = $pathSave;
 
      session_start();
-     include_once $path .='/yara/TaskSystem//pages/addTask.php';
      $path = $pathSave;
 
      if(isset($_SESSION['account'])){

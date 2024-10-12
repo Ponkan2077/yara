@@ -1,5 +1,5 @@
 <?php
-session_start();
+ session_start();
      $pathindex = $path1 = $path = $_SERVER['DOCUMENT_ROOT'];
      $path .= "/yara/TaskSystem/pages/classes/user.class.php";
      $path1 .= "/yara/TaskSystem/assets/function.php";
@@ -55,6 +55,7 @@ session_start();
             }
         }
      }
+
 ?>
 
 

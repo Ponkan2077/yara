@@ -2,7 +2,8 @@
       $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
 
       session_start();
-
+      include_once $path .='/yara/TaskSystem/pages/classes/task.class.php';
+      $path = $pathSave;
 
 if(isset($_SESSION['account'])){
     if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
@@ -11,7 +12,29 @@ if(isset($_SESSION['account'])){
     else {
         header('location: login.php');
     }
-} 
+}
+  
+  $taskObj = new task();
+
+  $category = "";
+  $categoryErr = "";
+
+ if ($_SERVER['REQUEST_METHOD'] == "POST"){
+    $category = $_POST['category'];
+    
+    if (empty($category)){
+       $categoryErr = "Empty Category";
+    }
+
+    if (empty($categoryErr)){
+        if($taskObj->addCategory($category));
+    }
+
+    else {
+        echo $categoryErr;
+    }
+ } 
+ 
     ?>
 
 <!DOCTYPE html>
@@ -35,11 +58,11 @@ if(isset($_SESSION['account'])){
     <main>
         <div class="modalWrapper" id="modalWrapper">
         <div class="categoryModal" id="categoryModal">
-        <button type="button" class="close" id="close">&times;</button>
+        <span class="close">&times;</span>
             <div class="logo">
                <span>Logo</span>
            </div>
-            <form class="formModal">
+            <form class="formModal" action="" method="POST">
                 <label for="category">Category Name:</label>
                 <input type="text" name="category" class="field">
                 <div class="formBtnWrapper"><input type="submit" class="btnFormR" id="btnFormR" value="Add Category"></div>
@@ -80,20 +103,22 @@ if(isset($_SESSION['account'])){
     <script>
         var addCategoryBtn = document.getElementById("addCategoryBtn");
         var submitBtn = document.getElementById("formBtnR");
-        var closeBtn = document.getElementById("close");
+        var close = document.getElementsByClassName("close")[0];
         var modal = document.getElementById("modalWrapper");
 
+
+        close.addEventListener("click", () => {
+          modal.style.display = "none";
+        })
+
+        window.onclick = function(event) {
+            if (event.target == modal){
+            modal.style.display = "none";
+        }}
         addCategoryBtn.addEventListener("click", () => {
             modal.style.display = "block";
                 } )
         submitBtn.addEventListener("click", () => {
-            modal.style.display = "none";
-        })
-        closeBtn.addEventListener("click", () => {
-          modal.style.display = "none";
-        })
-
-        window.addEventListener("click", () => {
             modal.style.display = "none";
         })
     </script>
