@@ -11,6 +11,9 @@ $path .= "/yara/TaskSystem/pages/database.php";
      public $description = '';
      public $due_date = '';
 
+     public $is_complete = '';
+     public $is_incomplete = '';
+
      protected $db='';
 
      function __construct() {
@@ -79,10 +82,11 @@ $path .= "/yara/TaskSystem/pages/database.php";
      }
 
      function getTask($category_id){
-        $sql = "Select * from task inner join category  where task.category_id = category.category.id;";
+        $sql = "Select title as title, description, due_date from task where category_id = :category_id;";
 
         $query = $this->db->connect()->prepare($sql);
-         
+        
+        $query->bindParam(':category_id',$category_id);
         $data = null;
         if ($query->execute()){
             $data = $query->fetchAll(PDO::FETCH_ASSOC);

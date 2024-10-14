@@ -13,6 +13,8 @@ if(isset($_SESSION['account'])){
     }
 } 
 
+$var = 100;
+
 ?>
 
 
@@ -148,7 +150,7 @@ new Chart(task, {
     labels: ['Completed Task', 'Pending Task', 'Overdue Task'],
     datasets: [{
       label: '# of Task',
-      data: [12, 30,90],
+      data: [<?php echo $var ?>, 30,90],
       borderWidth: 1
     }]
   },

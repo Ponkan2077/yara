@@ -458,8 +458,20 @@ header {
 }
 
 .taskHolder {
-    margin-left: 20px;
     margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 90%;
+    margin: auto;
+    padding: 1rem 1rem;
+}
+
+.taskHolder:hover {
+    border-color: #5463FF;
+}
+
+.taskHolder:active {
+    border-color: #FF1818;
 }
 
 .taskHolder label {
@@ -492,9 +504,10 @@ header {
     font-size: 1rem;
 }
 
+
 /* add Category */
 
-.categoryModal {
+.categoryModal, .viewTaskModal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -508,7 +521,12 @@ header {
     flex-direction: column;
 }
 
-.modalWrapper {
+.viewTaskModal {
+    width: 600px;
+    height: 700px;
+}
+
+.modalWrapper, .viewModal {
     position: absolute;
     display: none;
     z-index: 1;
@@ -521,7 +539,10 @@ header {
     background-color: rgba(0,0,0,0.4);
 }
 
-.categoryModal .logo {
+.viewModal {
+    z-index: 2;
+}
+.categoryModal .logo, .viewTaskModal .logo{
     display: flex;
     flex-direction: row;
 }
@@ -534,7 +555,7 @@ header {
     margin-top: 30px;
 }
 
-.close {
+.close,.close1 {
     float: right;
     color: black;
     font-size: 1.8rem;
@@ -548,14 +569,47 @@ header {
   text-decoration: none;
   cursor: pointer;
 }
-.categoryModal .logo span {
+
+.close1:hover,
+.close1:focus {
+  color: #5463FF;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.categoryModal .logo span, .viewTaskModal .logo span {
     color: #5463FF;
 }
 
 .addCategoryBtn {
     color: #FF1818;
 }
+
+.viewTaskModal p {
+    border: 1px solid black;
+    padding-left: 10px;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.dueDateWrap, .taskTitleWrap, .descriptionWrap {
+    width: 90%;
+}
+
+.descriptionWrap p{
+    height: 250px;
+}
+
+.viewTaskModal .btnFormR {
+    font-size: 1.5rem;
+    padding: 0.75rem 1.5rem;
+}
 /* add Task */
+
 .taskDescription, .taskTitle, .taskDueDate {
     display: flex;
     flex-direction: column;

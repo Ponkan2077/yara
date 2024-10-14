@@ -92,7 +92,7 @@
             </div>
             <div class="taskDueDate">
             <label for="due_date">Due date:</label>
-            <input type="date" name="due_date" class="field">
+            <input type="datetime-local" name="due_date" class="field">
             </div>
             <div class="formBtnWrapper"><input type="submit" class="btnFormR" value="Add Task"></div>
         </form>

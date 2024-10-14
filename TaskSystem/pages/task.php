@@ -15,9 +15,21 @@ if(isset($_SESSION['account'])){
 }
   
   $taskObj = new task();
-
+  $category_id = "";
+  $category_name = "";
   $category = "";
   $categoryErr = "";
+
+  $category_array = "";
+
+  $task_array = "";
+
+  $category_array = $taskObj->getCategory();
+
+  foreach($category_array as $arr){
+    $task_array = $taskObj->getTask($category_id['category_id']);
+  }
+    
 
  if ($_SERVER['REQUEST_METHOD'] == "POST"){
     $category = $_POST['category'];
@@ -67,19 +79,44 @@ if(isset($_SESSION['account'])){
                 <input type="text" name="category" class="field">
                 <div class="formBtnWrapper"><input type="submit" class="btnFormR" id="btnFormR" value="Add Category"></div>
             </form>
+            
         </div>
+        
         </div>
+        <div class="viewModal" id="viewModal">
+            <div class="viewTaskModal">
+                 <span class="close1">&times;</span>
+                 <div class="logo">
+               <span>Logo</span>
+           </div>
+                  <div class="taskTitleWrap">
+                      <h2 class="title">Title:</h2>
+                      <p>Hello</p>
+                  </div>
+                  <div class="descriptionWrap">
+                      <h2>Description:</h2>
+                      <p>Hello</p>
+                  </div>
+                  <div class="dueDateWrap">
+                     <h2>Due Date: </h2>
+                     <p>Hello</p>
+                  </div>
+                  <div class="formBtnWrapper"><button type="button" class="btnFormR" id="btnFormR">Done</button></div>
+
+            </div>
+        </div>
+        
         <section class="taskMainSection">
         <div class="addCategory">
             <button type ="button" class="addCategoryBtn" id="addCategoryBtn">Add Category</button>
             <div class="categoryTask">
                 <div class="tasks">
-                <span>Category</span>
-                <div class="taskHolder">
+                <span><?php $category_name ?></span>
+                <div class="taskHolder" id="taskHolder">
                 <input type="checkbox" name="task">
                 <label for="task">Task</label>
                 </div>
-                <div class="taskHolder">
+                <div class="taskHolder" id="taskHolder">
                 <input type="checkbox" name="task">
                 <label for="task">Task</label>
                 </div>
@@ -102,24 +139,42 @@ if(isset($_SESSION['account'])){
     <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
     <script>
         var addCategoryBtn = document.getElementById("addCategoryBtn");
-        var submitBtn = document.getElementById("formBtnR");
+        var submitBtn = document.getElementById("btnFormR");
         var close = document.getElementsByClassName("close")[0];
         var modal = document.getElementById("modalWrapper");
-
-
         close.addEventListener("click", () => {
           modal.style.display = "none";
         })
 
+
         window.onclick = function(event) {
-            if (event.target == modal){
+            if (event.target == modal || event.target == viewModal){
             modal.style.display = "none";
         }}
+       
+
         addCategoryBtn.addEventListener("click", () => {
             modal.style.display = "block";
                 } )
         submitBtn.addEventListener("click", () => {
             modal.style.display = "none";
+        })
+
+        var close1 = document.getElementsByClassName("close1")[0];
+        var taskHolder = document.getElementById("taskHolder");
+        var viewModal = document.getElementById("viewModal");
+
+        close1.addEventListener("click", () => {
+          viewModal.style.display = "none";
+        })
+
+        window.onclick = function(event) {
+            if (event.target == viewModal){
+            viewModal.style.display = "none";
+        }}
+
+        taskHolder.addEventListener("click", () => {
+            viewModal.style.display = "block";
         })
     </script>
 </body>
