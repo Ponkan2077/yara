@@ -21,7 +21,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
      }
 
      function addTask() {
-        $sql = "INSERT INTO task (user_id, title, description, due_date) VALUES (:user_id, :title, :description, :due_date);";
+        $sql = "INSERT INTO task (user_id, title, description, due_date, category_id) VALUES (:user_id, :title, :description, :due_date, :category_id);";
         $query = $this->db->connect()->prepare($sql);
 
         $query->bindParam(':user_id', $this->user_id);
@@ -29,6 +29,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
         $query->bindParam(':title', $this->description);
         $query->bindParam(':description', $this->description);
         $query->bindParam(':due_date', $this->due_date);
+        $query->bindParam(':category_id', $this->category_id);
         
         if($query->execute()){
             return true;

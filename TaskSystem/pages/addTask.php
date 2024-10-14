@@ -16,13 +16,20 @@
              header('location: ./pages/login.php');
          }
      } 
-
+     
      $taskObj = new task();
 
      $title  = $description = $due_date = '';
 
      $titleErr  = $descriptionErr = $due_dateErr = '';
      
+     $category_id = '';
+
+    if($_SERVER['REQUEST_METHOD'] == "GET"){
+        if(isset($_GET['id'])){
+           $category_id = $_GET['id'];
+        }
+    }
     if($_SERVER['REQUEST_METHOD'] == "POST"){
        $title = $_POST['title'];
        $description = $_POST['description'];
@@ -45,6 +52,7 @@
          $taskObj->title = $title;
          $taskObj->description = $description;
          $taskObj->due_date = $due_date;
+         $taskObj->category_id = $category_id;
 
          if($taskObj->addTask());
          else{

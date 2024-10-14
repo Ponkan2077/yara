@@ -27,7 +27,7 @@ if(isset($_SESSION['account'])){
   $category_array = $taskObj->getCategory();
 
   foreach($category_array as $arr){
-    $task_array = $taskObj->getTask($category_id['category_id']);
+    $task_array = $taskObj->getTask($arr['category_id']);
   }
     
 
@@ -109,22 +109,24 @@ if(isset($_SESSION['account'])){
         <section class="taskMainSection">
         <div class="addCategory">
             <button type ="button" class="addCategoryBtn" id="addCategoryBtn">Add Category</button>
+            <?php foreach($category_array as $arr){ ?>
             <div class="categoryTask">
                 <div class="tasks">
-                <span><?php $category_name ?></span>
+                <span><?php echo $arr['name'] ?></span>
+                <?php foreach($task_array as $arrs) {?>
                 <div class="taskHolder" id="taskHolder">
                 <input type="checkbox" name="task">
-                <label for="task">Task</label>
+                <label for="task"><?php echo $arrs['title']?></label>
                 </div>
-                <div class="taskHolder" id="taskHolder">
-                <input type="checkbox" name="task">
-                <label for="task">Task</label>
-                </div>
+                <?php }
+                ?>
                 </div>
                 <div class="addTaskWrapper">
-                    <button type="button" class="addTaskBtn"><a href="addtask.php">Add Task</a></button>
+                    <button type="button" class="addTaskBtn"><a href="addtask.php?id=<?php echo $arr['category_id'] ?>">Add Task</a></button>
                 </div>
             </div>
+            <?php }
+            ?>
         </div>
         </section>
     </main>
