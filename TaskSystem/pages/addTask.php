@@ -19,25 +19,28 @@
      
      $taskObj = new task();
 
-     $title  = $description = $due_date = '';
+     $title  = $description = $due_date = $category_id = '';
 
-     $titleErr  = $descriptionErr = $due_dateErr = '';
-     
-     $category_id = '';
+     $titleErr  = $descriptionErr = $due_dateErr = $categoryIdErr= '';
 
     if($_SERVER['REQUEST_METHOD'] == "GET"){
         if(isset($_GET['id'])){
            $category_id = $_GET['id'];
         }
+    
     }
+
+
     if($_SERVER['REQUEST_METHOD'] == "POST"){
        $title = $_POST['title'];
        $description = $_POST['description'];
        $due_date = $_POST['due_date'];
+       $category_id = $_POST['category_id'];
 
        if(empty($title)){
           $titleErr = "There should be a title";
        }
+
 
        if (empty($description)){
         $descriptionErr = "There should be a description";
@@ -47,18 +50,29 @@
         $due_dateErr = "There should be a due date";
        }
 
-       if(empty($titleErr) && empty($descriptionErr) && empty($due_dateErr)){
+       if(empty($category_id)){
+        $categoryIdErr = "Category Id is not setup";
+       }
+
+
+
+       if(empty($titleErr) && empty($descriptionErr) && empty($due_dateErr) && empty($category_idErr)){
          $taskObj->user_id = $_SESSION['user']['user_id'];
          $taskObj->title = $title;
          $taskObj->description = $description;
          $taskObj->due_date = $due_date;
          $taskObj->category_id = $category_id;
-
-         if($taskObj->addTask());
-         else{
-            echo "Something went wrong";
+         
+         if($taskObj->addTask()){
+            //header('location: task.php');
+            echo "Hello world";
+            echo $taskObj->category_id;
+            echo $category_id;
          }
        }
+       else{
+        echo "Something went wrong";
+     }
     }
 
      
@@ -101,7 +115,10 @@
             <div class="taskDueDate">
             <label for="due_date">Due date:</label>
             <input type="datetime-local" name="due_date" class="field">
+            <input type="hidden" value="<?php echo $category_id?>" name="category_id">
+            <span><?php echo $category_id?></span>
             </div>
+            
             <div class="formBtnWrapper"><input type="submit" class="btnFormR" value="Add Task"></div>
         </form>
         </div>

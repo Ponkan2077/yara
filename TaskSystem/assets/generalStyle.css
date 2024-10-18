@@ -433,7 +433,10 @@ header {
 .taskMainSection {
     margin-left: 3%;
     margin-right: 3%;
+    display: flex;
+    flex-direction: column;
 }
+
 
 .tasks {
     display: flex;
@@ -443,12 +446,13 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 40rem;
-    width: 20%;
+    height: 30rem;
     background-color: #ffffff;
     border-radius: 20px;
     margin-top: 20px;
     flex-wrap: wrap;
+    flex: auto;
+    width: 20%;
 }
 
 .tasks span {
@@ -458,14 +462,23 @@ header {
 }
 
 .taskHolder {
-    margin-top: 10px;
     border: 1px solid black;
     border-radius: 20px;
     width: 90%;
     margin: auto;
     padding: 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
 }
 
+.taskHolder .btnFormR{
+    margin-left: auto;
+    margin-right: 15px;
+    margin-top: 0px;
+}
 .taskHolder:hover {
     border-color: #5463FF;
 }
@@ -481,6 +494,10 @@ header {
     background-color: #FFC300;
     padding: 10px 25px;
     border-radius: 20px;
+}
+
+.addCategoryBtn {
+    width: 200px;
 }
 
 .addTaskWrapper {
@@ -502,6 +519,17 @@ header {
     color:#FF1818;
     text-decoration: none;
     font-size: 1rem;
+}
+
+
+
+.addCategory {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 5rem;
+    row-gap: 5rem;
+    column-gap: 5rem;
 }
 
 
@@ -537,6 +565,10 @@ header {
     overflow: auto;
     background-color:  rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
+}
+
+.viewMOdal {
+    display: block;
 }
 
 .viewModal {
@@ -619,13 +651,13 @@ header {
    margin-bottom: 5px;
 }
 
- .btnFormR {
+ .btnFormR, .btnFormRR {
     color: #FF1818;
     background-color: #FFC300;
     font-size: 1rem;
     padding: 0.5rem 1rem;
     border-radius: 20px;
-    margin-top: 10px;
+    margin-top: 10px; 
 }
 
 .field {
@@ -639,4 +671,15 @@ header {
 .formBtnWrapper {
     display: flex;
     justify-content: center;
+}
+
+.taskHolder .btnFormRR {
+    margin-top: 0px;
+}
+
+.taskHolder .btnFormRR  a{
+    text-decoration: none;
+    color: #FF1818;
+    font-size: 1rem;
+    text-align: start;
 }

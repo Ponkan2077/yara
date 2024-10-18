@@ -13,25 +13,24 @@ if(isset($_SESSION['account'])){
         header('location: login.php');
     }
 }
-  
+  //header('Location:'.$_SERVER['PHP_SELF']);
   $taskObj = new task();
   $category_id = "";
   $category_name = "";
   $category = "";
   $categoryErr = "";
-
+  $is_done = $is_doneErr =  "";
   $category_array = "";
 
   $task_array = "";
 
   $category_array = $taskObj->getCategory();
 
-  foreach($category_array as $arr){
-    $task_array = $taskObj->getTask($arr['category_id']);
-  }
-    
+  $task_array = $taskObj->getTask();
 
  if ($_SERVER['REQUEST_METHOD'] == "POST"){
+
+    if(isset($_POST['category'])){
     $category = $_POST['category'];
     
     if (empty($category)){
@@ -40,10 +39,24 @@ if(isset($_SESSION['account'])){
 
     if (empty($categoryErr)){
         if($taskObj->addCategory($category));
+        header('Location:'.$_SERVER['PHP_SELF']);
+        
     }
 
     else {
         echo $categoryErr;
+    }
+}
+    if(isset($_POST['is_done'])){
+       $is_done = $_POST['is_done'];
+
+       if(empty($is_done)){
+        $is_doneErr = "Is empty";
+       }
+
+       if(empty($is_doneErr)){
+
+       }
     }
  } 
  
@@ -83,49 +96,30 @@ if(isset($_SESSION['account'])){
         </div>
         
         </div>
-        <div class="viewModal" id="viewModal">
-            <div class="viewTaskModal">
-                 <span class="close1">&times;</span>
-                 <div class="logo">
-               <span>Logo</span>
-           </div>
-                  <div class="taskTitleWrap">
-                      <h2 class="title">Title:</h2>
-                      <p>Hello</p>
-                  </div>
-                  <div class="descriptionWrap">
-                      <h2>Description:</h2>
-                      <p>Hello</p>
-                  </div>
-                  <div class="dueDateWrap">
-                     <h2>Due Date: </h2>
-                     <p>Hello</p>
-                  </div>
-                  <div class="formBtnWrapper"><button type="button" class="btnFormR" id="btnFormR">Done</button></div>
-
-            </div>
-        </div>
-        
         <section class="taskMainSection">
+        <button type ="button" class="addCategoryBtn" id="addCategoryBtn">Add Category</button>
         <div class="addCategory">
-            <button type ="button" class="addCategoryBtn" id="addCategoryBtn">Add Category</button>
             <?php foreach($category_array as $arr){ ?>
             <div class="categoryTask">
                 <div class="tasks">
                 <span><?php echo $arr['name'] ?></span>
-                <?php foreach($task_array as $arrs) {?>
-                <div class="taskHolder" id="taskHolder">
+                <?php foreach($task_array as $arrs) {
+                    if($arrs['category_id'] == $arr['category_id']){?>
+                <div class="taskHolder">
+                    <div class="taskTitleWrap">
                 <input type="checkbox" name="task">
                 <label for="task"><?php echo $arrs['title']?></label>
                 </div>
-                <?php }
+                <button type="button" class="btnFormRR"><a href="viewTask.php?id=<?php echo $arrs['task_id']?>">View</a></button>
+                    </div>
+                <?php }}
                 ?>
                 </div>
                 <div class="addTaskWrapper">
                     <button type="button" class="addTaskBtn"><a href="addtask.php?id=<?php echo $arr['category_id'] ?>">Add Task</a></button>
                 </div>
             </div>
-            <?php }
+            <?php } 
             ?>
         </div>
         </section>
@@ -162,22 +156,26 @@ if(isset($_SESSION['account'])){
             modal.style.display = "none";
         })
 
-        var close1 = document.getElementsByClassName("close1")[0];
-        var taskHolder = document.getElementById("taskHolder");
-        var viewModal = document.getElementById("viewModal");
+       // var close1 = document.getElementsByClassName("close1")[0];
+      //  var viewModal = document.getElementById("viewModal");
 
-        close1.addEventListener("click", () => {
-          viewModal.style.display = "none";
-        })
+       // var taskHolder = document.querySelectorAll(".btnFormRR").forEach(function(el){
+      //      el.addEventListener("click", () =>{
+       //         viewModal.style.display = "block";
+                
+      //      })
+       // });
+//
+       // close1.addEventListener("click", () => {
+     //     viewModal.style.display = "none";
+     //   })
+        
+        
+   //     window.onclick = function(event) {
+  //          if (event.target == viewModal){
+   //         viewModal.style.display = "none";
+   //     }}
 
-        window.onclick = function(event) {
-            if (event.target == viewModal){
-            viewModal.style.display = "none";
-        }}
-
-        taskHolder.addEventListener("click", () => {
-            viewModal.style.display = "block";
-        })
     </script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 
 session_start();
 $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
+include_once $path .='/yara/TaskSystem/pages/classes/task.class.php';
+      $path = $pathSave;
 
 
 if(isset($_SESSION['account'])){
@@ -13,6 +15,12 @@ if(isset($_SESSION['account'])){
     }
 } 
 
+$taskObj = new task();
+
+$count_task = $taskObj->countCompleteTask();
+$complete = $count_task['completed'];
+$incomplete = $count_task['incompleted'];
+$overdue = $count_task['overDueTask'];
 $var = 100;
 
 ?>
@@ -150,7 +158,7 @@ new Chart(task, {
     labels: ['Completed Task', 'Pending Task', 'Overdue Task'],
     datasets: [{
       label: '# of Task',
-      data: [<?php echo $var ?>, 30,90],
+      data: [<?php echo $complete ?>, <?php echo $incomplete?>,<?php echo $overdue ?>],
       borderWidth: 1
     }]
   },
