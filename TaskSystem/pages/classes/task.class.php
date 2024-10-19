@@ -139,6 +139,39 @@ $path .= "/yara/TaskSystem/pages/database.php";
      }
 
      function countCategory(){
-        $sql = "";
+        $sql = "Select c.name As category_name, count(task_id) As numTask from task  t inner  join category as c on t.category_id = c.category_id group by category_name;";
+         
+        $query = $this->db->connect()->prepare($sql);
+
+        $data = null;
+
+        if($query->execute()){
+            $data = $query->fetch(PDO::FETCH_ASSOC);
+            return $data;
+        }
+        
+        return false;
+
      }
+
+     function check($keyword){
+     $sql = "Select name from category where name = :name;";
+
+     $query = $this->db->connect()->prepare($sql);
+     
+     $query->bindParam(':name', $keyword);
+
+     $rowCount = null;
+
+        if($query->execute()){
+            $rowCount = $query->rowCount();
+            
+            if($rowCount >= 1){
+                return false;
+            }
+        }
+        
+        return true;
+
+         }
  }

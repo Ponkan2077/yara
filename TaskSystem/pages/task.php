@@ -37,6 +37,10 @@ if(isset($_SESSION['account'])){
        $categoryErr = "Empty Category";
     }
 
+    if($taskObj->check($category)){
+        
+    }
+
     if (empty($categoryErr)){
         if($taskObj->addCategory($category));
         header('Location:'.$_SERVER['PHP_SELF']);

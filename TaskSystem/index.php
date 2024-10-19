@@ -21,7 +21,6 @@ $count_task = $taskObj->countCompleteTask();
 $complete = $count_task['completed'];
 $incomplete = $count_task['incompleted'];
 $overdue = $count_task['overDueTask'];
-$var = 100;
 
 ?>
 
