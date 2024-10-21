@@ -22,6 +22,9 @@ $complete = $count_task['completed'];
 $incomplete = $count_task['incompleted'];
 $overdue = $count_task['overDueTask'];
 
+$categoryTask = $taskObj->countCategory();
+$json = json_encode($categoryTask);
+
 ?>
 
 
@@ -126,13 +129,20 @@ $overdue = $count_task['overDueTask'];
 <script>
     const ctx = document.getElementById('dashBar');
 
+var data = <?php echo "$json" ?> ;
+
+var data1 = <?php echo json_encode($categoryTask); ?>;
+
+console.log(data1);
+
+console.log(data);
 new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ['Day 1', 'Day 2', 'Day 3'],
+    labels: data.map(row => row.category_name),
     datasets: [{
       label: '# hours',
-      data: [12, 30,90],
+      data: data.map(row => row.numTask),
       borderWidth: 1
     }]
   },
@@ -176,13 +186,15 @@ new Chart(task, {
 
 const taskCategory = document.getElementById('dashPie');
 
+
+console.log('category');
 new Chart(taskCategory, {
   type: 'polarArea',
   data: {
-    labels: ['Category 1', 'Category 2', 'Category 3'],
+    labels: data.map(row => row.category_name),
     datasets: [{
       label: '# of Task',
-      data: [12, 30,90],
+      data: data.map(row => row.numTask),
       borderWidth: 1
     }]
   },

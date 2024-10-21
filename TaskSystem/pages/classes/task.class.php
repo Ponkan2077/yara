@@ -146,7 +146,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
         $data = null;
 
         if($query->execute()){
-            $data = $query->fetch(PDO::FETCH_ASSOC);
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;
         }
         
