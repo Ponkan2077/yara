@@ -28,6 +28,11 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
      function addTask() {
         $sql = "INSERT INTO task (user_id, title, description, due_date, category_id, is_completed) VALUES (:user_id, :title, :description, :due_date, :category_id, :is_completed);";
+        $sql = $sql . "Update task set updated_at = :date;";
+
+        $date = new DateTime('now');
+        $date = $this->date->format('Y-m-d H:i:s');
+
         $query = $this->db->connect()->prepare($sql);
 
         $query->bindParam(':user_id', $this->user_id);
@@ -42,6 +47,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
         $query->bindParam(':is_completed', $this->is_completed);
 
+        $query->bindParam(':date', $date);
+
         if($query->execute()){
             return true;
         }
@@ -49,8 +56,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
         return false;
      }
 
-     function showAll($id) {
-        $sql = "Select * from task where user_id = :id";
+     function showAll($keyword ='', $category='') {
+        $sql = "Select * from task  where user_id = :id";
 
         $query = $this->db->connect()->prepare($sql);
         $data = null;
@@ -109,6 +116,10 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
      function is_done($task_id){
         $sql = "UPDATE task set is_completed = 1 where task_id = :task_id;";
+        $sql = $sql . "Update task set updated_at = :date;";
+
+        $date = new DateTime('now');
+        $date = $this->date->format('Y-m-d H:i:s');
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':task_id', $task_id);
@@ -120,10 +131,11 @@ $path .= "/yara/TaskSystem/pages/database.php";
      }
 
      function countCompleteTask(){
-        $sql = "Select (Select count(is_completed) from task where is_completed = 1) As completed, (Select count(is_completed) from task where is_completed = 0 and :date < completion_date) As incompleted, (Select count(task_id) from task where :date > completion_date and is_completed = 0) As overDueTask from task;";
+        $sql = "Select (Select count(is_completed) from task where is_completed = 1) As completed, (Select count(is_completed) from task where is_completed = 0 and :date < due_date) As incompleted, (Select count(task_id) from task where :date > due_date and is_completed = 0) As overDueTask from task;";
 
         $query = $this->db->connect()->prepare($sql);
-
+        
+        $date = new DateTime('now');
         $date = $this->date->format('Y-m-d H:i:s');
         //$currentDate = strtotime($date); 
 
@@ -172,6 +184,39 @@ $path .= "/yara/TaskSystem/pages/database.php";
         }
         
         return true;
+
+         }
+
+         function upcomingDeadlines(){
+            $sql = "Select * from task where due_date > :date order by due_date - created_at ASC LIMIT 5; ";
+
+            $date = new DateTime('now');
+            $date = $this->date->format('Y-m-d H:i:s');
+
+            $query = $this->db->connect()->prepare($sql);
+
+            $query->bindParam(':date', $date);
+
+            if($query->execute()){
+                return true;
+            }
+
+            return false;
+
+         }
+
+         function recentActivities() {
+            $sql = "Select * from task order by updated_at  DESC LIMIT 5;";
+            
+            $query = $this->db->connect()->prepare($sql);
+
+            $query->bindParam(':date', $date);
+
+            if($query->execute()){
+                return true;
+            }
+
+            return false;
 
          }
  }

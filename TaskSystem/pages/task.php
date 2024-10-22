@@ -22,6 +22,8 @@ if(isset($_SESSION['account'])){
   $is_done = $is_doneErr =  "";
   $category_array = "";
 
+  $categorySearch = $Keyword ='';
+
   $task_array = "";
 
   $category_array = $taskObj->getCategory();

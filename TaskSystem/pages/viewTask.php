@@ -87,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
                   </div>
                   <form action="" method="POST">
                   <input type="hidden" name="task_id" value="<?php echo $taskId?>">
-                  <span><?php  echo $taskId?></span>
                   <?php } }?>
                   <div class="formBtnWrapper"><input type="submit" name="is_done" class="btnFormR" value ="Done" id="btnFormR"></div>
                   </form>
