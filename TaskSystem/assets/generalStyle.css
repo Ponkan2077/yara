@@ -366,12 +366,45 @@ header {
 }
 
 .dashAct, .dashDead {
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
+    width: 80%;
+    height: 250px;
     margin-left: 20px;
     border-radius: 20px;
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.dashActChild, .dashDeadChild{
+    width: 95%;
+    height: 68px;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.dashActChild *, .dashDeadChild *{
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 0px !important;
+}
+
+.DeadTop {
+    display: flex;
+}
+
+.DeadTop {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.DeadTop * {
+   width: 50%;
+   margin: 0px !important;
+   word-wrap: break-word;
 }
 
 /* right */

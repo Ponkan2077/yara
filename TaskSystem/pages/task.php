@@ -81,7 +81,7 @@ if(isset($_SESSION['account'])){
 <div class="gridWrapper">
     <header>
     <?php 
-         $path .= "/yara/TaskSystem/pages/includes/header.html";
+         $path .= "/yara/TaskSystem/pages/includes/header.php";
             include_once($path);
          $path = $pathSave;
         ?>

@@ -28,10 +28,14 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
      function addTask() {
         $sql = "INSERT INTO task (user_id, title, description, due_date, category_id, is_completed) VALUES (:user_id, :title, :description, :due_date, :category_id, :is_completed);";
-        $sql = $sql . "Update task set updated_at = :date;";
+        $sql = $sql . "Update task set updated_at = :date where task_id = :task_id;";
+        
+        $sql = $sql . "Update task set action = :action where task_id = :task_id;";
 
         $date = new DateTime('now');
         $date = $this->date->format('Y-m-d H:i:s');
+
+        $action = "Add Task";
 
         $query = $this->db->connect()->prepare($sql);
 
@@ -48,6 +52,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
         $query->bindParam(':is_completed', $this->is_completed);
 
         $query->bindParam(':date', $date);
+
+        $query->bindParam(':action', $action);
 
         if($query->execute()){
             return true;
@@ -73,9 +79,22 @@ $path .= "/yara/TaskSystem/pages/database.php";
      function addCategory($category){
         $sql = "INSERT INTO category (name) VALUES (:category);";
 
+        $sql = $sql . "Update category set updated_at = :date where name = :category;";
+        
+        //$sql = $sql . "Update category set action = :action where name = :category;";
+
+        $action = "Add Category";
+
+        $date = new DateTime('now');
+        $date = $this->date->format('Y-m-d H:i:s');
+
         $query = $this->db->connect()->prepare($sql);
 
         $query->bindParam('category', $category);
+
+        $query->bindParam(":date", $date);
+
+        //$query->bindParam(':action', $action);
 
         if($query->execute()){
             return true;
@@ -116,13 +135,22 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
      function is_done($task_id){
         $sql = "UPDATE task set is_completed = 1 where task_id = :task_id;";
-        $sql = $sql . "Update task set updated_at = :date;";
+
+        $sql = $sql . "Update task set updated_at = :date where task_id = :task_id;";
+        
+        $sql = $sql . "Update task set action = :action where task_id = :task_id;";
 
         $date = new DateTime('now');
         $date = $this->date->format('Y-m-d H:i:s');
 
+        $action = "Done Task";
+
         $query = $this->db->connect()->prepare($sql);
+
+
+        $query->bindParam(':date', $date);
         $query->bindParam(':task_id', $task_id);
+        $query->bindParam(":action", $action);
         if($query->execute()){
             return true;
         }
@@ -188,7 +216,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
          }
 
          function upcomingDeadlines(){
-            $sql = "Select * from task where due_date > :date order by due_date - created_at ASC LIMIT 5; ";
+            $sql = "Select title, due_date from task where due_date > :date order by due_date - created_at ASC LIMIT 3; ";
 
             $date = new DateTime('now');
             $date = $this->date->format('Y-m-d H:i:s');
@@ -197,8 +225,12 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
             $query->bindParam(':date', $date);
 
+            $data = null;
+
             if($query->execute()){
-                return true;
+                $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                return $data;
             }
 
             return false;
@@ -206,14 +238,16 @@ $path .= "/yara/TaskSystem/pages/database.php";
          }
 
          function recentActivities() {
-            $sql = "Select * from task order by updated_at  DESC LIMIT 5;";
+            $sql = "Select updated_at, action, title from task order by updated_at  DESC LIMIT 3;";
             
             $query = $this->db->connect()->prepare($sql);
-
-            $query->bindParam(':date', $date);
+            
+            $data = null;
 
             if($query->execute()){
-                return true;
+                $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                return $data;
             }
 
             return false;

@@ -25,6 +25,14 @@ $overdue = $count_task['overDueTask'];
 $categoryTask = $taskObj->countCategory();
 $json = json_encode($categoryTask);
 
+
+$upcomingDeadline = $taskObj->upcomingDeadlines();
+
+$recentActivities = $taskObj->recentActivities();
+
+
+
+
 ?>
 
 
@@ -82,11 +90,30 @@ $json = json_encode($categoryTask);
                 <div class="dashLeftBottomWrapper">
                 <div class="dashDeadlines">
                 <span>Upcoming Deadlines</span>
-                <div class="dashDead"></div>
+                <div class="dashDead">
+                <?php foreach ($upcomingDeadline as $arr) { ?>
+                   <div class="dashDeadChild">
+                    <div class="DeadTop">
+                    <span><?php echo $arr['title'] ?></span>
+                    <span><?php echo $arr['due_date'] ?></span>
+                    </div>
+                   </div>
+                   <?php } ?>
+                </div>
                 </div>
                 <div class="dashRecent">
                 <span>Recent Activities</span>
-                <div class="dashAct"></div>
+                <div class="dashAct">
+                <?php foreach ($recentActivities as $arrs) { ?>
+                   <div class="dashActChild">
+                   <div class="DeadTop">
+                    <span><?php echo $arrs['title'] ?></span>
+                    <span><?php echo $arrs['updated_at'] ?></span>
+                    </div>
+                    <span> <span><?php echo $arrs['action'] ?> </span>
+                   </div>
+                   <?php } ?>
+                </div>
                 </div>
                 </div>
                 </div>
