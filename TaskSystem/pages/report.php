@@ -1,5 +1,17 @@
 <?php 
       $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
+
+      session_start();
+
+
+      if(isset($_SESSION['account'])){
+          if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
+              header('location: login.php');
+          }
+          else {
+              header('location: login.php');
+          }
+      } 
     ?>
 <!DOCTYPE html>
 <html lang="en">

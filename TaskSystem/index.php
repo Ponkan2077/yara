@@ -1,8 +1,9 @@
 <?php
 
-$path = $_SERVER['DOCUMENT_ROOT'];
-$path .= '/yara/TaskSystem/';
 session_start();
+$path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
+include_once $path .='/yara/TaskSystem/pages/classes/task.class.php';
+      $path = $pathSave;
 
 
 if(isset($_SESSION['account'])){
@@ -14,6 +15,24 @@ if(isset($_SESSION['account'])){
     }
 } 
 
+$taskObj = new task();
+
+$count_task = $taskObj->countCompleteTask();
+$complete = $count_task['completed'];
+$incomplete = $count_task['incompleted'];
+$overdue = $count_task['overDueTask'];
+
+$categoryTask = $taskObj->countCategory();
+$json = json_encode($categoryTask);
+
+
+$upcomingDeadline = $taskObj->upcomingDeadlines();
+
+$recentActivities = $taskObj->recentActivities();
+
+
+
+
 ?>
 
 
@@ -23,6 +42,7 @@ if(isset($_SESSION['account'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/c0056d4561.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" type="text/css" href="./assets/generalStyle.css">
 
     <title>Document</title>
@@ -57,30 +77,166 @@ if(isset($_SESSION['account'])){
         </div>
     </header>
     <main>
-       <div class="mainWrapper">
-        <span></span>
+        <section class="dashMainSection">
+       <div class="dashMainTopWrapper">
+            <article class="dashLeftWrapper">
+                <div class="dashTaskWrapper">
+                <div class="labelTaskGraph">
+                <span>Tasks</span>
+                <div class="taskGraphWrapper">
+                    <canvas id="taskGraph"></canvas>
+                </div>
+                </div>
+                <div class="dashLeftBottomWrapper">
+                <div class="dashDeadlines">
+                <span>Upcoming Deadlines</span>
+                <div class="dashDead">
+                <?php foreach ($upcomingDeadline as $arr) { ?>
+                   <div class="dashDeadChild">
+                    <div class="DeadTop">
+                    <span><?php echo $arr['title'] ?></span>
+                    <span><?php echo $arr['due_date'] ?></span>
+                    </div>
+                   </div>
+                   <?php } ?>
+                </div>
+                </div>
+                <div class="dashRecent">
+                <span>Recent Activities</span>
+                <div class="dashAct">
+                <?php foreach ($recentActivities as $arrs) { ?>
+                   <div class="dashActChild">
+                   <div class="DeadTop">
+                    <span><?php echo $arrs['title'] ?></span>
+                    <span><?php echo $arrs['updated_at'] ?></span>
+                    </div>
+                    <span> <span><?php echo $arrs['action'] ?> </span>
+                   </div>
+                   <?php } ?>
+                </div>
+                </div>
+                </div>
+                </div>
+            </article>
+            <article class="dashRightWrapper">
+                <div class="dashTopRightWrapper">
+                     <div class="dashPieGraph">
+                        <span>Task Distribution by Category</span>
+                        <div class="dashPieWrapper">
+                        <canvas class="dashPie" id="dashPie"></canvas>
+                        </div>
+                     </div>
+                     <div class="dashBarGraph">
+                        <span>Task Completion Overtime</span>
+                        <div class="dashBarWrapper">
+                        <canvas id="dashBar"></canvas>
+                        </div>
+                        
+                     </div>
+                </div>
+                <div class="dashBottomRightWrapper">
+                    <div class="dashLeaderboard">
+                        <span>Leaderboard</span>
+                        <div class="leaderboardWrapper"></div>
+                    </div>
+                </div>
+             </article>
        </div>
+       </section>
     </main>
     <aside>
-        <div class="asideWrapper">
-        
-        <div class="menuHome">
-            <a href="#">Menu</a>
-        </div>
-        <nav class="asideNav">
-             <ul>
-                <li class="dashboard"><a data-active="home" href="#">DASHBOARD</a></li>
-                <li class="reports"><a  data-active ="report"   href="./pages/report.php">REPORTS</a></li>
-                <li class="settings"><a data-active = "setting" href="./pages/setting.php">SETTINGS</a></li>
-                <li class="tasks"><a  data-active ="task" href="./pages/task.php">TASKS</a></li>
-             </ul>
-        </nav>
-        <div class="logout">
-            <button class="logoutBtn" type="submit">Log Out</button>
-        </div>
-        </div>
+    <?php 
+        $path .= "/yara/TaskSystem/pages/includes/aside.php";
+        include_once($path);
+        $path = $pathSave;
+        ?> 
     </aside>
 </div>
 <script type="text/javascript"  src="./assets/script/script.js"></script>
+<script>
+    const ctx = document.getElementById('dashBar');
+
+var data = <?php echo "$json" ?> ;
+
+var data1 = <?php echo json_encode($categoryTask); ?>;
+
+console.log(data1);
+
+console.log(data);
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: data.map(row => row.category_name),
+    datasets: [{
+      label: '# hours',
+      data: data.map(row => row.numTask),
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero:true
+            }
+        }]
+    }
+  }
+});
+
+    const task = document.getElementById('taskGraph');
+
+new Chart(task, {
+  type: 'doughnut',
+  data: {
+    labels: ['Completed Task', 'Pending Task', 'Overdue Task'],
+    datasets: [{
+      label: '# of Task',
+      data: [<?php echo $complete ?>, <?php echo $incomplete?>,<?php echo $overdue ?>],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero:true
+            }
+        }]
+    }
+  }
+});
+
+const taskCategory = document.getElementById('dashPie');
+
+
+console.log('category');
+new Chart(taskCategory, {
+  type: 'polarArea',
+  data: {
+    labels: data.map(row => row.category_name),
+    datasets: [{
+      label: '# of Task',
+      data: data.map(row => row.numTask),
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero:true
+            }
+        }]
+    }
+  }
+});
+</script>
 </body>
 </html>

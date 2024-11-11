@@ -1,5 +1,5 @@
 <?php
-session_start();
+ session_start();
      $pathindex = $path1 = $path = $_SERVER['DOCUMENT_ROOT'];
      $path .= "/yara/TaskSystem/pages/classes/user.class.php";
      $path1 .= "/yara/TaskSystem/assets/function.php";
@@ -10,6 +10,15 @@ session_start();
 
      $username = $password = "";//$email = "";
      $usernameErr = $passwordErr = ""; //$emailErr = "";
+
+     if(isset($_SESSION['account'])){
+         if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
+             header('location: login.php');
+         }
+         else {
+             header('location: login.php');
+         }
+     } 
     
       $userObj = new user();
      if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -43,6 +52,7 @@ session_start();
             }
         }
      }
+
 ?>
 
 
