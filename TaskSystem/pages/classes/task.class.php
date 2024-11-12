@@ -251,6 +251,20 @@ $path .= "/yara/TaskSystem/pages/database.php";
             }
 
             return false;
+         }
 
+         function leaderboard(){
+            $sql = "Select u.username as username, u.created_at, (Select count(is_completed) from task where is_completed = 1) as NumTaskComplete from task t inner join user u on t.user_id = u.user_id group by u.username order by NumTaskComplete DESC limit 5;";
+
+            $query = $this->db->connect()->prepare($sql);
+
+            $data = null;
+
+            if($query->execute()){
+               $data =  $query->fetchAll(PDO::FETCH_ASSOC);
+               return $data;
+            }
+
+            return false;
          }
  }

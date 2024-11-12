@@ -10,7 +10,7 @@
 
 
 body{
-    display: block;
+    display: flex;
     background-color: #5463FF;
 }
 
@@ -202,7 +202,7 @@ header {
     height: 100vh;
 }
 .formWrapper {
-    position: relative;
+    position: absolute;
     display: flex;
     width: 500px;
     height: 550px;
@@ -416,7 +416,7 @@ header {
 }
 
 .dashTopRightWrapper{
-    height: 65%;
+    height: 100%;
     background-color: #ECECEC;
     border-radius: 20px;
 }
@@ -430,7 +430,7 @@ header {
 }
 
 .dashBarGraph {
-    margin-top: 0.8rem;
+    margin-top: 10rem;
 }
 .dashPieGraph span {
     margin-left: 0.8rem;
@@ -447,19 +447,41 @@ header {
     background-color: white;
     border-radius: 20px;
     row-gap: 6rem;
+    margin-bottom: 50px;
+    margin-top: 50px;
 }
 
 .dashLeaderboard {
     margin-top: 0.5rem;
     margin-left: 0.8rem;
+    height: 550px;
+
 }
 
 .leaderboardWrapper {
-    width: 100px;
-    height: 100px;
+    width: 98%;
+    height: 500px;
     border: 1px solid black;
     border-radius: 20px;
     margin-top: 0.5rem;
+}
+
+.userWrapper {
+    margin: auto;
+    margin-top: 1.25rem;
+    width: 95%;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+}
+
+.userInfo {
+    width: 125px;
+    text-align: center;
 }
 
 /* TASK page */

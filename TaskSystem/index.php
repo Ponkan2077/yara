@@ -30,6 +30,7 @@ $upcomingDeadline = $taskObj->upcomingDeadlines();
 
 $recentActivities = $taskObj->recentActivities();
 
+$leaderboard = $taskObj->leaderboard();
 
 
 
@@ -134,14 +135,31 @@ $recentActivities = $taskObj->recentActivities();
                         
                      </div>
                 </div>
-                <div class="dashBottomRightWrapper">
-                    <div class="dashLeaderboard">
-                        <span>Leaderboard</span>
-                        <div class="leaderboardWrapper"></div>
-                    </div>
-                </div>
              </article>
        </div>
+       <div class="dashBottomRightWrapper">
+                    <div class="dashLeaderboard">
+                        <span>Leaderboard</span>
+                        <div class="leaderboardWrapper">
+                        <div class="userWrapper">
+                                <div class="userInfo">Rank</div>
+                                <div class="userInfo">Username</div>
+                                <div class="userInfo">Number Of Tasks Done</div>
+                                <div class="userInfo">Number of Tasks Done Today</div>
+                                <div class="userInfo">Account Created At</div>
+                            </div>
+                            <?php $count = 0; foreach($leaderboard as $arr) { ?>
+                            <div class="userWrapper">
+                                <div class="userInfo"><?php echo $count += 1?></div>
+                                <div class="userInfo"><?php echo $arr['username'] ?></div>
+                                <div class="userInfo"><?php echo $arr['NumTaskComplete'] ?></div>
+                                <div class="userInfo"><?php echo $arr['created_at'] ?></div>
+                                <div class="userInfo"></div>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
        </section>
     </main>
     <aside>
