@@ -5,13 +5,14 @@
 
 
       if(isset($_SESSION['account'])){
-          if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
-              header('location: login.php');
-          }
-          else {
-              header('location: login.php');
-          }
-      } 
+        if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
+            header('location: ./pages/login.php');
+        }
+        $user_id = $_SESSION['account']['user_id'];
+    } 
+    else {
+        header('location: ./pages/login.php');
+    }
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,8 +28,8 @@
     <div class="gridWrapper">
     <header>
     <?php 
-         $path .= "/yara/TaskSystem/pages/includes/header.html";
-            include_once($path);
+         $path .= "/yara/TaskSystem/pages/includes/header.php";
+        include_once($path);
          $path = $pathSave;
         ?>
     </header>

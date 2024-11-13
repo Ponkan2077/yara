@@ -15,10 +15,11 @@
          if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
              header('location: login.php');
          }
-         else {
-             header('location: login.php');
-         }
      } 
+
+     else {
+        header('location: login.php');
+    }
     
       $userObj = new user();
      if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -42,8 +43,8 @@
            // $userObj->email = $email;
 
             if($userObj->login($username,$password)){
-                $_SESSION['user'] = $userObj->fetch($username);
-                if($_SESSION['user']['is_admin'] || $_SESSION['user']['is_user']){
+                $_SESSION['account'] = $userObj->fetch($username);
+                if($_SESSION['account']['is_admin'] || $_SESSION['account']['is_user']){
                     header('location: ../index.php');
                 }
             }

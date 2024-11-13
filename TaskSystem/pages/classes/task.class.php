@@ -76,8 +76,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
         return false;
      }
 
-     function addCategory($category){
-        $sql = "INSERT INTO category (name) VALUES (:category);";
+     function addCategory($category, $user_id){
+        $sql = "INSERT INTO category (name, user_id) VALUES (:category, :user_id);";
 
         $sql = $sql . "Update category set updated_at = :date where name = :category;";
         
@@ -94,6 +94,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
         $query->bindParam(":date", $date);
 
+        $query->bindParam(":user_id", $user_id);
+
         //$query->bindParam(':action', $action);
 
         if($query->execute()){
@@ -103,11 +105,14 @@ $path .= "/yara/TaskSystem/pages/database.php";
         return false;
      }
 
-     function getCategory(){
-        $sql = "Select * from category;";
+     function getCategory($user_id){
+       // $sql = "Select c.name from task as k  inner join category as c on k.category_id = c.category_id where c.user_id = :user_id; ";
+
+       $sql = "Select * from category where user_id = :user_id;";
 
         $query = $this->db->connect()->prepare($sql);
-
+         
+        $query->bindParam(":user_id", $user_id);
         $data = null;
         if ($query->execute()){
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -119,10 +124,12 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
      }
 
-     function getTask(){
-        $sql = "Select task_id, title, due_date, description, category_id from task;";
+     function getTask($user_id){
+        $sql = "Select task_id, title, due_date, description, category_id, user_id from task where user_id = :user_id;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
+
+        $query->bindParam(":user_id", $user_id);
        
             if ($query->execute()){
                 $data = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -158,8 +165,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
         return false;
      }
 
-     function countCompleteTask(){
-        $sql = "Select (Select count(is_completed) from task where is_completed = 1) As completed, (Select count(is_completed) from task where is_completed = 0 and :date < due_date) As incompleted, (Select count(task_id) from task where :date > due_date and is_completed = 0) As overDueTask from task;";
+     function countCompleteTask($user_id){
+        $sql = "Select (Select count(is_completed) from task where is_completed = 1) As completed, (Select count(is_completed) from task where is_completed = 0 and :date < due_date) As incompleted, (Select count(task_id) from task where :date > due_date and is_completed = 0) As overDueTask from task where :user_id = user_id;";
 
         $query = $this->db->connect()->prepare($sql);
         
@@ -168,21 +175,23 @@ $path .= "/yara/TaskSystem/pages/database.php";
         //$currentDate = strtotime($date); 
 
         $query->bindParam(':date', $date);
-        $data = null;
+        $query->bindParam(":user_id", $user_id);
+        $data = 0;
 
         if($query->execute()){
             $data = $query->fetch(PDO::FETCH_ASSOC);
             return $data;
         }
         
-        return false;
+        return $data;
      }
 
-     function countCategory(){
-        $sql = "Select c.name As category_name, count(task_id) As numTask from task  t inner  join category as c on t.category_id = c.category_id group by category_name;";
+     function countCategory($user_id){
+        $sql = "Select c.name As category_name, count(task_id) As numTask from task  t inner  join category as c on t.category_id = c.category_id where :user_id = t.user_id group by category_name;";
          
         $query = $this->db->connect()->prepare($sql);
-
+        
+        $query->bindParam(":user_id", $user_id);
         $data = null;
 
         if($query->execute()){
@@ -215,8 +224,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
          }
 
-         function upcomingDeadlines(){
-            $sql = "Select title, due_date from task where due_date > :date order by due_date - created_at ASC LIMIT 3; ";
+         function upcomingDeadlines($user_id){
+            $sql = "Select title, due_date from task where due_date > :date and :user_id = user_id order by due_date - created_at ASC LIMIT 3; ";
 
             $date = new DateTime('now');
             $date = $this->date->format('Y-m-d H:i:s');
@@ -224,6 +233,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
             $query = $this->db->connect()->prepare($sql);
 
             $query->bindParam(':date', $date);
+
+            $query->bindParam(":user_id", $user_id);
 
             $data = null;
 
@@ -237,10 +248,12 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
          }
 
-         function recentActivities() {
-            $sql = "Select updated_at, action, title from task order by updated_at  DESC LIMIT 3;";
+         function recentActivities($user_id) {
+            $sql = "Select updated_at, action, title from task where :user_id = user_id order by updated_at  DESC LIMIT 3;";
             
             $query = $this->db->connect()->prepare($sql);
+
+            $query->bindParam(":user_id", $user_id);
             
             $data = null;
 

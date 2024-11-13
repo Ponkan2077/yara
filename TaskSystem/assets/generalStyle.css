@@ -506,8 +506,9 @@ header {
     border-radius: 20px;
     margin-top: 20px;
     flex-wrap: wrap;
-    flex: auto;
-    width: 20%;
+    flex: 1 1 auto;
+    min-width: 260px;
+    max-width: 320px;
 }
 
 .tasks span {
@@ -737,4 +738,68 @@ header {
     color: #FF1818;
     font-size: 1rem;
     text-align: start;
+}
+
+/* setting */
+.settingWrapper {
+    background-color: white;
+    width: 80%;
+    height: 700px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.settingdiv2 {
+    display: flex;
+    width: 60%;
+    flex-direction: row;
+    gap: 40px;
+    margin-bottom: 40px;
+    font-size: 1.25rem;
+    margin-left: 20px;
+}
+.settingdiv1 {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    gap: 40px;
+    font-size: 1.25rem;
+    margin-left: 20px;
+    margin-bottom: 40px;
+    width: 50%;
+}
+
+.settingdiv2 div{
+    padding-right: 20px;
+}
+
+.settingdiv1 div{
+    padding-right: 40px;
+}
+
+.settingRight {
+    border-right: 2px solid black;
+}
+
+.settingdiv3 {
+    margin-left: 20px;
+    margin-top: 60px;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.settingdiv1Wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+.settingdiv1Wrapper button {
+    padding: 4px 17px; 
+    margin: 0px;
+    height: 50px;
+
 }

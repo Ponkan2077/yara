@@ -5,14 +5,15 @@
       include_once $path .='/yara/TaskSystem/pages/classes/task.class.php';
       $path = $pathSave;
 
-if(isset($_SESSION['account'])){
-    if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
-        header('location: login.php');
-    }
+      if(isset($_SESSION['account'])){
+        if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
+            header('location: ./pages/login.php');
+        }
+        $user_id = $_SESSION['account']['user_id'];
+    } 
     else {
-        header('location: login.php');
+        header('location: ./pages/login.php');
     }
-}
   //header('Location:'.$_SERVER['PHP_SELF']);
   $taskObj = new task();
   $category_id = "";
@@ -26,9 +27,9 @@ if(isset($_SESSION['account'])){
 
   $task_array = "";
 
-  $category_array = $taskObj->getCategory();
+  $category_array = $taskObj->getCategory($user_id);
 
-  $task_array = $taskObj->getTask();
+  $task_array = $taskObj->getTask($user_id);
 
  if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
@@ -44,7 +45,7 @@ if(isset($_SESSION['account'])){
     }
 
     if (empty($categoryErr)){
-        if($taskObj->addCategory($category));
+        if($taskObj->addCategory($category, $user_id));
         header('Location:'.$_SERVER['PHP_SELF']);
         
     }

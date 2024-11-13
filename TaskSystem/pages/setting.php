@@ -1,13 +1,15 @@
 <?php 
 session_start();
 
-      if(isset($_SESSION['user'])){
-        if(!(isset($_SESSION['user']['is_user']) || isset($_SESSION['user']['is_admin']))){
-           header('location: login.php');
-      }
-   } else {
-       header('location: login.php');
+if(isset($_SESSION['account'])){
+    if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
+        header('location: ./pages/login.php');
     }
+    $user_id = $_SESSION['account']['user_id'];
+} 
+else {
+    header('location: ./pages/login.php');
+}
 
     $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
 
@@ -26,12 +28,34 @@ session_start();
 <div class="gridWrapper">
     <header>
         <?php 
-         $path .= "/yara/TaskSystem/pages/includes/header.html";
+         $path .= "/yara/TaskSystem/pages/includes/header.php";
             include_once($path);
          $path = $pathSave;
         ?>
         </header>
-    <main> <div class="mainWrapper"><span>setting</span></div></main>
+    <main> 
+        <div class="mainWrapper">
+            <div class="settingWrapper">
+            <div><img class="profile"></div>
+            <div class="settingdiv1Wrapper">
+            <div class ="settingdiv1">
+                <div class="settingRight"><span>Rey</span></div>
+                <div>Zamboanga City</div>
+            </div>
+            <button type="button" class="btnFormR">Edit Profile</button>
+            </div>
+            <div class ="settingdiv2">
+                <div class="settingRight"><span>Age: 21</span></div>
+                <div class="settingRight"><span>Gender: Male</span></div>
+                <div><span>Status: Active*</span></div>
+            </div>
+            <div class="settingdiv3">
+                <div>Email: albion123@gmail.com</div>
+                <div>Contact: +639188196339</div>
+            </div>
+            </div>
+        </div>
+    </main>
     <aside>
         <?php 
         $path .= "/yara/TaskSystem/pages/includes/aside.php";

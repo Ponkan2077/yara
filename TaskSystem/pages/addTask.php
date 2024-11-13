@@ -9,13 +9,14 @@
      $path = $pathSave;
 
      if(isset($_SESSION['account'])){
-         if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
-             header('location: ./pages/login.php');
-         }
-         else {
-             header('location: ./pages/login.php');
-         }
-     } 
+        if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
+            header('location: ./pages/login.php');
+        }
+        $user_id = $_SESSION['account']['user_id'];
+    } 
+    else {
+        header('location: ./pages/login.php');
+    }
      
      $taskObj = new task();
 

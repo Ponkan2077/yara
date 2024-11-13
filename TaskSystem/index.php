@@ -5,30 +5,41 @@ $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
 include_once $path .='/yara/TaskSystem/pages/classes/task.class.php';
       $path = $pathSave;
 
-
+$user_id = '';
 if(isset($_SESSION['account'])){
     if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
         header('location: ./pages/login.php');
     }
-    else {
-        header('location: ./pages/login.php');
-    }
+    $user_id = $_SESSION['account']['user_id'];
 } 
+else {
+    header('location: ./pages/login.php');
+}
 
 $taskObj = new task();
 
-$count_task = $taskObj->countCompleteTask();
-$complete = $count_task['completed'];
-$incomplete = $count_task['incompleted'];
-$overdue = $count_task['overDueTask'];
+$complete = '';
+$incomplete ='';
+$overdue = '';
+$count_task = $taskObj->countCompleteTask($user_id);
+if (!$count_task == 0){
+    $complete = $count_task['completed'];
+    $incomplete = $count_task['incompleted'];
+    $overdue = $count_task['overDueTask'];
+}else {
+    $complete = 0;
+    $incomplete = 0;
+    $overdue = 0;
+}
 
-$categoryTask = $taskObj->countCategory();
+
+$categoryTask = $taskObj->countCategory($user_id);
 $json = json_encode($categoryTask);
 
 
-$upcomingDeadline = $taskObj->upcomingDeadlines();
+$upcomingDeadline = $taskObj->upcomingDeadlines($user_id);
 
-$recentActivities = $taskObj->recentActivities();
+$recentActivities = $taskObj->recentActivities($user_id);
 
 $leaderboard = $taskObj->leaderboard();
 
