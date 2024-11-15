@@ -73,7 +73,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $userObj->contact = $contact;
     $userObj->user_id = $_SESSION['account']['user_id'];
 
-    if($userObj->edit()){
+    if($userObj->edit($imagePth)){
         if ($_SESSION['account'] = $userObj->fetch($username)){
             header('Location:'.$_SERVER['PHP_SELF']);
         }
@@ -114,7 +114,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
            </div>
             <form class="formModal" action="" method="POST" enctype="multipart/form-data">
                 <img src="" class="profileImg">
-                <input type="file" name="image" accept="image/*" class="inputImg">
+                <div class="imgChooseWrapper"> <input type="file" name="image" accept="image/*" class="inputImg" id="imageBtn" hidden>
+                <label for="imageBtn" class="labelProfile">Upload Image</label><span id="file-chosen" class="spanProfile">No file chosen</span></div>
                 <label for="category">UserName:</label>
                 <input type="text" name="username" class="field" value="<?php echo $_SESSION['account']['username']?>">
                 <label for="category">Address:</label>
@@ -139,19 +140,19 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             <div><img class="profile"></div>
             <div class="settingdiv1Wrapper">
             <div class ="settingdiv1">
-                <div class="settingRight"><span>Rey</span></div>
-                <div>Zamboanga City</div>
+                <div class="settingRight"><span>Username: <?php echo $_SESSION['account']['username']?></span></div>
+                <div>Address: <?php echo $_SESSION['account']['address']?></div>
             </div>
             <button type="button" class="btnFormR" id="editProfile">Edit Profile</button>
             </div>
             <div class ="settingdiv2">
-                <div class="settingRight"><span>Age: 21</span></div>
-                <div class="settingRight"><span>Gender: Male</span></div>
+                <div class="settingRight"><span>Age: <?php echo $_SESSION['account']['age']?></span></div>
+                <div class="settingRight"><span>Gender: <?php echo $_SESSION['account']['gender']?></span></div>
                 <div><span>Status: Active*</span></div>
             </div>
             <div class="settingdiv3">
-                <div>Email: albion123@gmail.com</div>
-                <div>Contact: +639188196339</div>
+                <div>Email: <?php echo $_SESSION['account']['email']?></div>
+                <div>Contact: <?php echo $_SESSION['account']['contact']?></div>
             </div>
             </div>
         </div>
@@ -189,5 +190,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         submitBtn.addEventListener("click", () => {
             modal.style.display = "none";
         })
+
+
+        const actualBtn = document.getElementById('imageBtn');
+
+        const fileChosen = document.getElementById('file-chosen');
+
+        actualBtn.addEventListener('change', function(){
+        fileChosen.textContent = this.files[0].name
+})
 </script>
 </html>

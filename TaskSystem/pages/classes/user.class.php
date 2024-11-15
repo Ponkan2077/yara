@@ -62,7 +62,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
     }
 
     function fetch($username){
-        $sql = "Select user_id, username, email, is_admin, is_user, address, gender, contact from user where username = :username limit 1;";
+        $sql = "Select user_id, username, email, is_admin, is_user, address, gender, contact, age from user where username = :username limit 1;";
 
         $query = $this->db->connect()->prepare($sql);
        $query->bindParam(':username', $username);
@@ -73,8 +73,10 @@ $path .= "/yara/TaskSystem/pages/database.php";
        return $data;
     }
 
-    function edit(){
+    function edit($imgPth){
         $sql = "Update user SET username = :username, email = :email, address = :address, gender = :gender, contact = :contact; where user_id = :user_id; ";
+
+        $sql = $sql . "Insert into image (image_path, user_id) values (:image_path, :user_id);";
 
         $query = $this->db->connect()->prepare($sql);
 
@@ -89,6 +91,8 @@ $path .= "/yara/TaskSystem/pages/database.php";
         $query->bindParam(':contact', $this->contact);
 
         $query->bindParam(":user_id", $this->user_id);
+
+        $query->bindParam(":image_path", $imgPth);
 
         if ($query->execute()){
             return true;

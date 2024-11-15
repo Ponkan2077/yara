@@ -810,7 +810,7 @@ header {
     left: 50%;
     transform: translate(-50%,-50%);
     width: 700px;
-    height: 750px;
+    height: 810px;
     background-color: white;
     border-radius: 20px;
     display: flex;
@@ -827,11 +827,35 @@ header {
 }
 
 .profileImg {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     align-self: center;
 }
 
 .inputImg {
     align-self: center;
+}
+
+.labelProfile {
+  background-color: indigo;
+  color: white;
+  padding: 0.7rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  width: 20%;
+}
+
+.imgChooseWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.spanProfile {
+    align-self: center;
+    justify-self: center;
+    margin-left: 10px;
 }
