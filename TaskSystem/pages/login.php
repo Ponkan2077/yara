@@ -16,10 +16,6 @@
              header('location: login.php');
          }
      } 
-
-     else {
-        header('location: login.php');
-    }
     
       $userObj = new user();
      if($_SERVER['REQUEST_METHOD'] == "POST"){

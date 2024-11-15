@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
 include_once $path .='/yara/TaskSystem/pages/classes/task.class.php';
@@ -11,10 +10,12 @@ if(isset($_SESSION['account'])){
         header('location: ./pages/login.php');
     }
     $user_id = $_SESSION['account']['user_id'];
-} 
+}
+
 else {
     header('location: ./pages/login.php');
 }
+
 
 $taskObj = new task();
 

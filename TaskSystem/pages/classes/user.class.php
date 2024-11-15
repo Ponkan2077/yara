@@ -4,10 +4,18 @@ $path .= "/yara/TaskSystem/pages/database.php";
  include_once $path;
 
  class user {
+
+    public $user_id = '';
     public $username = '';
     public $password = '';
 
     public $email = '';
+
+    public $address = '';
+
+    public $gender = '';
+
+    public $contact = '';
 
     public $is_admin = false;
     public $is_user = true;
@@ -54,15 +62,38 @@ $path .= "/yara/TaskSystem/pages/database.php";
     }
 
     function fetch($username){
-         $sql = "Select * from user where username = :username limit 1;";
+        $sql = "Select user_id, username, email, is_admin, is_user, address, gender, contact from user where username = :username limit 1;";
 
-         $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':username', $username);
-        $data = null;
-        if($query->execute()){
-           $data = $query->fetch();
-        }
-        return $data;
- 
+        $query = $this->db->connect()->prepare($sql);
+       $query->bindParam(':username', $username);
+       $data = null;
+       if($query->execute()){
+          $data = $query->fetch();
+       }
+       return $data;
     }
-}
+
+    function edit(){
+        $sql = "Update user SET username = :username, email = :email, address = :address, gender = :gender, contact = :contact; where user_id = :user_id; ";
+
+        $query = $this->db->connect()->prepare($sql);
+
+        $query->bindParam(':username', $this->username);
+
+        $query->bindParam(':email', $this->email);
+
+        $query->bindParam(':address', $this->address);
+
+        $query->bindParam(':gender', $this->gender);
+
+        $query->bindParam(':contact', $this->contact);
+
+        $query->bindParam(":user_id", $this->user_id);
+
+        if ($query->execute()){
+            return true;
+        }
+
+        return false;
+    }
+ }
