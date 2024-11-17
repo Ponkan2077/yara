@@ -296,6 +296,14 @@ header {
 }
 
 /* DashBoard or Index.php */
+
+.profileImg-sm {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid black;
+    padding: 3px;
+}
 .dashMainSection {
     margin-right: 3%;
 }

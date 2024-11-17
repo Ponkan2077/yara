@@ -62,21 +62,23 @@ $path .= "/yara/TaskSystem/pages/database.php";
     }
 
     function fetch($username){
-        $sql = "Select user_id, username, email, is_admin, is_user, address, gender, contact, age from user where username = :username limit 1;";
-
+        $sql = "Select i.image_path as img_path, u.user_id as user_id, u.username as username, u.email as email, u.is_admin as is_admin, u.is_user as is_user, u.address as address, u.gender as gender, u.contact as contact, u.age as age from user u inner join image i on u.user_id = i.user_id where u.username = :username limit 1;";
+       
         $query = $this->db->connect()->prepare($sql);
        $query->bindParam(':username', $username);
        $data = null;
+
+       $imgPth = null;
        if($query->execute()){
-          $data = $query->fetch();
+          $data = $query->fetch(PDO::FETCH_ASSOC);
+          return $data;
+
        }
-       return $data;
+       return false;
     }
 
     function edit($imgPth){
-        $sql = "Update user SET username = :username, email = :email, address = :address, gender = :gender, contact = :contact; where user_id = :user_id; ";
-
-        $sql = $sql . "Insert into image (image_path, user_id) values (:image_path, :user_id);";
+        $sql = "Update user SET username = :username, email = :email, address = :address, gender = :gender, contact = :contact where user_id = :user_id; ";
 
         $query = $this->db->connect()->prepare($sql);
 
@@ -92,12 +94,80 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
         $query->bindParam(":user_id", $this->user_id);
 
-        $query->bindParam(":image_path", $imgPth);
-
         if ($query->execute()){
+            $this->UploadImg($imgPth);
             return true;
         }
 
         return false;
     }
- }
+
+    function UploadImg($img_path){
+        $sqlCheckImage = "SELECT * FROM image WHERE role = :role and user_id = :user_id;";
+        $role = "profile";
+        $queryCheckImage = $this->db->connect()->prepare($sqlCheckImage);
+        $queryCheckImage->bindParam(':user_id', $this->user_id);
+
+        $queryCheckImage->bindParam(":role", $role);
+
+        $existingImage= null;
+
+
+        if($queryCheckImage->execute()){
+            $existingImage = $queryCheckImage->fetch(PDO::FETCH_ASSOC);
+        }
+
+        if ($existingImage) {
+            $sqlUpdateImage = "
+                UPDATE image 
+                SET image_path = :image_path 
+                WHERE role = :role and user_id = :user_id;
+            ";
+
+            $queryUpdateImage = $this->db->connect()->prepare($sqlUpdateImage);
+            $queryUpdateImage->bindParam(':image_path', $img_path);
+            $queryUpdateImage->bindParam(':user_id', $this->user_id);
+            $queryUpdateImage->bindParam(":role", $role);
+
+            if($queryUpdateImage->execute()){
+                return true;
+            }
+    }
+       $sqlInsertImage = "Insert into image (image_path, role, user_id) values (:image_path, :role, :user_id);";
+
+       $queryInsertImage = $this->db->connect()->prepare($sqlInsertImage);
+
+       $queryInsertImage->bindParam(":image_path", $imgPath);
+
+       $queryInsertImage->bindParam(":user_id", $this->user_id);
+
+       $queryInsertImage->bindParam(":role", $role);
+
+       if($queryInsertImage->execute()){
+        return true;
+       }
+
+       return false;
+    }
+
+    function getImg ($user_id){
+        $sql = "Select image_path from image where user_id = :user_id and role = :role Limit 1;";
+       
+        $query = $this->db->connect()->prepare($sql);
+
+        $role = 'profile';
+
+        $data = null;
+
+        $query->bindParam(":role", $role);
+
+        $query->bindParam(":user_id", $user_id);
+
+        if($query->execute()){
+            $data = $query->fetch(PDO::FETCH_ASSOC);
+            return $data;
+        }
+
+        return false;
+    }
+}

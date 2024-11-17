@@ -3,6 +3,7 @@ session_start();
 
 include_once './classes/user.class.php';
 
+$fpath = $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
 if(isset($_SESSION['account'])){
     if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
         header('location: ./login.php');
@@ -22,8 +23,11 @@ else {
     $username = $email = $address = $gender = $age = $contact = '';
     $usernameErr = '';
 
+    $image_path = $_SESSION['account']['img_path'];
 
+    $imagePth;
 
+    $userTest = [];
 if($_SERVER['REQUEST_METHOD'] == "POST"){
 
    $username = $_POST['username'];
@@ -37,6 +41,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $usernameErr = "Username is required!";
    }
    
+   $imageType;
    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
     $image = $_FILES['image'];
     $imageName = basename($image['name']);
@@ -52,7 +57,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
         // Generate unique file name
         $newImageName = uniqid('user_') . '.' . $imageType;
-        $imagePath = "/yara/TaskSystem/uploads/" . $newImageName;
+        $imagePth = $imagePath = "/yara/TaskSystem/assets/uploads/" . $newImageName;
 
         // Move the uploaded file to the designated folder
         if (!move_uploaded_file($image['tmp_name'], $uploadDir . $newImageName)) {
@@ -64,7 +69,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     }
 }
 
-   if(empty($usernameErr)){
+if(empty($usernameErr)){
     $userObj->username = $username;
     $userObj->email = $email;
     $userObj->address = $address;
@@ -73,8 +78,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $userObj->contact = $contact;
     $userObj->user_id = $_SESSION['account']['user_id'];
 
+
     if($userObj->edit($imagePth)){
         if ($_SESSION['account'] = $userObj->fetch($username)){
+            $imagePth = $_SESSION['account']['img_path'];
             header('Location:'.$_SERVER['PHP_SELF']);
         }
     }
@@ -110,10 +117,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         <div class="profileModal" id="profileModal">
         <span class="close">&times;</span>
             <div class="logo">
-               <span>Logo</span>
+               <span> Logo</span>
            </div>
             <form class="formModal" action="" method="POST" enctype="multipart/form-data">
-                <img src="" class="profileImg">
+                <img src="<?php echo $image_path?>" class="profileImg">
                 <div class="imgChooseWrapper"> <input type="file" name="image" accept="image/*" class="inputImg" id="imageBtn" hidden>
                 <label for="imageBtn" class="labelProfile">Upload Image</label><span id="file-chosen" class="spanProfile">No file chosen</span></div>
                 <label for="category">UserName:</label>
@@ -137,7 +144,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         </div>
         <div class="mainWrapper">
             <div class="settingWrapper">
-            <div><img class="profile"></div>
+            <div><img src = "<?php echo $image_path ?>"class="profileImg"></div>
             <div class="settingdiv1Wrapper">
             <div class ="settingdiv1">
                 <div class="settingRight"><span>Username: <?php echo $_SESSION['account']['username']?></span></div>

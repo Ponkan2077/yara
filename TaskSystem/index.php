@@ -154,6 +154,7 @@ $leaderboard = $taskObj->leaderboard();
                         <span>Leaderboard</span>
                         <div class="leaderboardWrapper">
                         <div class="userWrapper">
+                                <div class="userInfo"></div>
                                 <div class="userInfo">Rank</div>
                                 <div class="userInfo">Username</div>
                                 <div class="userInfo">Number Of Tasks Done</div>
@@ -162,6 +163,7 @@ $leaderboard = $taskObj->leaderboard();
                             </div>
                             <?php $count = 0; foreach($leaderboard as $arr) { ?>
                             <div class="userWrapper">
+                                <div class="userInfo"> <img src="<?php echo $_SESSION['account']['img_path']?>" class="profileImg-sm"></div>
                                 <div class="userInfo"><?php echo $count += 1?></div>
                                 <div class="userInfo"><?php echo $arr['username'] ?></div>
                                 <div class="userInfo"><?php echo $arr['NumTaskComplete'] ?></div>
