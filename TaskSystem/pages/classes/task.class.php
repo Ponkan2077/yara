@@ -86,6 +86,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
         $action = "Add Category";
 
         $date = new DateTime('now');
+
         $date = $this->date->format('Y-m-d H:i:s');
 
         $query = $this->db->connect()->prepare($sql);
@@ -148,6 +149,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
         $sql = $sql . "Update task set action = :action where task_id = :task_id;";
 
         $date = new DateTime('now');
+
         $date = $this->date->format('Y-m-d H:i:s');
 
         $action = "Done Task";
@@ -166,7 +168,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
      }
 
      function countCompleteTask($user_id){
-        $sql = "Select (Select count(is_completed) from task where is_completed = 1) As completed, (Select count(is_completed) from task where is_completed = 0 and :date < due_date) As incompleted, (Select count(task_id) from task where :date > due_date and is_completed = 0) As overDueTask from task where :user_id = user_id;";
+        $sql = "Select (Select count(is_completed) from task where is_completed = 1 and user_id = :user_id) As completed, (Select count(is_completed) from task where is_completed = 0 and :date < due_date and user_id = :user_id) As incompleted, (Select count(task_id) from task where :date > due_date and is_completed = 0 and user_id = :user_id) As overDueTask, (Select count(task_id) from task where user_id = :user_id) As total from task where :user_id = user_id;";
 
         $query = $this->db->connect()->prepare($sql);
         

@@ -1,5 +1,4 @@
- <main class="bg-red-600">
-        <section class="dashMainSection">
+<section class="dashMainSection">
        <div class="dashMainTopWrapper">
             <article class="dashLeftWrapper">
                 <div class="dashTaskWrapper">
@@ -84,4 +83,3 @@
                     </div>
                 </div>
        </section>
-    </main>
