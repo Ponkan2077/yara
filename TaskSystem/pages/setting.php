@@ -89,7 +89,7 @@ if(empty($usernameErr)){
         echo "Something went wrong";
     }
    }
-}
+}//<script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
     ?>
 
 
@@ -100,18 +100,20 @@ if(empty($usernameErr)){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/yara/TaskSystem/assets/generalStyle.css">
     <script src="https://kit.fontawesome.com/c0056d4561.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="/yara/TaskSystem/assets/generalStyle.css">
 
     <title>Document</title>
 </head>
 <body id="setting">
-<div class="gridWrapper">
-    <header>
+<aside>
         <?php 
-         $path .= "/yara/TaskSystem/pages/includes/header.php";
-            include_once($path);
-         $path = $pathSave;
+        $path .= "/yara/TaskSystem/pages/includes/aside.php";
+        include_once($path);
+        $path = $pathSave;
         ?>
-        </header>
+    
+    </aside>
     <main> 
     <div class="modalWrapper" id="modalWrapper">
         <div class="profileModal" id="profileModal">
@@ -164,17 +166,7 @@ if(empty($usernameErr)){
             </div>
         </div>
     </main>
-    <aside>
-        <?php 
-        $path .= "/yara/TaskSystem/pages/includes/aside.php";
-        include_once($path);
-        $path = $pathSave;
-        ?>
-    
-    </aside>
-    </div>
     <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
-</body>
 <script>
     var editProfileBtn = document.getElementById("editProfile");
         var submitBtn = document.getElementById("btnFormR");
@@ -207,4 +199,5 @@ if(empty($usernameErr)){
         fileChosen.textContent = this.files[0].name
 })
 </script>
+</body>
 </html>
