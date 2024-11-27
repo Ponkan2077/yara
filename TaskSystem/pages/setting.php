@@ -112,19 +112,18 @@ if(empty($usernameErr)){
         include_once($path);
         $path = $pathSave;
         ?>
-    
-    </aside>
+ </aside>
     <main> 
     <div class="modalWrapper" id="modalWrapper">
         <div class="profileModal" id="profileModal">
         <span class="close">&times;</span>
             <div class="logo">
-               <span> Logo</span>
+               <span>TaskSystem</span>
            </div>
             <form class="formModal" action="" method="POST" enctype="multipart/form-data">
                 <img src="<?php echo $image_path?>" class="profileImg">
                 <div class="imgChooseWrapper"> <input type="file" name="image" accept="image/*" class="inputImg" id="imageBtn" hidden>
-                <label for="imageBtn" class="labelProfile">Upload Image</label><span id="file-chosen" class="spanProfile">No file chosen</span></div>
+                <label for="imgBtn" class="reusableBtn">Upload Image</label><span id="file-chosen" class="spanProfile">No file chosen</span></div>
                 <label for="category">UserName:</label>
                 <input type="text" name="username" class="field" value="<?php echo $_SESSION['account']['username']?>">
                 <label for="category">Address:</label>
@@ -137,34 +136,36 @@ if(empty($usernameErr)){
                 <input type="email" name="email" class="field" value="<?php echo $_SESSION['account']['email']?>">
                 <label for="category">Age:</label>
                 <input type="number" name="age" class="field" value="<?php echo $_SESSION['account']['age']?>">
-                <div class="formBtnWrapper"><input type="submit" class="btnFormR" id="btnFormR" value="Edit Profile"></div>
+                <div class="formBtnWrapper"><input type="submit" class="reusableBtn" id="btnFormR" value="Edit Profile"></div>
             </form>
 
             
         </div>
         
         </div>
-        <div class="mainWrapper">
-            <div class="settingWrapper">
-            <div><img src = "<?php echo $image_path ?>"class="profileImg"></div>
-            <div class="settingdiv1Wrapper">
-            <div class ="settingdiv1">
-                <div class="settingRight"><span>Username: <?php echo $_SESSION['account']['username']?></span></div>
-                <div>Address: <?php echo $_SESSION['account']['address']?></div>
-            </div>
-            <button type="button" class="btnFormR" id="editProfile">Edit Profile</button>
-            </div>
-            <div class ="settingdiv2">
-                <div class="settingRight"><span>Age: <?php echo $_SESSION['account']['age']?></span></div>
-                <div class="settingRight"><span>Gender: <?php echo $_SESSION['account']['gender']?></span></div>
-                <div><span>Status: Active*</span></div>
-            </div>
-            <div class="settingdiv3">
-                <div>Email: <?php echo $_SESSION['account']['email']?></div>
-                <div>Contact: <?php echo $_SESSION['account']['contact']?></div>
-            </div>
+    <div class="main">
+        <div>
+            <div class="profileBackground"></div>
+            <img src="/yara/TaskSystem/assets/uploads/user_6739d9205c3d2.png" alt="" class="profileImgSetting">
+            <div class="editButtonWrapper">
+                <button class="reusableBtn" id="editProfile">Edit Profile</button>
             </div>
         </div>
+        <div class="settingInfoWrap">
+        <div class="settingInfoWrapper">
+            <div class="settingInfoWidth"><span class="label">Username:</span><span class="value"><?php echo $_SESSION['account']['username']?></span></div>
+            <div class="settingInfoWidth"><span class="label">Email:</span><span class="value"><?php echo $_SESSION['account']['email']?></span></div>
+            <div class="settingInfoWidth"><span class="label">Contact:</span><span class="value"><?php echo $_SESSION['account']['contact']?></span></div>
+        </div>
+        <div class="settingInfoWrapper">
+            <div class="settingInfoWidth"><span class="label">Age:</span><span class="value"><?php echo $_SESSION['account']['age']?></span></div>
+            <div class="settingInfoWidth"><span class="label">Address:</span><span class="value"><?php echo $_SESSION['account']['address']?></span></div>
+        </div>
+        <div class="settingInfoWrapper">
+            <div class="settingInfoWidth"><span class="label">Gender:</span><span class="value"><?php echo $_SESSION['account']['gender']?></span></div>
+        </div>
+        </div>
+    </div>
     </main>
     <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
 <script>

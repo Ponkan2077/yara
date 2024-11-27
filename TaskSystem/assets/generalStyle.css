@@ -24,6 +24,13 @@
     font-weight: 600;
 }
 
+:root {
+    --blue: #5463FF;
+    --orange: #F27B12;
+    --red: #D83428;
+    --green: #1BE01B;
+}
+
 body{
     display: flex;
     background-color: white;
@@ -39,6 +46,38 @@ img, video {
 main {
     width: calc(100% - 263px);
 }
+
+/* Reusables */
+
+.reusableBtn {
+    height: 42px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--blue);
+    color: white;
+    padding: 11px 20px;
+    border-radius: 10px;
+}
+
+.redBtn {
+    height: 42px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--red);
+    color: white;
+    padding: 11px 20px;
+    border-radius: 10px;
+}
+
+.greenBtn {
+    height: 42px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--green);
+    color: white;
+    padding: 11px 20px;
+    border-radius: 10px;
+}
 /* General Positioning */
 .dashMainSection {
     margin-left: 40px;
@@ -48,6 +87,50 @@ main {
     margin-left: 40px;
 }
 
+/* Modals */
+.modalWrapper, .viewModal {
+    position: absolute;
+    display: none;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color:  rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.formModal {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 90%;
+    margin-top: 30px;
+}
+
+/* close */
+.close,.close1 {
+    float: right;
+    color: black;
+    font-size: 1.8rem;
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.close:hover,
+.close:focus {
+  color: #5463FF;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.close1:hover,
+.close1:focus {
+  color: #5463FF;
+  text-decoration: none;
+  cursor: pointer;
+}
 /* index/dashboard style*/
 
 /* aside */
@@ -143,6 +226,8 @@ main {
 .wraplogin{
     height: 100vh;
 }
+
+
 .formWrapper {
     position: absolute;
     display: flex;
@@ -155,10 +240,18 @@ main {
     transform: translate(-50%,-50%);
     border-radius: 20px;
     background-color: white;
+    border: 1px solid black;
 }
 
 .formWrapper .logo {
     margin-top: 1.25rem;
+}
+
+#loginLogo {
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+    margin-top: 30px;
 }
 .formWrapper .logo span {
     color: #5463FF;
@@ -179,6 +272,7 @@ main {
     justify-content: center;
     font-size: 2rem;
 }
+
 .loginBtnWrapper {
     border-radius: 10px;
     background-color: #5463FF;
@@ -191,15 +285,32 @@ main {
     padding: 5px 0px;
 }
 
+#submitLoginBtn {
+    font-size: 1.5rem;
+    height: 50px;
+    width: 130px;
+}
+
+#submitSignUpBtn {
+    font-size: 1.5rem;
+    height: 50px;
+    width: 130px;
+}
+
+
 .signUpBtn a, .loginBtn a{
     text-decoration: none;
 }
 
 .loginBtn a {
-    color: #FFC300;
+    color: white;
 }
 
 .loginBtn {
+    color: black;
+}
+
+.signUpBtn a {
     color: black;
 }
 
@@ -359,15 +470,33 @@ main {
     align-items: center;
 }
 
-.userInfo {
+.userInfo1, .userInfo {
     width: 125px;
     text-align: center;
 }
 
+.userInfo {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.userInfo1 {
+    font-size: 14px;
+    font-weight: medium;
+}
+.profileImg-sm{
+    width: 35px;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 5px;
+}
+
 /* TASK page */
 .taskMainSection {
-    margin-left: 3%;
-    margin-right: 3%;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
 }
@@ -377,6 +506,7 @@ main {
     display: flex;
     flex-direction: column;
 }
+
 .categoryTask {
     display: flex;
     flex-direction: column;
@@ -515,36 +645,6 @@ main {
     flex-direction: row;
 }
 
-.formModal {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    width: 90%;
-    margin-top: 30px;
-}
-
-.close,.close1 {
-    float: right;
-    color: black;
-    font-size: 1.8rem;
-    margin-left: auto;
-    margin-right: 15px;
-}
-
-.close:hover,
-.close:focus {
-  color: #5463FF;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.close1:hover,
-.close1:focus {
-  color: #5463FF;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 .categoryModal .logo span, .viewTaskModal .logo span {
     color: #5463FF;
 }
@@ -620,6 +720,101 @@ main {
     text-align: start;
 }
 
+/* New Task*/
+.main{
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
+}
+
+.taskCategory {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 42px;
+}
+
+.taskCategory div {
+    display: flex;
+    flex-direction: column;
+}
+
+.categoryLink{
+    display: flex;
+    gap: 15px;
+}
+
+.taskCategory div span{
+    font-size: 24px;
+    font-weight: bold
+}
+
+.categoryLink li a {
+    font-weight: medium;
+    font-size: 15px;
+    text-decoration: none;
+    color: black;
+}
+
+.taskDiv2 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.taskWrap {
+    margin-top: 30px;
+    flex-basis: 24%;
+    max-width: 24%;
+    height: 143px;
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.taskWrap div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.taskWrap > span{
+    font-size: 15px;
+    font-weight: medium;
+}
+
+.taskView {
+    background-color: white;
+    color: var(--blue);
+    font-size: 15px;
+    font-weight: bold;
+
+}
+
+.incomplete{
+    background-color: var(--orange);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.incomplete span {
+    margin: auto;
+    font-weight: bold;
+}
+
+.addTaskBtnWrapper {
+    display: flex;
+    justify-content: end;
+}
+
+#addTaskBtn {
+    margin-top: 30px;
+}
 /* setting */
 .settingWrapper {
     background-color: white;
@@ -684,6 +879,62 @@ main {
 
 }
 
+
+/* New Setting */
+.profileBackground {
+    background-color: var(--blue);
+    height: 109px;
+}
+
+.profileImgSetting {
+    width: 156px;
+    height: 130px;
+    border-radius: 50%;
+    margin-left: 100px;
+    margin-top: -50px;
+    object-fit: cover;
+}
+
+#editProfile{
+    margin-top: -50px;
+}
+
+.editButtonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+}
+
+.settingInfoWrap {
+    display: flex;
+    gap: 40px;
+    margin-top: 15px;
+}
+
+.settingInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    gap: 15px;
+}
+
+.settingInfoWidth{
+    width: 250px;
+    display: flex;
+    gap: 10px;
+}
+
+.label {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.value {
+    font-size: 17px;
+    font-weight: medium;
+}
+
 .profileModal {
     position: absolute;
     top: 50%;
@@ -703,7 +954,9 @@ main {
 }
 
 .profileModal .logo span {
-    color: #5463FF;
+    color: black;
+    font-size: 36px;
+    font-weight: bold;
 }
 
 .profileImg {
@@ -738,4 +991,50 @@ main {
     align-self: center;
     justify-self: center;
     margin-left: 10px;
+}
+
+.close {
+    height: 19px;
+}
+
+.formModal {
+    margin-top: 15px;
+}
+
+.formBtnWrapper {
+    margin-top: 5px;
+}
+
+/* report */
+.reportTable {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.reportTable thead{
+    color: white;
+    background-color: var(--blue);
+    width: 100%;
+}
+
+.reportTable thead tr {
+    height: 30px;
+    border-radius: 15px;
+}
+.reportTable thead tr td {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.reportBtnWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+#reportBtn {
+    background-color: var(--red);
+    margin-top: 30px;
 }

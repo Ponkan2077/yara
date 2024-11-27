@@ -69,8 +69,8 @@
 <body class="loginBody">
     <div class="wraplogin">
     <div class="formWrapper">
-    <div class="logo">
-        <span>Logo</span>
+    <div id="loginLogo">
+        <span>TaskSystem</span>
     </div>
     <div class="signUpLoginBtnWrapper">
         <div class="loginBtnWrapper">
@@ -96,7 +96,7 @@
         <input type="email" name="email" id="email" class="inputl">
         </div>
         <div class="submitBtn">
-        <input type="submit" value="SignUp" class="btnform">
+        <input type="submit" value="SignUp" class="reusableBtn" id="submitSignUpBtn">
         </div>
         </form>
         </div>

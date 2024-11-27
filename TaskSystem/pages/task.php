@@ -79,66 +79,41 @@
     <title>Document</title>
 </head>
 <body id="task">
-<div class="gridWrapper">
-    <header>
-    <?php 
-         $path .= "/yara/TaskSystem/pages/includes/header.php";
-            include_once($path);
-         $path = $pathSave;
-        ?>
-    </header>
-    <main>
-        <div class="modalWrapper" id="modalWrapper">
-        <div class="categoryModal" id="categoryModal">
-        <span class="close">&times;</span>
-            <div class="logo">
-               <span>Logo</span>
-           </div>
-            <form class="formModal" action="" method="POST">
-                <label for="category">Category Name:</label>
-                <input type="text" name="category" class="field">
-                <div class="formBtnWrapper"><input type="submit" class="btnFormR" id="btnFormR" value="Add Category"></div>
-            </form>
-            
-        </div>
-        
-        </div>
-        <section class="taskMainSection">
-        <button type ="button" class="addCategoryBtn" id="addCategoryBtn">Add Category</button>
-        <div class="addCategory">
-            <?php foreach($category_array as $arr){ ?>
-            <div class="categoryTask">
-                <div class="tasks">
-                <span><?php echo $arr['name'] ?></span>
-                <?php foreach($task_array as $arrs) {
-                    if($arrs['category_id'] == $arr['category_id']){?>
-                <div class="taskHolder">
-                    <div class="taskTitleWrap">
-                <input type="checkbox" name="task">
-                <label for="task"><?php echo $arrs['title']?></label>
-                </div>
-                <button type="button" class="btnFormRR"><a href="viewTask.php?id=<?php echo $arrs['task_id']?>">View</a></button>
-                    </div>
-                <?php }}
-                ?>
-                </div>
-                <div class="addTaskWrapper">
-                    <button type="button" class="addTaskBtn"><a href="addtask.php?id=<?php echo $arr['category_id'] ?>">Add Task</a></button>
-                </div>
-            </div>
-            <?php } 
-            ?>
-        </div>
-        </section>
-    </main>
-    <aside>
+<aside>
     <?php 
         $path .= "/yara/TaskSystem/pages/includes/aside.php";
         include_once($path);
         $path = $pathSave;
         ?> 
-    </aside>
-    </div>
+</aside>
+    <main>
+        <div class="main">
+            <div class="taskCategory">
+                <div>
+                    <span>Category</span>
+                    <nav>
+                        <ul class="categoryLink">
+                           <li><a href="#">Work</a></li>
+                           <li><a href="#">School</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <button type="button" class="reusableBtn">Add Category</button>
+            </div>
+            <div class="taskDiv2">
+                <div class="taskWrap">
+                    <div>
+                        <span>Title: </span>
+                        <button type="button" class="taskView">View</button>
+                    </div>
+                    <span>Date: </span>
+                    <div class="incomplete"><span>Incomplete</span></div>
+                </div>
+                
+            </div>
+            <div class="addTaskBtnWrapper"> <button type="button" class="reusableBtn" id="addTaskBtn">Add Task</button></div>
+        </div>
+    </main>
     <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
     <script>
         var addCategoryBtn = document.getElementById("addCategoryBtn");

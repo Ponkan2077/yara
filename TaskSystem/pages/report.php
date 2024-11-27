@@ -25,23 +25,40 @@
     <title>Document</title>
 </head>
 <body id="report">
-    <div class="gridWrapper">
-    <header>
-    <?php 
-         $path .= "/yara/TaskSystem/pages/includes/header.php";
-        include_once($path);
-         $path = $pathSave;
-        ?>
-    </header>
-    <main><span>report</span></main>
-    <aside>
+<aside>
     <?php 
         $path .= "/yara/TaskSystem/pages/includes/aside.php";
         include_once($path);
         $path = $pathSave;
         ?> 
     </aside>
-    </div>
+    <main>
+        <div class="main" id="settingMain">
+            <table class="reportTable">
+                <thead>
+                    <tr aria-rowspan="2">
+                        <td>Title</td>
+                        <td>Id</td>
+                        <td>Description</td>
+                        <td>Status</td>
+                        <td>Date</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                        <td>Title</td>
+                        <td>Id</td>
+                        <td>Description</td>
+                        <td>Status</td>
+                        <td>Date</td>
+                        <td>Action</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="reportBtnWrapper"><button type="button" class="reusableBtn" id="reportBtn">Report Problem</button></div>
+        </div>
+    </main>
     <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
 </body>
 </html>
