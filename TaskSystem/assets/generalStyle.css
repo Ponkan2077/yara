@@ -37,6 +37,10 @@ body{
     height: 100vh;
 }
 
+.adminDash{
+    height: auto;
+}
+
 img, video {
     width: 100%;
     object-fit: contain;
@@ -349,6 +353,14 @@ main {
 }
 
 /* new Dashboard */
+
+#barChartWrapper, #lineChartWrapper {
+    width: 444px;
+    height: 371px;
+}
+.sectionChart {
+    display: flex;
+}
 .dashboardPage {
     width: calc(100% - 263px);
 }

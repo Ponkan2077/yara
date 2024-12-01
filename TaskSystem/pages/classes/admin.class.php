@@ -57,7 +57,10 @@ class admin extends user {
     COUNT(user_id) AS totalUsers,
     (SELECT COUNT(user_id) FROM user WHERE created_at BETWEEN :weekAgo AND :date) AS newUsers,
     (SELECT COUNT(user_id) FROM user WHERE loggedin_at BETWEEN :weekAgo AND :date) AS activeUsers,
-    (SELECT COUNT(user_id) FROM user WHERE loggedin_at < :weekAgo) AS inactiveUsers
+    (SELECT COUNT(user_id) FROM user WHERE loggedin_at < :weekAgo) AS inactiveUsers,
+    (SELECT COUNT(gender) FROM user WHERE gender = 'male') AS male,
+    (SELECT COUNT(gender) FROM user WHERE gender = 'female') AS female,
+    (SELECT COUNT(gender) FROM user WHERE gender != 'female' AND gender != 'male') AS other
 FROM user;
 ";
 

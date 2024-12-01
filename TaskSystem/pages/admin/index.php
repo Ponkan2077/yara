@@ -2,7 +2,9 @@
 session_start();
 $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
 include_once $path .='/yara/TaskSystem/pages/classes/task.class.php';
-      $path = $pathSave;
+$path = $pathSave;
+include_once $path .='/yara/TaskSystem/pages/classes/admin.class.php';
+$path = $pathSave;
 
 $user_id = '';
 if(isset($_SESSION['account'])){
@@ -18,6 +20,7 @@ else {
 
 
 $taskObj = new task();
+$adminObj = new admin($_SESSION['account']['username'], $_SESSION['account']['user_id']);
 
 $count_task = $taskObj->countCompleteTask($user_id);
 
@@ -25,6 +28,16 @@ $complete = isset($count_task['completed']) ? $count_task['completed'] : 0;
 $incomplete = isset($count_task['incompleted']) ? $count_task['incompleted'] : 0;
 $overdue = isset($count_task['overDueTask']) ? $count_task['overDueTask'] : 0;
 $total= isset($count_task['total']) ? $count_task['total'] : 0;
+
+$userData = $adminObj->getUsers();
+
+$totalUsers = isset($userData['totalUsers']) ? $userData['totalUsers'] : 0;
+$newUsers = isset($userData['newUsers']) ? $userData['newUsers'] : 0;
+$activeUsers = isset($userData['activeUsers']) ? $userData['activeUsers'] : 0;
+$inactiveUsers = isset($userData['inactiveUsers']) ? $userData['inactiveUsers'] : 0;
+$male = isset($userData['male']) ? $userData['male'] : 0;
+$female = isset($userData['female']) ? $userData['female'] : 0;
+$other = isset($userData['other']) ? $userData['other'] : 0;
 
 
 $categoryTask = $taskObj->countCategory($user_id);
@@ -53,7 +66,7 @@ $leaderboard = $taskObj->leaderboard();
 
     <title>Document</title>
 </head>
-<body id="home">
+<body id="home" class="adminDash">
 <aside>
         <?php 
         $path .= "/yara/TaskSystem/pages/includes/admin.aside.php";
@@ -63,6 +76,55 @@ $leaderboard = $taskObj->leaderboard();
     
     </aside>
     <main class="dashboardPage">
+    <section class="dashSect1">
+            <div class="dashboardInfo">
+                <div>
+                    <img src="/yara/TaskSystem/assets/icons/task2.svg" alt=""><span>Total Users</span>
+                </div>
+                <div>
+                    <span><?php echo "$totalUsers"?></span>
+                </div>
+            </div>
+            <div class="dashboardInfo">
+                <div>
+                    <img src="/yara/TaskSystem/assets/icons/task2.svg" alt=""><span>New Users</span>
+                </div>
+                <div>
+                    <span><?php echo "$newUsers"?></span>
+                </div>
+            </div>
+            <div class="dashboardInfo">
+                <div>
+                    <img src="/yara/TaskSystem/assets/icons/task2.svg" alt=""><span>Active Users</span>
+                </div>
+                <div>
+                    <span><?php echo "$activeUsers"?></span>
+                </div>
+            </div>
+            <div class="dashboardInfo">
+                <div>
+                        <img src="/yara/TaskSystem/assets/icons/task2.svg" alt=""><span>Inactive Users</span>
+                </div>
+                <div>
+                    <span><?php echo "$inactiveUsers"?></span>
+                </div>
+            </div>
+        </section>
+        <section class="sectionChart">
+            <div class="dashGraph" id="lineChartWrapper">
+                <span>User Distribution</span>
+                <div class="dashGraphWrap">
+                        <canvas class="dashPie" id="lineChart"></canvas>
+                </div>
+            </div>
+
+            <div class="dashGraph" id="barChartWrapper">
+                <span>Gender Distribution</span>
+                <div class="dashGraphWrap">
+                        <canvas class="dashPie" id="barChart"></canvas>
+                </div>
+            </div>
+        </section>
         <section class="dashSect1">
             <div class="dashboardInfo">
                 <div>
@@ -144,6 +206,8 @@ console.log(data1);
 console.log(data);
 
 const taskCategory = document.getElementById('dashPie');
+const userDistribution = document.getElementById('lineChart');
+const genderDistribution = document.getElementById('barChart');
 
 console.log('category');
 
@@ -157,6 +221,45 @@ const taskData = {
     }]
 }
 
+const userData = {
+    labels: ['Total Users', 'New Users', 'Active Users', 'Inactive Users'],
+    datasets: [{
+        label: 'Number of Users',
+        data: ['<?php echo $totalUsers ?>', '<?php echo $newUsers ?>', '<?php echo $activeUsers ?>', '<?php echo $inactiveUsers ?>'],
+        fill: true,
+        backgroundColor: '#5463FF4C',
+        borderColor: '#5463FF',
+        pointBackgroundColor: '#5463FF'
+    }]
+}
+
+const userGenderData = {
+    labels: ['Male', 'Female', 'other'],
+    datasets: [{
+        label: 'Number of Users',
+        data: ['<?php echo $male ?>', '<?php echo $female ?>', '<?php echo $other ?>'],
+        backgroundColor: chartColors
+    }]
+}
+
+
+new Chart(lineChart, {
+    type: 'line',
+    data: userData,
+    options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    }
+});
+
+new Chart(barChart, {
+    type: 'bar',
+    data: userGenderData,
+    options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    }
+});
 
 new Chart(taskCategory, {
   type: 'polarArea',
