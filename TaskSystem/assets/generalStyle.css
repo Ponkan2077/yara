@@ -660,7 +660,8 @@ main {
 }
 
 .categoryModal .logo span, .viewTaskModal .logo span {
-    color: #5463FF;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .addCategoryBtn {
@@ -1050,5 +1051,14 @@ main {
 
 #reportBtn {
     background-color: var(--red);
+    margin-top: 30px;
+}
+
+#reportModal {
+    width: 450px;
+    height: 500px;
+}
+
+#submitReportBtn {
     margin-top: 30px;
 }

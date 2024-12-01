@@ -2,7 +2,8 @@
       $path = $pathSave = $_SERVER['DOCUMENT_ROOT'];
 
       session_start();
-
+      include_once $path .='/yara/TaskSystem/pages/classes/admin.class.php';
+      $path = $pathSave;
 
       if(isset($_SESSION['account'])){
         if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
@@ -13,6 +14,10 @@
     else {
         header('location: ./pages/login.php');
     }
+
+    $adminObj = new admin($_SESSION['account']['username'], $_SESSION['account']['user_id']);
+
+    $reportData = $adminObj->getReport();
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,15 +52,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tr>
-                        <td>Title</td>
-                        <td>Id</td>
-                        <td>Username</td>
-                        <td>Description</td>
-                        <td>Status</td>
-                        <td>Date</td>
-                        <td>Action</td>
-                    </tr>
+                    <?php foreach ($reportData as $arr) {?>
+                        <tr>
+                            <td><?php echo $arr['report_title']?></td>
+                            <td><?php echo $arr['report_id']?></td>
+                            <td><?php echo $arr['username']?></td>
+                            <td><?php echo $arr['description']?></td>
+                            <td><?php echo $arr['status']?></td>
+                            <td><?php echo $arr['generated_at']?></td>
+                            <td>Action</td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
            <!-- <div class="reportBtnWrapper"><button type="button" class="reusableBtn" id="reportBtn">Report Problem</button></div> -->
