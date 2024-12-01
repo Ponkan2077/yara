@@ -398,6 +398,8 @@ main {
 .dashGraphWrap {
     height: calc(100% - 46px);
     margin-top: 15px;
+    display: flex;
+    justify-content: center;
 }
 
 .dashPie {

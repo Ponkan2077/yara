@@ -19,22 +19,12 @@ else {
 
 $taskObj = new task();
 
-$complete = '';
-$incomplete ='';
-$overdue = '';
-$total = '';
 $count_task = $taskObj->countCompleteTask($user_id);
-if (!$count_task == 0){
-    $complete = $count_task['completed'];
-    $incomplete = $count_task['incompleted'];
-    $overdue = $count_task['overDueTask'];
-    $total = $count_task['total'];
-}else {
-    $complete = 0;
-    $incomplete = 0;
-    $overdue = 0;
-    $total = 0;
-}
+
+$complete = isset($count_task['completed']) ? $count_task['completed'] : 0;
+$incomplete = isset($count_task['incompleted']) ? $count_task['incompleted'] : 0;
+$overdue = isset($count_task['overDueTask']) ? $count_task['overDueTask'] : 0;
+$total= isset($count_task['total']) ? $count_task['total'] : 0;
 
 
 $categoryTask = $taskObj->countCategory($user_id);
@@ -141,6 +131,7 @@ $leaderboard = $taskObj->leaderboard();
     </main>
 
 <script type="text/javascript"  src="./assets/script/script.js"></script>
+<script type="text/javascript"  src="../../assets/script/chartColor.js"></script>
 <script>
     const ctx = document.getElementById('dashBar');
 
@@ -156,52 +147,44 @@ const taskCategory = document.getElementById('dashPie');
 
 console.log('category');
 
+const taskData = {
+    labels: data.map(row=>row.category_name),
+    datasets: [{
+        label: 'Number Of Task',
+        data: data.map(row=>row.numTask),
+        borderWidth: 1,
+        backgroundColor: chartColors
+    }]
+}
+
+
 new Chart(taskCategory, {
   type: 'polarArea',
-  data: {
-    labels: [
-    'Red',
-    'Blue',
-    'Yellow'
-  ],//data.map(row => row.category_name),
-    datasets: [{
-      label: '# of Task',
-      data: [300, 50, 100] //data.map(row => row.numTask),
-      borderWidth: 2,
-      borderColor: '#5463FF',
-      backgroundColor: ['#FF0000', '#0000FF', '#FFFF00'], // Colors for each segment
-      borderColor: ['#8B0000', '#00008B', '#FFD700'],
-    }]
-  },
+  data: taskData,
   options: {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
-      r: {
-        beginAtZero: true // Adjusting the radius scale for polar charts
-      }
-    },
-    layout: {
-      padding: 20 // Optional: adjust padding around the chart area
-    },
-    plugins: {
-      legend: {
-        position: 'top',
-      },
+        r: {
+            grid: {
+                    color: '#0000000', // Change gridline color
+                    lineWidth: 2, // Set the thickness of gridlines
+                    borderDash: [5, 5], // Dashed gridlines (dashes and gaps of 5px)
+                    circular: true, // Make gridlines circular (default for polarArea)
+                },
+                angleLines: {
+                    color: '#FF5722', // Change radial gridlines (angle lines) color
+                    lineWidth: 1, // Set radial gridline width
+                },
+                ticks: {
+                    display: false,
+                    backdropColor: 'rgba(0,0,0,0)', // Remove the tick label backdrop
+                    color: '#212121', // Tick label color
+                    beginAtZero: true
+                }
+            }
+        }
     }
-  },
-  plugins: [{
-    beforeDraw: function(chart) {
-      const ctx = chart.ctx;
-      const chartArea = chart.chartArea;
-
-      // Set background color for the chart area (behind the chart data)
-      ctx.save();
-      ctx.fillStyle = '#FFFFFF'; // Background color
-      ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height); // Fill chart area
-      ctx.restore();
-    }
-  }]
 });
 
 </script>
