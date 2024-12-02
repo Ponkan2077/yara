@@ -51,6 +51,15 @@ main {
     width: calc(100% - 263px);
 }
 
+td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
 /* Reusables */
 
 .reusableBtn {
@@ -63,7 +72,7 @@ main {
     border-radius: 10px;
 }
 
-.redBtn {
+.redBtn, .redBtnSubmit, .redBtnValue {
     height: 42px;
     font-size: 15px;
     font-weight: bold;
@@ -73,7 +82,7 @@ main {
     border-radius: 10px;
 }
 
-.greenBtn {
+.greenBtn, .greenBtnValue {
     height: 42px;
     font-size: 15px;
     font-weight: bold;
@@ -81,6 +90,11 @@ main {
     color: white;
     padding: 11px 20px;
     border-radius: 10px;
+}
+.redBtnValue,.greenBtnValue {
+    height: 30px;
+    width: 80px;
+    padding: 5px;
 }
 /* General Positioning */
 .dashMainSection {
@@ -1068,4 +1082,30 @@ main {
 
 #submitReportBtn {
     margin-top: 30px;
+}
+
+/* admin user page */
+#banUserBtn {
+    padding: 5px;
+    widtH: 70px;
+    height: 30px;
+}
+
+#userModal {
+    height: 200px;
+    width: 300px;
+}
+
+#userModal p{
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+}
+
+#submitBanBtn {
+    margin-right: 10px;
+}
+
+#btnModalWrap, #reportModalBtn {
+    margin-top: 20px;
 }

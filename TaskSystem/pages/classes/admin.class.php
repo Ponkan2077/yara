@@ -38,6 +38,40 @@ class admin extends user {
 
    }
 
+    function getUsersData(){
+    $sql = "Select *,
+        CASE
+            WHEN loggedin_at BETWEEN :weekAgo AND :date THEN 'Active'
+            WHEN is_banned = 1 THEN 'Banned'
+            ELSE 'Inactive'
+        END AS Status
+        from user;";
+
+    $query = $this->db->connect()->prepare($sql);
+
+    $date = new DateTime('now');
+
+    $dateClone = clone $date;
+
+    $date = $this->date->format('Y-m-d H:i:s');
+
+    $weekAgo = $dateClone->modify('-1week'); 
+
+    $weekAgo = $this->date->format('Y-m-d H:i:s');
+
+    $query->bindParam(':weekAgo', $weekAgo);
+
+    $query->bindParam(':date', $date);
+
+    $data = null;
+
+    if($query->execute()){
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    return false;
+   }
    function getReport(){
     $sql = "Select r.*, u.username as username from report as r inner join user as u on r.user_id = u.user_id;";
 
@@ -52,8 +86,22 @@ class admin extends user {
     return false;
    }
 
+   function reportDone($report_id){
+    $sql = "UPDATE report SET status = 'solved' WHERE report_id = :report_id;";
+    $query = $this->db->connect()->prepare($sql);
+
+    $query->bindParam(':report_id', $report_id);
+
+    if($query->execute()){
+        return true;
+    }
+
+    return false;
+
+   }
+
    function getUsers(){
-    $sql = "SELECT 
+    $sql = "SELECT
     COUNT(user_id) AS totalUsers,
     (SELECT COUNT(user_id) FROM user WHERE created_at BETWEEN :weekAgo AND :date) AS newUsers,
     (SELECT COUNT(user_id) FROM user WHERE loggedin_at BETWEEN :weekAgo AND :date) AS activeUsers,
