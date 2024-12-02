@@ -116,47 +116,11 @@
     </main>
     <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
     <script>
-        var addCategoryBtn = document.getElementById("addCategoryBtn");
-        var submitBtn = document.getElementById("btnFormR");
-        var close = document.getElementsByClassName("close")[0];
-        var modal = document.getElementById("modalWrapper");
-        close.addEventListener("click", () => {
-          modal.style.display = "none";
-        })
+        var addTaskBtn = document.getElementById('addTaskBtn');
 
-
-        window.onclick = function(event) {
-            if (event.target == modal || event.target == viewModal){
-            modal.style.display = "none";
-        }}
-       
-
-        addCategoryBtn.addEventListener("click", () => {
-            modal.style.display = "block";
-                } )
-        submitBtn.addEventListener("click", () => {
-            modal.style.display = "none";
-        })
-
-       // var close1 = document.getElementsByClassName("close1")[0];
-      //  var viewModal = document.getElementById("viewModal");
-
-       // var taskHolder = document.querySelectorAll(".btnFormRR").forEach(function(el){
-      //      el.addEventListener("click", () =>{
-       //         viewModal.style.display = "block";
-                
-      //      })
-       // });
-//
-       // close1.addEventListener("click", () => {
-     //     viewModal.style.display = "none";
-     //   })
-        
-        
-   //     window.onclick = function(event) {
-  //          if (event.target == viewModal){
-   //         viewModal.style.display = "none";
-   //     }}
+        addTaskBtn.addEventListener("click", ()=>{
+            window.location.href = 'addTask.php';
+        });
 
     </script>
 </body>

@@ -692,7 +692,14 @@ main {
     padding: 0.75rem 1.5rem;
 }
 /* add Task */
-
+#addTaskMain {
+    height: 100vh;
+    margin-top: 0px;
+}
+#addTaskFormWrapper {
+    position: relative;
+    height: 600px;
+}
 .taskDescription, .taskTitle, .taskDueDate {
     display: flex;
     flex-direction: column;

@@ -91,18 +91,19 @@
     <title>Document</title>
 </head>
 <body id="task">
-    <div class="gridWrapper">
-    <header>
-    <?php 
-         $path .= "/yara/TaskSystem/pages/includes/header.html";
-            include_once($path);
-         $path = $pathSave;
+<aside>
+        <?php 
+        $path .= "/yara/TaskSystem/pages/includes/aside.php";
+        include_once($path);
+        $path = $pathSave;
         ?>
-    </header>
+    
+    </aside>
     <main>
-        <div class="formWrapper">
-        <div class="logo">
-        <span>Logo</span>
+        <div class="main" id="addTaskMain">
+        <div class="formWrapper" id="addTaskFormWrapper">
+        <div id="loginLogo">
+        <span>TaskSystem</span>
     </div>
         <form class="addTaskForm" action="" method="POST">
             <div class="taskTitle">
@@ -120,18 +121,11 @@
             <span><?php echo $category_id?></span>
             </div>
             
-            <div class="formBtnWrapper"><input type="submit" class="btnFormR" value="Add Task"></div>
+            <div class="formBtnWrapper"><input type="submit" class="reusableBtn" value="Add Task"></div>
         </form>
         </div>
+        </div>
     </main>
-    <aside>
-    <?php 
-        $path .= "/yara/TaskSystem/pages/includes/aside.php";
-        include_once($path);
-        $path = $pathSave;
-        ?> 
-    </aside>
-    </div>
     <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
 </body>
 </html>

@@ -96,7 +96,6 @@
                         <td>Description</td>
                         <td>Status</td>
                         <td>Date</td>
-                        <td>Action</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,7 +106,6 @@
                             <td><?php echo $arr['description'] ?></td>
                             <td><?php echo $arr['status'] ?></td>
                             <td><?php echo $arr['generated_at'] ?></td>
-                            <td>Action</td>
                         </tr>
                     <?php }?>
                 </tbody>
