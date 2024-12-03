@@ -32,12 +32,20 @@ $path .= "/yara/TaskSystem/pages/database.php";
     $query = $this->db->connect()->prepare($sql);
      
      $query->bindParam(':username', $username);
+
+     $date = new DateTime('now');
+     $date = $this->date->format('Y-m-d H:i:s');
      if($query->execute()){
         $data  =  $query->fetch();
         if($data && password_verify($password,$data['password'])){
-            return true;
+            $sql .= "Update user set loggedin_at = :date where username = :username";
+
+            $query->bindParam(":date", $data);
+
+            if($query->execute()){
+                return true;
+            }
         } 
-       return true;
      }
      return false;
  }
