@@ -12,9 +12,11 @@
      if(isset($_SESSION['account'])){
          if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
              header('location: login.php');
+             exit;
          }
          else {
              header('location: login.php');
+             exit;
          }
      } 
      
@@ -24,7 +26,7 @@
      
      if($_SERVER['REQUEST_METHOD'] == "POST"){
         $username = clean_input($_POST['username']);
-        $password = clean_input(($_POST['password']));
+        $password = trim(($_POST['password']));
         $email = clean_input($_POST['email']);
 
         if(empty($username)){

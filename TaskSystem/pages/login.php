@@ -20,7 +20,7 @@
       $userObj = new user();
      if($_SERVER['REQUEST_METHOD'] == "POST"){
         $username = clean_input($_POST['username']);
-        $password = clean_input(($_POST['password']));
+        $password = trim(($_POST['password']));
        // $email = clean_input($_POST['email']);
 
         if(empty($username)){
@@ -40,7 +40,8 @@
 
             if($userObj->login($username,$password)){
                 $_SESSION['account'] = $userObj->fetch($username);
-                if($_SESSION['account']['is_admin'] || $_SESSION['account']['is_user']){
+
+                if($_SESSION['account']['is_admin'] || $_SESSION['account']['is_user']){ 
                     header('location: ../index.php');
                 }
             }

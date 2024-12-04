@@ -34,33 +34,46 @@ $path .= "/yara/TaskSystem/pages/database.php";
      $query->bindParam(':username', $username);
 
      $date = new DateTime('now');
-     $date = $this->date->format('Y-m-d H:i:s');
+     $date = $date->format('Y-m-d H:i:s');
      if($query->execute()){
         $data  =  $query->fetch();
-        if($data && password_verify($password,$data['password'])){
-            $sql .= "Update user set loggedin_at = :date where username = :username";
+        if($data){
+            if(password_verify($password,$data['password'])){
+                $Updatesql = "Update user set loggedin_at = :date where username = :username";
+                $updateQuery = $this->db->connect()->prepare($Updatesql);
+                $updateQuery->bindParam(":date", $date);
+                $updateQuery->bindParam(":username", $username);
 
-            $query->bindParam(":date", $data);
-
-            if($query->execute()){
-                return true;
+                if($updateQuery->execute()){
+                    return true;
+                } else{
+                    error_log("Update query for username: $username");
+                }
+            } else{
+                error_log("Invalid password for username: $username");
+                error_log("password hash:" . $data['password']);
             }
-        } 
+        } else{
+            error_log("No data for this username: $username");
+        }
      }
      return false;
  }
+    
 
     function signUp() {
         $sql = "Insert into user (username,email,password,is_admin,is_user) values (:username, :email, :password, :is_admin,:is_user);";
         
         $query = $this->db->connect()->prepare($sql);
          $query->bindParam(':username', $this->username);
-         $hash = password_hash($this->password,PASSWORD_DEFAULT);
-         $query->bindParam(':password', $hash);
          $query->bindParam(':email', $this->email);
          $query->bindParam(':is_admin', $this->is_admin);
         $query->bindParam(':is_user', $this->is_user);
+
+        $hash = password_hash($this->password,PASSWORD_DEFAULT);
+         $query->bindParam(':password', $hash);
         if($query->execute()){
+            error_log("the password hash:" . $hash);
             return true;
         }
 
@@ -81,8 +94,10 @@ $path .= "/yara/TaskSystem/pages/database.php";
           $data = $query->fetch(PDO::FETCH_ASSOC);
           return $data;
 
+       } else{
+        error_log("Fetch user data query failed!");
        }
-       return false;
+       return false;;
     }
 
     function edit($imgPth){
