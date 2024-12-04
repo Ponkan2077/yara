@@ -10,12 +10,6 @@
 
      $username = $password = "";//$email = "";
      $usernameErr = $passwordErr = ""; //$emailErr = "";
-
-     if(isset($_SESSION['account'])){
-         if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
-             header('location: login.php');
-         }
-     } 
     
       $userObj = new user();
      if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -37,12 +31,14 @@
 
         if(empty($usernameErr) && empty($passwordErr)){ //&& empty($emailErr)){
            // $userObj->email = $email;
-
             if($userObj->login($username,$password)){
-                $_SESSION['account'] = $userObj->fetch($username);
 
-                if($_SESSION['account']['is_admin'] || $_SESSION['account']['is_user']){ 
+                $_SESSION['account'] = $userObj->fetch($username);
+                if($_SESSION['account']['is_user']){ 
                     header('location: ../index.php');
+                }
+                if($_SESSION['account']['is_admin']){
+                    header('location: ./pages/admin/index.php');
                 }
             }
             else {
@@ -50,6 +46,7 @@
             }
         }
      }
+
 
 ?>
 

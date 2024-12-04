@@ -83,19 +83,22 @@ $path .= "/yara/TaskSystem/pages/database.php";
     }
 
     function fetch($username){
-        $sql = "Select i.image_path as img_path, u.user_id as user_id, u.username as username, u.email as email, u.is_admin as is_admin, u.is_user as is_user, u.address as address, u.gender as gender, u.contact as contact, u.age as age from user u inner join image i on u.user_id = i.user_id where u.username = :username limit 1;";
+        $sql = "Select i.image_path as img_path, u.user_id as user_id, u.username as username, u.email as email, u.is_admin as is_admin, u.is_user as is_user, u.address as address, u.gender as gender, u.contact as contact, u.age as age from user u left join image i on u.user_id = i.user_id where u.username = :username limit 1;";
        
-        $query = $this->db->connect()->prepare($sql);
+       $query = $this->db->connect()->prepare($sql);
        $query->bindParam(':username', $username);
        $data = null;
 
        $imgPth = null;
        if($query->execute()){
-          $data = $query->fetch(PDO::FETCH_ASSOC);
-          return $data;
-
+        $data = $query->fetch(PDO::FETCH_ASSOC);
+        if($data){
+            return $data;
+        } else {
+            error_log("Has no user data");
+        }
        } else{
-        error_log("Fetch user data query failed!");
+        error_log("Query not executed!");
        }
        return false;;
     }

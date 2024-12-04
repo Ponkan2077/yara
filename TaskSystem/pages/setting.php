@@ -144,13 +144,14 @@ if(empty($usernameErr)){
         
         </div>
     <div class="main">
-        <div>
-            <div class="profileBackground"></div>
-            <img src="/yara/TaskSystem/assets/uploads/user_6739d9205c3d2.png" alt="" class="profileImgSetting">
-            <div class="editButtonWrapper">
-                <button class="reusableBtn" id="editProfile">Edit Profile</button>
-            </div>
-        </div>
+    <div>
+    <div class="profileBackground"></div>
+        <img src="<?php if($_SESSION['account']['img_path']) { echo $_SESSION['account']['img_path'];} else { echo '/yara/TaskSystem/assets/uploads/user_6739d9205c3d2.png'; } ?>" alt="Profile Image" class="profileImgSetting">
+    <div class="editButtonWrapper">
+        <button class="reusableBtn" id="editProfile">Edit Profile</button>
+    </div>
+</div>
+
         <div class="settingInfoWrap">
         <div class="settingInfoWrapper">
             <div class="settingInfoWidth"><span class="label">Username:</span><span class="value"><?php echo $_SESSION['account']['username']?></span></div>
