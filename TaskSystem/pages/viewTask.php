@@ -10,13 +10,17 @@ if(isset($_SESSION['account'])){
     if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
         header('location: login.php');
     }
-    else {
-        header('location: login.php');
-    }
 }
-$taskObj = new task();
 
-$taskId = "";
+else {
+    header('location: login.php');
+}
+$taskObj = new task($_SESSION['account']['user_id']);
+
+$taskId = $taskTitle = "";
+
+$taskIdErr = $taskTitleErr = "";
+
 $task_array = "";
 $task_array = $taskObj->getTask();
 if ($_SERVER['REQUEST_METHOD'] == "GET"){
@@ -26,6 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] == "GET"){
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
      
     $taskId = $_POST['task_id'];
+    $taskTitle = $_POST['task_title'];
+
+    if(isset($taskId)){
+        $taskIdErr = "Task Id needed!";
+    }
+
+    if (isset($taskTitle)){
+        $taskTitleErr = "Task title needed needed!";
+    }
+
     if(isset($_POST['is_done'])){
         $is_done = $_POST['is_done'];
 
@@ -33,10 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
          $is_doneErr = "Is empty";
         }
  
-        if(empty($is_doneErr)){
+        if(empty($is_doneErr && empty($taskIdErr) && empty($taskTitle))){
            $taskObj->is_done = true;
 
-           if($taskObj->is_done($taskId)){
+           if($taskObj->is_done($_SESSION['account']['user_id'],$taskId, $task_Title )){
             header('location: task.php');
            }
 
@@ -57,20 +71,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
     <title>Document</title>
 </head>
 <body id="task">
-    <div class="gridWrapper">
-    <header>
-    <?php 
-         $path .= "/yara/TaskSystem/pages/includes/header.html";
-            include_once($path);
-         $path = $pathSave;
-        ?>
-    </header>
+<aside>
+        <?php 
+        $path .= "/yara/TaskSystem/pages/includes/aside.php";
+        include_once($path);
+        $path = $pathSave;
+        ?> 
+        </aside>
     <main>
             <div class="viewTaskModal">
-                 <span class="close1">&times;</span>
-                 <div class="logo">
-               <span>Logo</span>
-           </div>
+                 <div id="loginLogo">
+                <span>TaskSystem</span>
+                 </div>
                   <?php foreach($task_array as $arr){ 
                     if($arr['task_id'] == $taskId){?>
                   <div class="taskTitleWrap">
@@ -87,21 +99,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
                   </div>
                   <form action="" method="POST">
                   <input type="hidden" name="task_id" value="<?php echo $taskId?>">
+                  <input type="hidden" name="task_title" value="<?php echo $arr['title']?>">
                   <?php } }?>
-                  <div class="formBtnWrapper"><input type="submit" name="is_done" class="btnFormR" value ="Done" id="btnFormR"></div>
+                  <div class="formBtnWrapper"><input type="submit" name="is_done" class="reusableBtn" value ="Done" id="btnFormR"></div>
                   </form>
 
             </div>
         </main>
-        <aside>
-        <?php 
-        $path .= "/yara/TaskSystem/pages/includes/aside.php";
-        include_once($path);
-        $path = $pathSave;
-        ?> 
-        </aside>
-        </div>
-
         <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
 </body>
 </html>

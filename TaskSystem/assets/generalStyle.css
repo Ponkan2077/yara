@@ -529,7 +529,6 @@ table {
     flex-direction: column;
 }
 
-
 .tasks {
     display: flex;
     flex-direction: column;
@@ -626,14 +625,13 @@ table {
     column-gap: 5rem;
 }
 
-
 /* add Category */
 
 .categoryModal, .viewTaskModal {
-    position: absolute;
-    top: 50%;
+     position: absolute; 
+     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%); 
     width: 300px;
     height: 350px;
     background-color: white;
@@ -642,6 +640,8 @@ table {
     align-items: center;
     flex-direction: column;
 }
+
+.viewTaskModal {}
 
 .viewTaskModal {
     width: 600px;
@@ -705,6 +705,14 @@ table {
     font-size: 1.5rem;
     padding: 0.75rem 1.5rem;
 }
+
+/*New Add Category Modal*/
+#categoryModal {
+    height: 250px;
+}
+#categoryModalBtnWrapper{
+    margin-top: 30px;
+}
 /* add Task */
 #addTaskMain {
     height: 100vh;
@@ -763,6 +771,10 @@ table {
     margin-top: 30px;
 }
 
+#addTaskBtn a{
+    color: white;
+}
+
 .taskCategory {
     display: flex;
     justify-content: space-between;
@@ -782,7 +794,12 @@ table {
 
 .taskCategory div span{
     font-size: 24px;
-    font-weight: bold
+}
+
+.categorySpan {
+    font-size: 16px !important;
+    font-weight: normal !important;
+    margin-top: 10px;
 }
 
 .categoryLink li a {
@@ -801,7 +818,7 @@ table {
 }
 
 .taskWrap {
-    margin-top: 30px;
+    margin-top: 15px;
     flex-basis: 24%;
     max-width: 24%;
     height: 143px;
@@ -1108,4 +1125,10 @@ table {
 
 #btnModalWrap, #reportModalBtn {
     margin-top: 20px;
+}
+
+.viewTaskModal {
+    position: relative !important;
+    border: 1px solid black;
+    border-radius: 20px;
 }

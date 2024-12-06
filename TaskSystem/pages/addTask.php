@@ -58,17 +58,14 @@
 
 
        if(empty($titleErr) && empty($descriptionErr) && empty($due_dateErr) && empty($category_idErr)){
-         $taskObj->user_id = $_SESSION['user']['user_id'];
+         $taskObj->user_id = $_SESSION['account']['user_id'];
          $taskObj->title = $title;
          $taskObj->description = $description;
          $taskObj->due_date = $due_date;
          $taskObj->category_id = $category_id;
          
          if($taskObj->addTask()){
-            //header('location: task.php');
-            echo "Hello world";
-            echo $taskObj->category_id;
-            echo $category_id;
+            header('location: task.php');
          }
        }
        else{
@@ -118,7 +115,6 @@
             <label for="due_date">Due date:</label>
             <input type="datetime-local" name="due_date" class="field">
             <input type="hidden" value="<?php echo $category_id?>" name="category_id">
-            <span><?php echo $category_id?></span>
             </div>
             
             <div class="formBtnWrapper"><input type="submit" class="reusableBtn" value="Add Task"></div>

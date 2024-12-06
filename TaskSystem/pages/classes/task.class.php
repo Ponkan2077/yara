@@ -1,7 +1,10 @@
 <?php
 $path = $_SERVER['DOCUMENT_ROOT'];
 $path .= "/yara/TaskSystem/pages/database.php";
- include_once $path;
+include_once $path;
+$path = $_SERVER['DOCUMENT_ROOT'];
+$path .= "/yara/TaskSystem/pages/classes/action.class.php";
+include_once $path;
 
  date_default_timezone_set("Asia/Manila");
  $date = new DateTime('now');
@@ -21,16 +24,14 @@ $path .= "/yara/TaskSystem/pages/database.php";
      public $is_completed = false;
 
 
-     function __construct() {
+     function __construct($user_id) {
         $this->db = new database();
         $this->date = new DateTime('now');
+        $this->user_id = $user_id;
      }
 
      function addTask() {
-        $sql = "INSERT INTO task (user_id, title, description, due_date, category_id, is_completed) VALUES (:user_id, :title, :description, :due_date, :category_id, :is_completed);";
-        $sql = $sql . "Update task set updated_at = :date where task_id = :task_id;";
-        
-        $sql = $sql . "Update task set action = :action where task_id = :task_id;";
+        $sql = "INSERT INTO task (user_id, title, description, due_date, category_id, is_completed, updated_at) VALUES (:user_id, :title, :description, :due_date, :category_id, :is_completed, :date);";
 
         $date = new DateTime('now');
         $date = $this->date->format('Y-m-d H:i:s');
@@ -53,10 +54,10 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
         $query->bindParam(':date', $date);
 
-        $query->bindParam(':action', $action);
-
         if($query->execute()){
-            return true;
+            if($this->setAction($this->user_id, $action, $this->title)){
+                return true;
+            }
         }
 
         return false;
@@ -100,11 +101,13 @@ $path .= "/yara/TaskSystem/pages/database.php";
         //$query->bindParam(':action', $action);
 
         if($query->execute()){
-            return true;
-        }
+            if($this->setAction($this->user_id, $action, $category)){
+                return true;
+            }
 
         return false;
      }
+    }
 
      function getCategory($user_id){
        // $sql = "Select c.name from task as k  inner join category as c on k.category_id = c.category_id where c.user_id = :user_id; ";
@@ -125,12 +128,12 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
      }
 
-     function getTask($user_id){
+     function getTask(){
         $sql = "Select task_id, title, due_date, description, category_id, user_id from task where user_id = :user_id;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
 
-        $query->bindParam(":user_id", $user_id);
+        $query->bindParam(":user_id", $this->user_id);
        
             if ($query->execute()){
                 $data = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -141,27 +144,28 @@ $path .= "/yara/TaskSystem/pages/database.php";
             return false;
         }
 
-     function is_done($task_id){
+     function is_done($user_id, $task_id, $task_title){
         $sql = "UPDATE task set is_completed = 1 where task_id = :task_id;";
 
         $sql = $sql . "Update task set updated_at = :date where task_id = :task_id;";
         
-        $sql = $sql . "Update task set action = :action where task_id = :task_id;";
 
         $date = new DateTime('now');
 
         $date = $this->date->format('Y-m-d H:i:s');
 
-        $action = "Done Task";
+        $action = "Completed Task";
 
         $query = $this->db->connect()->prepare($sql);
 
 
         $query->bindParam(':date', $date);
         $query->bindParam(':task_id', $task_id);
-        $query->bindParam(":action", $action);
+
         if($query->execute()){
-            return true;
+            if($this->setAction($this->user_id, $action, $this->title)){
+                return true;
+            }
         }
 
         return false;
@@ -250,24 +254,6 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
          }
 
-         function recentActivities($user_id) {
-            $sql = "Select updated_at, action, title from task where :user_id = user_id order by updated_at  DESC LIMIT 3;";
-            
-            $query = $this->db->connect()->prepare($sql);
-
-            $query->bindParam(":user_id", $user_id);
-            
-            $data = null;
-
-            if($query->execute()){
-                $data = $query->fetchAll(PDO::FETCH_ASSOC);
-
-                return $data;
-            }
-
-            return false;
-         }
-
         // function leaderboard(){
           //  $sql = "Select u.username as username, u.created_at, (Select count(is_completed) from task where is_completed = 1) as NumTaskComplete from task t inner join user u on t.user_id = u.user_id group by u.username order by NumTaskComplete DESC limit 5;";
 
@@ -299,5 +285,39 @@ $path .= "/yara/TaskSystem/pages/database.php";
             return false;
          }
 
-         
- }
+         function setAction($user_id, $action, $action_title){
+            $sql = "INSERT INTO action (user_id, action, action_title) VALUES (:user_id, :action, :action_title);";
+
+            $query = $this->db->connect()->prepare($sql);
+
+            $query->bindParam(":user_id", $user_id);
+            $query->bindParam(":action", $action);
+            $query->bindParam(":action_title", $action_title);
+
+            if($query->execute()){
+                return true;
+            }
+
+            return false;
+    }
+
+    function recentActivities($user_id) {
+      // $sql = "Select updated_at, action, title from task where :user_id = user_id order by updated_at  DESC LIMIT 3;";
+
+      $sql = "Select action, action_title, created_at from action where user_id = :user_id;";
+       
+       $query = $this->db->connect()->prepare($sql);
+
+       $query->bindParam(":user_id", $user_id);
+       
+       $data = null;
+
+       if($query->execute()){
+           $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+           return $data;
+       }
+
+       return false;
+    }  
+}

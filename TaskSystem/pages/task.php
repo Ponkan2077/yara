@@ -15,7 +15,7 @@
         header('location: ./pages/login.php');
     }
   //header('Location:'.$_SERVER['PHP_SELF']);
-  $taskObj = new task();
+  $taskObj = new task($_SESSION['account']['user_id']);
   $category_id = "";
   $category_name = "";
   $category = "";
@@ -87,31 +87,45 @@
         ?> 
 </aside>
     <main>
+    <div class="modalWrapper" id="modalWrapper">
+        <div class="categoryModal" id="categoryModal">
+        <span class="close">&times;</span>
+        <div class="logo">
+               <span>TaskSystem</span>
+           </div>
+            <form class="formModal" action="" method="POST" id="categoryForm">
+                <label for="category">Category Name:</label>
+                <input type="text" name="category" class="field">
+                <div class="formBtnWrapper" id="categoryModalBtnWrapper"><input type="submit" class="reusableBtn" id="submitCategory" value="Add Category"></div>
+            </form>
+            
+        </div>
+        
+        </div>
         <div class="main">
             <div class="taskCategory">
                 <div>
                     <span>Category</span>
-                    <nav>
-                        <ul class="categoryLink">
-                           <li><a href="#">Work</a></li>
-                           <li><a href="#">School</a></li>
-                        </ul>
-                    </nav>
                 </div>
-                <button type="button" class="reusableBtn">Add Category</button>
+                <button type="button" class="reusableBtn" id="addCategoryBtn">Add Category</button>
             </div>
+            <?php foreach ($category_array as $arr) {?>
+            <span><?php echo $arr['name'] ?></span>
+            <?php foreach ($task_array as $arr2) {?>
             <div class="taskDiv2">
                 <div class="taskWrap">
                     <div>
-                        <span>Title: </span>
-                        <button type="button" class="taskView">View</button>
+                        <span>Title: <?php echo $arr2['title']?></span>
+                        <button type="button"><a href="viewTask.php?id=<?php echo $arr2['task_id'] ?>" class="taskView" >View</a></button>
                     </div>
-                    <span>Date: </span>
+                    <span>Due Date: <?php $arr2['due_date'] ?> </span>
                     <div class="incomplete"><span>Incomplete</span></div>
                 </div>
                 
             </div>
-            <div class="addTaskBtnWrapper"> <button type="button" class="reusableBtn" id="addTaskBtn">Add Task</button></div>
+            <?php } ?>
+            <div class="addTaskBtnWrapper"> <button type="button" class="reusableBtn" id="addTaskBtn"><a href="addtask.php?id=<?php echo $arr['category_id'] ?>">Add Task</a></button></div>
+            <?php } ?>
         </div>
     </main>
     <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
@@ -122,6 +136,29 @@
             window.location.href = 'addTask.php';
         });
 
+        var addCategoryBtn = document.getElementById("addCategoryBtn");
+        var close = document.getElementsByClassName("close")[0];
+        var categoryBtn = document.getElementById("categoryModal");
+        var submitBtn = document.getElementById('submitCategory');
+        var modal = document.getElementById("modalWrapper");
+
+        window.onclick = function(event) {
+            if (event.target == modal || event.target == viewModal){
+            modal.style.display = "none";
+        }}
+
+        addCategoryBtn.addEventListener("click", () => {
+            modal.style.display = "block";
+                } )
+
+        submitBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+        })
+
+        close.addEventListener("click", () => {
+            modal.style.display = "none";
+        })
+        
     </script>
 </body>
 </html>

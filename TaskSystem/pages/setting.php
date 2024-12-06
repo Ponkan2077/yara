@@ -178,13 +178,11 @@ if(empty($usernameErr)){
           modal.style.display = "none";
         })
 
-
         window.onclick = function(event) {
             if (event.target == modal || event.target == viewModal){
             modal.style.display = "none";
         }}
-       
-
+        
         editProfileBtn.addEventListener("click", () => {
             modal.style.display = "block";
                 } )

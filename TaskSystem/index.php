@@ -17,7 +17,7 @@ else {
 }
 
 
-$taskObj = new task();
+$taskObj = new task($_SESSION['account']['user_id']);
 
 $count_task = $taskObj->countCompleteTask($user_id);
 
@@ -111,8 +111,8 @@ $leaderboard = $taskObj->leaderboard();
                 <?php foreach($recentActivities as $arr){?>
                 <div class="dashSect3Info">
                     <span><?php echo $arr['action']?></span>
-                    <span><?php echo $arr['title']?></span>
-                    <span><?php echo $arr['updated_at']?></span>
+                    <span><?php echo $arr['action_title']?></span>
+                    <span><?php echo $arr['created_at']?></span>
                 </div>
                 <?php }?>
             </div>
