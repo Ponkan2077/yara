@@ -16,11 +16,9 @@ else {
     header('location: ./pages/login.php');
 }
 
-$taskObj = new task();
+$taskObj = new task($_SESSION['account']['user_id']);
 
 $leaderboard = $taskObj->leaderboard();
-
-
 
 ?>
 
@@ -35,7 +33,7 @@ $leaderboard = $taskObj->leaderboard();
 <body id="leaderboard">
 <aside>
     <?php 
-        $path .= "/yara/TaskSystem/pages/includes/admin.aside.php";
+        $path .= "/yara/TaskSystem/pages/includes/aside.php";
         include_once($path);
         $path = $pathSave;
     ?>
@@ -55,7 +53,7 @@ $leaderboard = $taskObj->leaderboard();
                 </div>
                 <?php $count = 0; foreach($leaderboard as $arr) { ?>
                 <div class="userWrapper">
-                    <div class="userInfo1"> <img src="<?php echo $_SESSION['account']['img_path']?>" class="profileImg-sm"></div>
+                    <div class="userInfo1"> <img src="<?php if($arr['img_path']){ echo $arr['img_path'];} else {echo '/yara/TaskSystem/assets/uploads/user_6739d9205c3d2.png';} ?>" class="profileImg-sm"></div>
                     <div class="userInfo1"><?php echo $count += 1?></div>
                     <div class="userInfo1"><?php echo $arr['username'] ?></div>
                     <div class="userInfo1"><?php echo $arr['NumTaskComplete'] ?></div>

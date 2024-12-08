@@ -15,7 +15,7 @@
         header('location: ./pages/login.php');
     }
   //header('Location:'.$_SERVER['PHP_SELF']);
-  $taskObj = new task();
+  $taskObj = new task($_SESSION['account']['user_id']);
   $category_id = "";
   $category_name = "";
   $category = "";
@@ -29,7 +29,7 @@
 
   $category_array = $taskObj->getCategory($user_id);
 
-  $task_array = $taskObj->getTask($user_id);
+  $task_array = $taskObj->getTask();
 
  if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
@@ -62,7 +62,6 @@
        }
 
        if(empty($is_doneErr)){
-
        }
     }
  } 
@@ -81,83 +80,83 @@
 <body id="task">
 <aside>
     <?php 
-        $path .= "/yara/TaskSystem/pages/includes/admin.aside.php";
+        $path .= "/yara/TaskSystem/pages/includes/aside.php";
         include_once($path);
         $path = $pathSave;
         ?> 
 </aside>
     <main>
+    <div class="modalWrapper" id="modalWrapper">
+        <div class="categoryModal" id="categoryModal">
+        <span class="close">&times;</span>
+        <div class="logo">
+               <span>TaskSystem</span>
+           </div>
+            <form class="formModal" action="" method="POST" id="categoryForm">
+                <label for="category">Category Name:</label>
+                <input type="text" name="category" class="field">
+                <div class="formBtnWrapper" id="categoryModalBtnWrapper"><input type="submit" class="reusableBtn" id="submitCategory" value="Add Category"></div>
+            </form>
+            
+        </div>
+        
+        </div>
         <div class="main">
             <div class="taskCategory">
                 <div>
                     <span>Category</span>
-                    <nav>
-                        <ul class="categoryLink">
-                           <li><a href="#">Work</a></li>
-                           <li><a href="#">School</a></li>
-                        </ul>
-                    </nav>
                 </div>
-                <button type="button" class="reusableBtn">Add Category</button>
+                <button type="button" class="reusableBtn" id="addCategoryBtn">Add Category</button>
             </div>
+            <?php foreach ($category_array as $arr) {?>
+            <span><?php echo $arr['name'] ?></span>
             <div class="taskDiv2">
+            <?php foreach ($task_array as $arr2) {?>
                 <div class="taskWrap">
                     <div>
-                        <span>Title: </span>
-                        <button type="button" class="taskView">View</button>
+                        <span>Title: <?php echo $arr2['title']?></span>
+                        <button type="button"><a href="viewTask.php?id=<?php echo $arr2['task_id'] ?>" class="taskView" >View</a></button>
                     </div>
-                    <span>Date: </span>
-                    <div class="incomplete"><span>Incomplete</span></div>
+                    <span>Due Date: <?php echo $arr2['due_date'] ?> </span>
+                    <div class=" <?php echo $arr2['status'] ?> "><span><?php echo $arr2['status'] ?></span></div>
                 </div>
-                
+                <?php } ?>
             </div>
-            <div class="addTaskBtnWrapper"> <button type="button" class="reusableBtn" id="addTaskBtn">Add Task</button></div>
+            <div class="addTaskBtnWrapper"> <button type="button" class="reusableBtn" id="addTaskBtn"><a href="addtask.php?id=<?php echo $arr['category_id'] ?>">Add Task</a></button></div>
+            <?php } ?>
         </div>
     </main>
     <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
     <script>
-        var addCategoryBtn = document.getElementById("addCategoryBtn");
-        var submitBtn = document.getElementById("btnFormR");
-        var close = document.getElementsByClassName("close")[0];
-        var modal = document.getElementById("modalWrapper");
-        close.addEventListener("click", () => {
-          modal.style.display = "none";
-        })
+        var addTaskBtn = document.getElementById('addTaskBtn');
 
+        addTaskBtn.addEventListener("click", ()=>{
+            window.location.href = 'addTask.php';
+        });
+
+        var addCategoryBtn = document.getElementById("addCategoryBtn");
+        var close = document.getElementsByClassName("close")[0];
+        var categoryBtn = document.getElementById("categoryModal");
+        var submitBtn = document.getElementById('submitCategory');
+        var modal = document.getElementById("modalWrapper");
 
         window.onclick = function(event) {
             if (event.target == modal || event.target == viewModal){
             modal.style.display = "none";
         }}
-       
 
         addCategoryBtn.addEventListener("click", () => {
             modal.style.display = "block";
                 } )
+
         submitBtn.addEventListener("click", () => {
             modal.style.display = "none";
         })
 
-       // var close1 = document.getElementsByClassName("close1")[0];
-      //  var viewModal = document.getElementById("viewModal");
-
-       // var taskHolder = document.querySelectorAll(".btnFormRR").forEach(function(el){
-      //      el.addEventListener("click", () =>{
-       //         viewModal.style.display = "block";
-                
-      //      })
-       // });
-//
-       // close1.addEventListener("click", () => {
-     //     viewModal.style.display = "none";
-     //   })
+        close.addEventListener("click", () => {
+            modal.style.display = "none";
+        })
         
-        
-   //     window.onclick = function(event) {
-  //          if (event.target == viewModal){
-   //         viewModal.style.display = "none";
-   //     }}
-
     </script>
 </body>
 </html>
