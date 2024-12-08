@@ -821,7 +821,7 @@ table {
     margin-top: 15px;
     flex-basis: 24%;
     max-width: 24%;
-    height: 143px;
+    height: 170px;
     padding: 15px;
     border: 1px solid black;
     border-radius: 10px;
@@ -855,9 +855,23 @@ table {
     color: white;
 }
 
-.incomplete span {
+.incomplete span, .overDue span, .done span {
     margin: auto;
     font-weight: bold;
+}
+
+.overDue{
+    background-color: var(--red);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.done{
+    background-color: var(--green);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
 }
 
 .addTaskBtnWrapper {
@@ -867,6 +881,11 @@ table {
 
 #addTaskBtn {
     margin-top: 30px;
+}
+
+.dynamicWrapper {
+    display: flex;
+
 }
 /* setting */
 .settingWrapper {

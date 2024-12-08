@@ -16,7 +16,7 @@ else {
     header('location: ./pages/login.php');
 }
 
-$taskObj = new task();
+$taskObj = new task($_SESSION['account']['user_id']);
 
 $leaderboard = $taskObj->leaderboard();
 

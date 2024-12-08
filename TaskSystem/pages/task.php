@@ -111,19 +111,18 @@
             </div>
             <?php foreach ($category_array as $arr) {?>
             <span><?php echo $arr['name'] ?></span>
-            <?php foreach ($task_array as $arr2) {?>
             <div class="taskDiv2">
+            <?php foreach ($task_array as $arr2) {?>
                 <div class="taskWrap">
                     <div>
                         <span>Title: <?php echo $arr2['title']?></span>
                         <button type="button"><a href="viewTask.php?id=<?php echo $arr2['task_id'] ?>" class="taskView" >View</a></button>
                     </div>
-                    <span>Due Date: <?php $arr2['due_date'] ?> </span>
-                    <div class="incomplete"><span>Incomplete</span></div>
+                    <span>Due Date: <?php echo $arr2['due_date'] ?> </span>
+                    <div class=" <?php echo $arr2['status'] ?> "><span><?php echo $arr2['status'] ?></span></div>
                 </div>
-                
+                <?php } ?>
             </div>
-            <?php } ?>
             <div class="addTaskBtnWrapper"> <button type="button" class="reusableBtn" id="addTaskBtn"><a href="addtask.php?id=<?php echo $arr['category_id'] ?>">Add Task</a></button></div>
             <?php } ?>
         </div>

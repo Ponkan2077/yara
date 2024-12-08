@@ -129,7 +129,15 @@ include_once $path;
      }
 
      function getTask(){
-        $sql = "Select task_id, title, due_date, description, category_id, user_id from task where user_id = :user_id;";
+        $sql = "SELECT
+         task_id, title, due_date, description, category_id, completion_date, created_at, user_id, is_completed, 
+         CASE 
+            WHEN is_completed = 1 THEN 'done'
+            WHEN created_at > due_date THEN 'overdue'
+            when is_completed = 0 THEN 'incomplete'
+        END AS status
+        from task where user_id = :user_id;";
+
         $query = $this->db->connect()->prepare($sql);
         $data = null;
 
@@ -271,7 +279,7 @@ include_once $path;
 
          
         function leaderboard(){
-           $sql = "Select u.user_id, u.username as username, u.created_at, (Select count(is_completed) from task where is_completed = 1) as NumTaskComplete, (SELECT image_path from image where user_id = u.user_id) as img_path from task t inner join user u on t.user_id = u.user_id group by u.username order by NumTaskComplete DESC limit 5;";
+           $sql = "Select u.user_id, u.username as username, u.created_at, (Select count(is_completed) from task where is_completed = 1) as NumTaskComplete, (SELECT image_path from image where user_id = u.user_id) as img_path from task t inner join user u on t.user_id = u.user_id group by u.username order by NumTaskComplete DESC limit 10;";
 
            $query = $this->db->connect()->prepare($sql);
 

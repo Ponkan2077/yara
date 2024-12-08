@@ -121,7 +121,7 @@ if(empty($usernameErr)){
                <span>TaskSystem</span>
            </div>
             <form class="formModal" action="" method="POST" enctype="multipart/form-data">
-                <img src="<?php echo $image_path?>" class="profileImg">
+                <img src="<?php if($_SESSION['account']['img_path']) { echo $_SESSION['account']['img_path'];} else { echo '/yara/TaskSystem/assets/uploads/user_6739d9205c3d2.png'; } ?>" class="profileImg">
                 <div class="imgChooseWrapper"> <input type="file" name="image" accept="image/*" class="inputImg" id="imageBtn" hidden>
                 <label for="imgBtn" class="reusableBtn">Upload Image</label><span id="file-chosen" class="spanProfile">No file chosen</span></div>
                 <label for="category">UserName:</label>
