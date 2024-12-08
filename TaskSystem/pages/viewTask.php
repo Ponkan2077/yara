@@ -17,9 +17,13 @@ else {
 }
 $taskObj = new task($_SESSION['account']['user_id']);
 
-$taskId = $taskTitle = "";
+$taskId = $taskTitle = $taskDueDate = $taskDescription = "";
 
-$taskIdErr = $taskTitleErr = "";
+$taskIdErr = $taskTitleErr = $taskDescriptionErr = $taskDueDateErr = "";
+
+$taskAction = "";
+
+$taskActionErr = "";
 
 $task_array = "";
 $task_array = $taskObj->getTask();
@@ -31,35 +35,71 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
      
     $taskId = $_POST['task_id'];
     $taskTitle = $_POST['task_title'];
+    $taskDueDate = $_POST['due_date'];
+    $taskAction = $_POST['submitAction'];
+    $taskDescription = $_POST['task_description'];
 
-    if(isset($taskId)){
+    if(empty($taskId)){
         $taskIdErr = "Task Id needed!";
     }
 
-    if (isset($taskTitle)){
-        $taskTitleErr = "Task title needed needed!";
+    if (empty($taskTitle)){
+        $taskTitleErr = "Task title needed!";
     }
 
-    if(isset($_POST['is_done'])){
-        $is_done = $_POST['is_done'];
+    if (empty($taskDueDate)){
+        $taskDueDateErr = "Task Due Date needed!";
+    }
 
-        if(empty($is_done)){
-         $is_doneErr = "Is empty";
-        }
+    if (empty($taskDescription)){
+        $taskDueDateErr = "Task Description needed!";
+    }
+
+        if($taskAction === "Delete"){
+            if(empty($taskIdErr) && empty($taskTitleErr)){
+     
+                if($taskObj->deleteTask($_SESSION['account']['user_id'],$taskId, $taskTitle )){
+                 header('location: task.php');
+                 exit;
+                }
+                else {
+                    error_log("Something went wrong!");
+                }
+             }
+           }
+
+        if($taskAction === "Edit"){
+            if(empty($taskIdErr) && empty($taskTitleErr) && empty($taskDueDateErr) && empty($taskDescriptionErr)){
+                
+                if($taskObj->editTask($_SESSION['account']['user_id'],$taskId, $taskTitle, $taskDescription, $taskDueDate )){
+                 header('location: task.php');
+                 exit;
+                }
+     
+                else {
+                    error_log("Something went wrong!");
+                }
+             }
+           }
+
+       if($taskAction === "Done"){
+
+        if(empty($taskIdErr) && empty($taskTitleErr)){
  
-        if(empty($is_doneErr && empty($taskIdErr) && empty($taskTitle))){
-           $taskObj->is_done = true;
-
-           if($taskObj->is_done($_SESSION['account']['user_id'],$taskId, $task_Title )){
-            header('location: task.php');
-           }
-
-           else {
-            echo "Something went wrong";
-           }
-        }
-     }
-}
+            if($taskObj->is_done($_SESSION['account']['user_id'],$taskId, $taskTitle )){
+             header('location: task.php');
+             exit;
+            }
+            else {
+                error_log("Something went wrong!");
+            }
+         }
+       } else {
+        error_log("Something went wrong!");
+       }
+     }else {
+        error_log("Something went wrong!");
+       }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,34 +118,39 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
         $path = $pathSave;
         ?> 
         </aside>
-    <main>
-            <div class="viewTaskModal">
-                 <div id="loginLogo">
-                <span>TaskSystem</span>
-                 </div>
-                  <?php foreach($task_array as $arr){ 
-                    if($arr['task_id'] == $taskId){?>
-                  <div class="taskTitleWrap">
-                      <h2 class="title">Title:</h2>
-                      <p><?php echo $arr['title']?></p>
-                  </div>.
-                  <div class="descriptionWrap">
-                      <h2>Description:</h2>
-                      <p><?php echo $arr['description']?></p>
-                  </div>
-                  <div class="dueDateWrap">
-                     <h2>Due Date: </h2>
-                     <p><?php echo $arr['due_date']?></p>
-                  </div>
-                  <form action="" method="POST">
-                  <input type="hidden" name="task_id" value="<?php echo $taskId?>">
-                  <input type="hidden" name="task_title" value="<?php echo $arr['title']?>">
-                  <?php } }?>
-                  <div class="formBtnWrapper"><input type="submit" name="is_done" class="reusableBtn" value ="Done" id="btnFormR"></div>
-                  </form>
-
+        <main>
+    <div class="viewTaskModal" id="viewMainTask">
+        <div id="loginLogo">
+            <span>TaskSystem</span>
+        </div>
+        <?php foreach ($task_array as $arr) { 
+            if ($arr['task_id'] == $taskId) { ?>
+                <form action="" method="POST" id="viewTaskForm">
+                <div class="taskTitle">
+               <label for="title">Title:</label>
+            <input type="text" name="task_title"  class="field" value="<?php  echo $arr['title'] ?>">
             </div>
-        </main>
+            <div class="taskDescription">
+            <label for="description">Description:</label>
+            <textarea name="task_description" rows="10" cols="10" class="field" value = "<?php  echo $arr['description'] ?>"><?php  echo $arr['description'] ?></textarea>
+            </div>
+            <div class="taskDueDate">
+            <label for="due_date">Due date:</label>
+            <input type="datetime-local" name="due_date" class="field" value="<?php  echo $arr['due_date'] ?>">
+            <input type="hidden" value="<?php echo $taskId?>" name="task_id">
+            </div>
+
+                    <div class="formBtnWrapper" id="viewBtnWrapper">
+                        <input type="submit" name="submitAction" class="redBtn" value="Delete" id="btnFormR">
+                        <input type="submit" name="submitAction" class="greenBtn" value="Done" id="btnFormR">
+                        <input type="submit" name="submitAction" class="reusableBtn" value="Edit" id="btnFormR">
+                    </div>
+                </form>
+            <?php }
+        } ?>
+    </div>
+</main>
+
         <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
 </body>
 </html>

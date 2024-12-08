@@ -1151,3 +1151,17 @@ table {
     border: 1px solid black;
     border-radius: 20px;
 }
+
+#viewBtnWrapper{
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+#viewTaskForm {
+    width: 90%;
+}
+
+#viewMainTask {
+    height: 630px;
+}

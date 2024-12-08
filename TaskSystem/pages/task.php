@@ -29,7 +29,7 @@
 
   $category_array = $taskObj->getCategory($user_id);
 
-  $task_array = $taskObj->getTask($user_id);
+  $task_array = $taskObj->getTask();
 
  if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
@@ -62,7 +62,6 @@
        }
 
        if(empty($is_doneErr)){
-
        }
     }
  } 

@@ -128,6 +128,57 @@ include_once $path;
 
      }
 
+     function editTask($user_id, $task_id, $task_title, $taskDescription,$due_date){
+        $sql = "UPDATE task 
+        SET 
+            title = :title,
+            description = :description,
+            due_date = :due_date,
+            updated_at = :date WHERE task_id = :task_id;
+        ";
+
+        $date = new DateTime('now');
+
+        $date = $this->date->format('Y-m-d H:i:s');
+
+        $action = "Edited Task";
+
+        $query = $this->db->connect()->prepare($sql);
+
+
+        $query->bindParam(':date', $date);
+        $query->bindParam(':task_id', $task_id);
+        $query->bindParam(':description', $taskDescription);
+        $query->bindParam(':title', $task_title);
+        $query->bindParam(':due_date', $due_date);
+
+        if($query->execute()){
+            if($this->setAction($this->user_id, $action, $this->title)){
+                return true;
+            }
+        }
+
+        return false;
+     }
+
+     function deleteTask($user_id, $task_id, $task_title){
+        $sql = "DELETE from task WHERE task_id = :task_id;";
+
+        $action = "Delete Task";
+
+        $query = $this->db->connect()->prepare($sql);
+
+        $query->bindParam(':task_id', $task_id);
+
+        if($query->execute()){
+            if($this->setAction($this->user_id, $action, $this->title)){
+                return true;
+            }
+        }
+
+        return false;
+     }
+
      function getTask(){
         $sql = "SELECT
          task_id, title, due_date, description, category_id, completion_date, created_at, user_id, is_completed, 
@@ -156,6 +207,8 @@ include_once $path;
         $sql = "UPDATE task set is_completed = 1 where task_id = :task_id;";
 
         $sql = $sql . "Update task set updated_at = :date where task_id = :task_id;";
+
+        $sql = $sql . "Update task set completion_date = :date where task_id = :task_id;";
         
 
         $date = new DateTime('now');
