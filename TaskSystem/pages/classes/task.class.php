@@ -109,12 +109,14 @@ include_once $path;
      }
     }
 
-     function getCategory($user_id){
+     function getCategory($user_id, $keyword=""){
        // $sql = "Select c.name from task as k  inner join category as c on k.category_id = c.category_id where c.user_id = :user_id; ";
 
-       $sql = "Select * from category where user_id = :user_id;";
+       $sql = "SELECT * from category where user_id = :user_id AND CONCAT('%', :keyword, '%');";
 
         $query = $this->db->connect()->prepare($sql);
+
+        $query->bindParam(':keyword', $keyword);
          
         $query->bindParam(":user_id", $user_id);
         $data = null;
@@ -179,20 +181,32 @@ include_once $path;
         return false;
      }
 
-     function getTask(){
-        $sql = "SELECT
-         task_id, title, due_date, description, category_id, completion_date, created_at, user_id, is_completed, 
-         CASE 
+     function getTask($keyword=''){
+        $sql = "SELECT *
+FROM (
+    SELECT
+        task_id, title, due_date, description, category_id, completion_date, created_at, user_id, is_completed, 
+        CASE 
             WHEN is_completed = 1 THEN 'done'
             WHEN created_at > due_date THEN 'overdue'
-            when is_completed = 0 THEN 'incomplete'
+            WHEN is_completed = 0 THEN 'incomplete'
         END AS status
-        from task where user_id = :user_id;";
+    FROM task
+) AS subquery
+WHERE user_id = :user_id 
+  AND (
+        title LIKE CONCAT('%', :keyword, '%')
+        OR description LIKE CONCAT('%', :keyword, '%')
+        OR status LIKE CONCAT('%', :keyword, '%')
+      );
+";
 
         $query = $this->db->connect()->prepare($sql);
         $data = null;
 
         $query->bindParam(":user_id", $this->user_id);
+
+        $query->bindParam(':keyword', $keyword);
        
             if ($query->execute()){
                 $data = $query->fetchAll(PDO::FETCH_ASSOC);

@@ -38,14 +38,20 @@ class admin extends user {
 
    }
 
-    function getUsersData(){
-    $sql = "Select *,
+    function getUsersData($keyword=''){
+    $sql = "SELECT *,
         CASE
             WHEN loggedin_at BETWEEN :weekAgo AND :date THEN 'Active'
             WHEN is_banned = 1 THEN 'Banned'
             ELSE 'Inactive'
         END AS Status
-        from user;";
+        from user
+        WHERE username LIKE CONCAT('%',:keyword,'%')
+        OR CAST(user_id AS CHAR) like CONCAT('%',:keyword,'%')
+         OR created_at LIKE CONCAT('%',:keyword,'%')
+         OR Status LIKE CONCAT('%',:keyword,'%')
+         OR gender LIKE CONCAT('%',:keyword,'%')
+         OR email LIKE CONCAT('%',:keyword,'%') ;";
 
     $query = $this->db->connect()->prepare($sql);
 
@@ -63,6 +69,8 @@ class admin extends user {
 
     $query->bindParam(':date', $date);
 
+    $query->bindParam(':keyword', $keyword);
+
     $data = null;
 
     if($query->execute()){
@@ -72,10 +80,18 @@ class admin extends user {
 
     return false;
    }
-   function getReport(){
-    $sql = "Select r.*, u.username as username from report as r inner join user as u on r.user_id = u.user_id;";
+   function getReport($keyword=''){
+    $sql = "SELECT r.*, u.username as username from report as r inner join user as u on r.user_id = u.user_id
+    WHERE u.username LIKE CONCAT('%', :keyword, '%')
+   OR r.report_title LIKE CONCAT('%', :keyword, '%')
+   OR r.description LIKE CONCAT('%', :keyword, '%')
+   OR r.status LIKE CONCAT('%', :keyword, '%')
+   OR r.generated_at LIKE CONCAT('%', :keyword, '%')
+   OR CAST(r.user_id AS CHAR) LIKE CONCAT('%', :keyword, '%');";
 
     $query = $this->db->connect()->prepare($sql);
+
+    $query->bindParam(':keyword', $keyword);
 
     $data = null;
     if($query->execute()){
