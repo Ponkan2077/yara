@@ -306,7 +306,7 @@ WHERE user_id = :user_id
          }
 
          function upcomingDeadlines($user_id){
-            $sql = "Select title, due_date from task where due_date > :date and :user_id = user_id order by due_date - created_at ASC LIMIT 3; ";
+            $sql = "Select title, due_date from task where due_date > :date and :user_id = user_id order by due_date - created_at ASC LIMIT 7; ";
 
             $date = new DateTime('now');
             $date = $this->date->format('Y-m-d H:i:s');

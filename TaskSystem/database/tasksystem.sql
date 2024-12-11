@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2024 at 11:28 AM
+-- Generation Time: Dec 11, 2024 at 03:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,14 @@ CREATE TABLE `action` (
 --
 
 INSERT INTO `action` (`action_id`, `user_id`, `action`, `created_at`, `action_title`) VALUES
-(1, 23, 'Add Task', '2024-12-06 08:39:06', '123');
+(1, 23, 'Add Task', '2024-12-06 08:39:06', '123'),
+(2, 23, 'Add Task', '2024-12-08 06:19:06', 'hello'),
+(3, 23, 'Completed Task', '2024-12-08 06:31:11', ''),
+(4, 23, 'Completed Task', '2024-12-08 11:06:37', ''),
+(5, 23, 'Delete Task', '2024-12-08 11:06:44', ''),
+(6, 23, 'Edited Task', '2024-12-08 11:36:55', ''),
+(7, 23, 'Edited Task', '2024-12-08 11:37:02', ''),
+(8, 23, 'Edited Task', '2024-12-08 11:55:33', '');
 
 -- --------------------------------------------------------
 
@@ -238,7 +245,7 @@ INSERT INTO `task` (`task_id`, `user_id`, `category_id`, `priority_id`, `title`,
 (48, 8, 2, 0, 'wert', 'werwer', '2024-10-16 20:19:00', '2024-10-16 20:14:52', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 0, 0),
 (49, 14, 2, 1, '123', '2', '2024-11-30 12:13:08', '2024-11-30 19:13:53', '2024-11-30 12:13:08', '2024-11-30 12:13:08', '2', 3, 3),
 (50, 14, 2, 1, '123', '2', '2024-11-30 12:13:08', '2024-11-30 19:14:00', '2024-11-30 12:13:08', '2024-11-30 12:13:08', '2', 3, 3),
-(51, 23, 24, 0, '123', '123', '2024-12-14 13:19:00', '2024-12-06 16:39:06', '2024-12-06 18:00:27', '0000-00-00 00:00:00', '', 0, 1);
+(51, 23, 24, 0, '123', '554789', '2024-12-14 13:19:00', '2024-12-06 16:39:06', '2024-12-08 19:55:32', '2024-12-08 19:06:37', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -282,7 +289,7 @@ INSERT INTO `user` (`user_id`, `username`, `email`, `password`, `is_user`, `is_a
 (20, '1000', 'reyflores12380@gmail.com', '$2y$10$3E.hIYLxFd5o0tbb/2d6LerLjYpj2dZ5VvFJYIyCOpT', 1, 0, '2024-12-04 07:22:16', NULL, '', '', 0, 0, 0),
 (21, '1111', 'reyflores12380@gmail.com', '$2y$10$YwzQ4BdWim8pGuiIqEJdu.aSz6B65.SmmY4HTumfPFj', 1, 0, '2024-12-04 07:29:02', NULL, '', '', 0, 0, 0),
 (22, '2222', 'reyflores12380@gmail.com', '$2y$10$5iRdGFGBUSuvHM7H9wlXIOX9i1zKlcTCwU04zOvl9Mt2KkRwj.3E2', 1, 0, '2024-12-04 07:30:45', '2024-12-04', '', '', 0, 0, 0),
-(23, '3333', 'reyflores12380@gmail.com', '$2y$10$yb8v6Zlsc5nsEctf0zf1EeqwZKYfn0/d3.A8lFEMfkkOfrzhlHimW', 1, 0, '2024-12-06 03:06:33', '2024-12-06', '', '', 0, 0, 0);
+(23, '3333', 'reyflores12380@gmail.com', '$2y$10$yb8v6Zlsc5nsEctf0zf1EeqwZKYfn0/d3.A8lFEMfkkOfrzhlHimW', 1, 0, '2024-12-11 10:52:24', '2024-12-11', '', '', 0, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -352,7 +359,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `action`
 --
 ALTER TABLE `action`
-  MODIFY `action_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `action_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -394,7 +401,7 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `task_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `task_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `user`
