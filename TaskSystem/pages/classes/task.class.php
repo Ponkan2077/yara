@@ -109,10 +109,10 @@ include_once $path;
      }
     }
 
-     function getCategory($user_id, $keyword=""){
+     function getCategory($user_id, $keyword=''){
        // $sql = "Select c.name from task as k  inner join category as c on k.category_id = c.category_id where c.user_id = :user_id; ";
 
-       $sql = "SELECT * from category where user_id = :user_id AND CONCAT('%', :keyword, '%');";
+        $sql = "SELECT * from category where user_id = :user_id AND name LIKE CONCAT('%', :keyword, '%');";
 
         $query = $this->db->connect()->prepare($sql);
 
@@ -155,7 +155,7 @@ include_once $path;
         $query->bindParam(':due_date', $due_date);
 
         if($query->execute()){
-            if($this->setAction($this->user_id, $action, $this->title)){
+            if($this->setAction($this->user_id, $action, $task_title)){
                 return true;
             }
         }
@@ -173,7 +173,7 @@ include_once $path;
         $query->bindParam(':task_id', $task_id);
 
         if($query->execute()){
-            if($this->setAction($this->user_id, $action, $this->title)){
+            if($this->setAction($this->user_id, $action, $task_title)){
                 return true;
             }
         }
@@ -379,7 +379,7 @@ WHERE user_id = :user_id
     function recentActivities($user_id) {
       // $sql = "Select updated_at, action, title from task where :user_id = user_id order by updated_at  DESC LIMIT 3;";
 
-      $sql = "Select action, action_title, created_at from action where user_id = :user_id;";
+      $sql = "Select action, action_title, created_at from action where user_id = :user_id order by created_at DESC LIMIT 7;";
        
        $query = $this->db->connect()->prepare($sql);
 

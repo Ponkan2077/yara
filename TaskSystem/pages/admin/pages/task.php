@@ -14,6 +14,7 @@
     else {
         header('location: ./pages/login.php');
     }
+  
   //header('Location:'.$_SERVER['PHP_SELF']);
   $taskObj = new task($_SESSION['account']['user_id']);
   $category_id = "";
@@ -21,15 +22,32 @@
   $category = "";
   $categoryErr = "";
   $is_done = $is_doneErr =  "";
-  $category_array = "";
-
-  $categorySearch = $Keyword ='';
+  $category_array = [];
 
   $task_array = "";
 
-  $category_array = $taskObj->getCategory($user_id);
+  $keyword ='';
 
-  $task_array = $taskObj->getTask();
+  if ($_SERVER['REQUEST_METHOD'] == "GET"){
+
+    $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
+
+    $category = isset($_GET['category']) ? trim($_GET['category']) : 'category';
+
+    if($category === "category"){
+        $category_array = $taskObj->getCategory($user_id, $keyword);
+        $task_array = $taskObj->getTask();
+    }
+    
+    if($category === "task" ){
+        if(!empty($task_array = $taskObj->getTask($keyword))){
+            $category_array = $taskObj->getCategory($user_id);
+            $task_array = $taskObj->getTask($keyword);
+        }   
+    }
+
+
+  }
 
  if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
@@ -102,6 +120,19 @@
         
         </div>
         <div class="main">
+        <div class = "field" id="searchWrapper">
+        <form action="" method="GET">
+            <button type = "submit" class = "searchBtn"><i class="fa-solid fa-magnifying-glass fs-nav"></i></button>
+                <input type = "text"
+                        placeholder = "Search..."
+                        name = "keyword"
+                        class = "" id="searchField" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>" >
+                        <select name="category" id="category">
+                            <option value="category" <?php echo (isset($_GET['category']) && $_GET['category'] == 'category') ? 'selected' : ''; ?>>Category</option>
+                            <option value="task" <?php echo (isset($_GET['category']) && $_GET['category'] == 'task') ? 'selected' : ''; ?>>Task</option>
+                        </select>
+                </form>
+        </div>
             <div class="taskCategory">
                 <div>
                     <span>Category</span>

@@ -1165,3 +1165,24 @@ table {
 #viewMainTask {
     height: 630px;
 }
+
+/* search */
+.searchBtn {
+    background-color: transparent;
+    width: 40px;
+    height: 100%;
+}
+
+#searchWrapper {
+    width: 300px;
+    margin-bottom: 30px;
+}
+
+#searchWrapper.focus {
+    border: 2px solid black;
+}
+
+#searchField, #category {
+    outline: none;
+}
+
