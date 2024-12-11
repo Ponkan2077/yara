@@ -39,19 +39,23 @@ class admin extends user {
    }
 
     function getUsersData($keyword=''){
-    $sql = "SELECT *,
-        CASE
-            WHEN loggedin_at BETWEEN :weekAgo AND :date THEN 'Active'
-            WHEN is_banned = 1 THEN 'Banned'
-            ELSE 'Inactive'
-        END AS Status
-        from user
-        WHERE username LIKE CONCAT('%',:keyword,'%')
-        OR CAST(user_id AS CHAR) like CONCAT('%',:keyword,'%')
-         OR created_at LIKE CONCAT('%',:keyword,'%')
-         OR Status LIKE CONCAT('%',:keyword,'%')
-         OR gender LIKE CONCAT('%',:keyword,'%')
-         OR email LIKE CONCAT('%',:keyword,'%') ;";
+    $sql = "SELECT *
+FROM (
+    SELECT *,
+           CASE
+               WHEN loggedin_at BETWEEN :weekAgo AND :date THEN 'Active'
+               WHEN is_banned = 1 THEN 'Banned'
+               ELSE 'Inactive'
+           END AS status
+    FROM user
+) AS subquery
+WHERE LOWER(status) LIKE LOWER(CONCAT('%', :keyword, '%'))
+       OR username LIKE CONCAT('%', :keyword, '%')
+       OR CAST(user_id AS CHAR) LIKE CONCAT('%', :keyword, '%')
+       OR created_at LIKE CONCAT('%', :keyword, '%')
+       OR gender LIKE CONCAT('%', :keyword, '%')
+       OR email LIKE CONCAT('%', :keyword, '%');
+";
 
     $query = $this->db->connect()->prepare($sql);
 
@@ -80,6 +84,7 @@ class admin extends user {
 
     return false;
    }
+   
    function getReport($keyword=''){
     $sql = "SELECT r.*, u.username as username from report as r inner join user as u on r.user_id = u.user_id
     WHERE u.username LIKE CONCAT('%', :keyword, '%')

@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
 <body id="task">
 <aside>
         <?php 
-        $path .= "/yara/TaskSystem/pages/includes/aside.php";
+        $path .= "/yara/TaskSystem/pages/includes/admin.aside.php";
         include_once($path);
         $path = $pathSave;
         ?> 

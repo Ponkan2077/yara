@@ -15,10 +15,20 @@ if (isset($_SESSION['account'])) {
 }
 
 $adminObj = new admin($_SESSION['account']['username'], $_SESSION['account']['user_id']);
-$userData = $adminObj->getUsersData();
 
 $user_id = '';
 $user_idErr = '';
+
+$keyword ='';
+
+$userData = [];
+
+  if ($_SERVER['REQUEST_METHOD'] == "GET"){
+
+    $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
+    
+    $userData = $adminObj->getUsersData($keyword);
+  }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_POST['userId'];
@@ -71,6 +81,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
     <div class="main" id="settingMain">
+    <div class = "field" id="searchWrapper">
+        <form action="" method="GET">
+            <button type = "submit" class = "searchBtn"><i class="fa-solid fa-magnifying-glass fs-nav"></i></button>
+                <input type = "text"
+                        placeholder = "Search..."
+                        name = "keyword"
+                        class = "" id="searchField" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>" >
+                </form>
+        </div>
         <table class="reportTable">
             <thead>
                 <tr aria-rowspan="2">
@@ -90,8 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <td><?php echo $arr['user_id']?></td>
                         <td><?php echo $arr['email']?></td>
                         <td><?php echo $arr['gender']?></td>
-                        <td><?php echo $arr['Status']?></td>
                         <td><?php echo $arr['created_at']?></td>
+                        <td><?php echo $arr['status']?></td>
                         <td><button type="button" class="redBtnValue" value="<?php echo $arr['user_id']?>" id="banUserBtn_<?php echo $arr['user_id']; ?>">Ban</button></td>
                     </tr>
                 <?php }?>

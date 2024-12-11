@@ -19,7 +19,7 @@ else {
 }
 
 
-$taskObj = new task();
+$taskObj = new task($_SESSION['account']['username'], $_SESSION['account']['user_id']);
 $adminObj = new admin($_SESSION['account']['username'], $_SESSION['account']['user_id']);
 
 $count_task = $taskObj->countCompleteTask($user_id);

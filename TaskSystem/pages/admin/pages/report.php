@@ -22,6 +22,15 @@
     $report_id = '';
     $report_idErr = '';
 
+    $keyword = "";
+
+    if ($_SERVER['REQUEST_METHOD'] == "GET"){
+
+        $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
+        
+        $reportData = $adminObj->getReport();
+      }
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $report_id = $_POST['reportId'];
 

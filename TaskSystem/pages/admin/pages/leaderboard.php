@@ -33,7 +33,7 @@ $leaderboard = $taskObj->leaderboard();
 <body id="leaderboard">
 <aside>
     <?php 
-        $path .= "/yara/TaskSystem/pages/includes/aside.php";
+        $path .= "/yara/TaskSystem/pages/includes/admin.aside.php";
         include_once($path);
         $path = $pathSave;
     ?>
