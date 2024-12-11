@@ -33,12 +33,19 @@ class report extends user {
 
    }
 
-   function getReport(){
-    $sql = "Select * from report where user_id = :user_id;";
+   function getReport($keyword=''){
+    $sql = "SELECT * from report
+    WHERE user_id = :user_id AND
+    (report_title LIKE CONCAT('%', :keyword, '%')
+   OR description LIKE CONCAT('%', :keyword, '%')
+   OR status LIKE CONCAT('%', :keyword, '%')
+   OR generated_at LIKE CONCAT('%', :keyword, '%'));";
 
     $query = $this->db->connect()->prepare($sql);
 
     $query->bindParam(":user_id", $this->user_id);
+
+    $query->bindParam(":keyword", $keyword);
 
     $data = null;
     if($query->execute()){

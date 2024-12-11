@@ -18,11 +18,20 @@
 
     $reportObj = new report($_SESSION['account']['username'], $_SESSION['account']['user_id']);
 
-    $reportData = $reportObj -> getReport();
+    $reportData = [];
 
     $reportTitle = $description = '';
 
     $reportTitleErr = $descriptionErr = '';
+
+    $keyword = "";
+
+    if ($_SERVER['REQUEST_METHOD'] == "GET"){
+
+        $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
+        
+        $reportData = $reportObj->getReport($keyword);
+      }
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $reportTitle = $_POST['title'];
@@ -88,6 +97,15 @@
         
         </div>
         <div class="main" id="settingMain">
+        <div class = "field" id="searchWrapper">
+        <form action="" method="GET">
+            <button type = "submit" class = "searchBtn"><i class="fa-solid fa-magnifying-glass fs-nav"></i></button>
+                <input type = "text"
+                        placeholder = "Search..."
+                        name = "keyword"
+                        class = "" id="searchField" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>" >
+                </form>
+        </div>
             <table class="reportTable">
                 <thead>
                     <tr aria-rowspan="2">

@@ -17,7 +17,7 @@
 
     $adminObj = new admin($_SESSION['account']['username'], $_SESSION['account']['user_id']);
 
-    $reportData = $adminObj->getReport();
+    $reportData = [];
 
     $report_id = '';
     $report_idErr = '';
@@ -28,7 +28,7 @@
 
         $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
         
-        $reportData = $adminObj->getReport();
+        $reportData = $adminObj->getReport($keyword);
       }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -82,6 +82,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
         <div class="main" id="settingMain">
+        <div class = "field" id="searchWrapper">
+        <form action="" method="GET">
+            <button type = "submit" class = "searchBtn"><i class="fa-solid fa-magnifying-glass fs-nav"></i></button>
+                <input type = "text"
+                        placeholder = "Search..."
+                        name = "keyword"
+                        class = "" id="searchField" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>" >
+                </form>
+        </div>
             <table class="reportTable">
                 <thead>
                     <tr aria-rowspan="2">
