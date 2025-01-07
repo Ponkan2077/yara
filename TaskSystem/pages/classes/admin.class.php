@@ -200,4 +200,18 @@ FROM user;
 
     return false;
    }
+
+   function unbanUser($user_id){
+    $sql = "Update user set is_banned = 1 where user_id = :user_id;";
+
+    $query = $this->db->connect()->prepare($sql);
+
+    $query->bindParam(':user_id', $user_id);
+
+    if($query->execute()){
+        return true;
+    }
+
+    return false;
+   }
 }

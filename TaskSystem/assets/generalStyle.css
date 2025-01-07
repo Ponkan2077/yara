@@ -58,6 +58,23 @@ td {
 
 table {
     border-collapse: collapse;
+    width: 100%;
+    background-color: var(--blue);
+    color: white;
+}
+
+theadWrapper {
+    background-color: var(--blue);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-bottom: 0px;
+}
+
+thead{
+    margin: 0;
+    padding: 0;
+    border-bottom: 0px;
 }
 
 /* Reusables */
@@ -82,7 +99,7 @@ table {
     border-radius: 10px;
 }
 
-.greenBtn, .greenBtnValue {
+.greenBtn, .greenBtnValue, .greenBtn1Value, .greenBtn2Value, .greenBtn3Value, .greenBtnSubmit {
     height: 42px;
     font-size: 15px;
     font-weight: bold;
@@ -91,7 +108,8 @@ table {
     padding: 11px 20px;
     border-radius: 10px;
 }
-.redBtnValue,.greenBtnValue {
+
+.redBtnValue,.greenBtnValue, .greenBtn1Value, .greenBtn2Value, .greenBtn3Value, .greenBtnSubmit {
     height: 30px;
     width: 80px;
     padding: 5px;
@@ -106,7 +124,7 @@ table {
 }
 
 /* Modals */
-.modalWrapper, .viewModal {
+.modalWrapper, .viewModa, .modalWrapper1, .modalWrapper2, .modalWrapper3 {
     position: absolute;
     display: none;
     z-index: 1;
@@ -1138,7 +1156,7 @@ table {
     text-align: center;
 }
 
-#submitBanBtn {
+#submitBanBtn, #submitunbanBtn, #submituserBtn, #submitadminBtn {
     margin-right: 10px;
 }
 

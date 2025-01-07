@@ -25,15 +25,17 @@
             $passwordErr = "Wrong password!";
         }
 
-        //if (empty($email)){
-           //$emailErr = "Please enter the correct email!";
-        //}
-
+        
         if(empty($usernameErr) && empty($passwordErr)){ //&& empty($emailErr)){
            // $userObj->email = $email;
             if($userObj->login($username,$password)){
 
                 $_SESSION['account'] = $userObj->fetch($username);
+                if($_SESSION['account']['is_banned']){ 
+                    header('location: login.php');
+                    echo "This user is banned!";
+                    exit;
+                }
                 if($_SESSION['account']['is_user']){ 
                     header('location: ../index.php');
                 }
