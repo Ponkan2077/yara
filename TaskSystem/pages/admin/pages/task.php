@@ -142,7 +142,7 @@
             <?php foreach ($category_array as $arr) {?>
             <span><?php echo $arr['name'] ?></span>
             <div class="taskDiv2">
-            <?php foreach ($task_array as $arr2) {?>
+            <?php foreach ($task_array as $arr2) { if ($arr['category_id'] == $arr2['category_id']){?>
                 <div class="taskWrap">
                     <div>
                         <span>Title: <?php echo $arr2['title']?></span>
@@ -151,7 +151,7 @@
                     <span>Due Date: <?php echo $arr2['due_date'] ?> </span>
                     <div class=" <?php echo $arr2['status'] ?> "><span><?php echo $arr2['status'] ?></span></div>
                 </div>
-                <?php } ?>
+                <?php } } ?>
             </div>
             <div class="addTaskBtnWrapper"> <button type="button" class="reusableBtn" id="addTaskBtn"><a href="addtask.php?id=<?php echo $arr['category_id'] ?>">Add Task</a></button></div>
             <?php } ?>

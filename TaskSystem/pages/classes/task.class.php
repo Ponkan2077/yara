@@ -194,7 +194,7 @@ FROM (
     FROM task
 ) AS subquery
 WHERE user_id = :user_id 
-  AND (
+  AND  (
         title LIKE CONCAT('%', :keyword, '%')
         OR description LIKE CONCAT('%', :keyword, '%')
         OR status LIKE CONCAT('%', :keyword, '%')
