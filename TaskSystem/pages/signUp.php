@@ -5,20 +5,6 @@
      $path2 .= "/yara/TaskSystem/index.html";
      require_once $path;
      require_once $path1;
-
-     session_start();
-
-
-     if(isset($_SESSION['account'])){
-         if(!(isset($_SESSION['account']['is_user']) || isset($_SESSION['account']['is_admin']))){
-             header('location: login.php');
-             exit;
-         }
-         else {
-             header('location: login.php');
-             exit;
-         }
-     } 
      
      $userObj = new user();
      $username = $password = $email = "";
