@@ -163,7 +163,7 @@ $path .= "/yara/TaskSystem/pages/database.php";
 
        $queryInsertImage = $this->db->connect()->prepare($sqlInsertImage);
 
-       $queryInsertImage->bindParam(":image_path", $imgPath);
+       $queryInsertImage->bindParam(":image_path", $img_path);
 
        $queryInsertImage->bindParam(":user_id", $this->user_id);
 

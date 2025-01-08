@@ -48,7 +48,7 @@ $leaderboard = $taskObj->leaderboard();
                     <div class="userInfo">Rank</div>
                     <div class="userInfo">Username</div>
                     <div class="userInfo">Number Of Tasks Done</div>
-                    <div class="userInfo">Number of Tasks Done Today</div>
+                    <div class="userInfo">Number Of Tasks Done Today</div>
                     <div class="userInfo">Account Created At</div>
                 </div>
                 <?php $count = 0; foreach($leaderboard as $arr) { ?>
@@ -57,6 +57,7 @@ $leaderboard = $taskObj->leaderboard();
                     <div class="userInfo1"><?php echo $count += 1?></div>
                     <div class="userInfo1"><?php echo $arr['username'] ?></div>
                     <div class="userInfo1"><?php echo $arr['NumTaskComplete'] ?></div>
+                    <div class="userInfo1"><?php echo $arr['TaskCompleteToday'] ?></div>
                     <div class="userInfo1"><?php echo $arr['created_at'] ?></div>
                      <div class="userInfo1"></div>
                 </div>

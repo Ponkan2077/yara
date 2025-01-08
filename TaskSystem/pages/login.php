@@ -40,7 +40,7 @@
                     header('location: ../index.php');
                 }
                 if($_SESSION['account']['is_admin']){
-                    header('location: ./pages/admin/index.php');
+                    header('location: ./admin/index.php');
                 }
             }
             else {

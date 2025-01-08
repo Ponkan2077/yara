@@ -23,11 +23,12 @@ else {
     $username = $email = $address = $gender = $age = $contact = '';
     $usernameErr = '';
 
-    $image_path = $_SESSION['account']['img_path'];
-
-    $imagePth;
+    $image_path = $_SESSION['account']['img_path'] ?? '/yara/TaskSystem/assets/uploads/user_6739d9205c3d2.pngg';
 
     $userTest = [];
+
+    $imagePth = $_SESSION['account']['img_path'] ?? '/yara/TaskSystem/assets/uploads/user_6739d9205c3d2.pngg';
+
 if($_SERVER['REQUEST_METHOD'] == "POST"){
 
    $username = $_POST['username'];
@@ -81,7 +82,7 @@ if(empty($usernameErr)){
 
     if($userObj->edit($imagePth)){
         if ($_SESSION['account'] = $userObj->fetch($username)){
-            $imagePth = $_SESSION['account']['img_path'];
+            $imagePth = $_SESSION['account']['img_path'] ?? '/yara/TaskSystem/assets/uploads/user_6739d9205c3d2.pngg';
             header('Location:'.$_SERVER['PHP_SELF']);
         }
     }

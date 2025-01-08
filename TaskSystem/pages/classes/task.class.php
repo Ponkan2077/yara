@@ -346,11 +346,25 @@ WHERE user_id = :user_id
 
          
         function leaderboard(){
-           $sql = "Select u.user_id, u.username as username, u.created_at, (Select count(is_completed) from task where is_completed = 1) as NumTaskComplete, (SELECT image_path from image where user_id = u.user_id) as img_path from task t inner join user u on t.user_id = u.user_id group by u.username order by NumTaskComplete DESC limit 10;";
+           $sql = "Select u.user_id, u.username as username, u.created_at, (Select count(is_completed) from task where is_completed = 1) as NumTaskComplete, (SELECT count(is_completed) from task where completion_date between :dayAgo and :date) as TaskCompleteToday, (SELECT image_path from image where user_id = u.user_id) as img_path from task t inner join user u on t.user_id = u.user_id group by u.username order by NumTaskComplete DESC limit 10;";
 
            $query = $this->db->connect()->prepare($sql);
 
+           $date = new DateTime('now');
+
+    $dateClone = clone $date;
+
+    $date = $this->date->format('Y-m-d H:i:s');
+
+    $dayAgo = $dateClone->modify('-1 day'); 
+
+    $dayAgo = $this->date->format('Y-m-d H:i:s');
+
+
            $data = null;
+
+           $query->bindParam(":dayAgo", $dayAgo);
+           $query->bindParam(":date", $date);
 
             if($query->execute()){
                $data =  $query->fetchAll(PDO::FETCH_ASSOC);
