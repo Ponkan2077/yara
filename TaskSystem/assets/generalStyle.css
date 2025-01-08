@@ -1,0 +1,1213 @@
+
+@font-face {
+    font-family: 'DMSans';
+    src: url('/yara/TaskSystem/assets/fonts/DMSans_36pt-Medium.ttf') format('truetype');
+    font-weight: 600; /* Medium weight */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DMSans';
+    src: url('/yara/TaskSystem/assets/fonts/DMSans_36pt-Bold.ttf') format('truetype');
+    font-weight: 700; /* Bold weight */
+    font-style: normal;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    font-family:'DMSans','Inter', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-decoration: none;
+    list-style: none;
+    font-weight: 600;
+}
+
+:root {
+    --blue: #5463FF;
+    --orange: #F27B12;
+    --red: #D83428;
+    --green: #1BE01B;
+}
+
+body{
+    display: flex;
+    background-color: white;
+    height: 100vh;
+}
+
+.adminDash{
+    height: auto;
+}
+
+img, video {
+    width: 100%;
+    object-fit: contain;
+    height: 100%;
+}
+
+main {
+    width: calc(100% - 263px);
+}
+
+td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: var(--blue);
+    color: white;
+}
+
+theadWrapper {
+    background-color: var(--blue);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-bottom: 0px;
+}
+
+thead{
+    margin: 0;
+    padding: 0;
+    border-bottom: 0px;
+}
+
+/* Reusables */
+
+.reusableBtn {
+    height: 42px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--blue);
+    color: white;
+    padding: 11px 20px;
+    border-radius: 10px;
+}
+
+.redBtn, .redBtnSubmit, .redBtnValue {
+    height: 42px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--red);
+    color: white;
+    padding: 11px 20px;
+    border-radius: 10px;
+}
+
+.greenBtn, .greenBtnValue, .greenBtn1Value, .greenBtn2Value, .greenBtn3Value, .greenBtnSubmit {
+    height: 42px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--green);
+    color: white;
+    padding: 11px 20px;
+    border-radius: 10px;
+}
+
+.redBtnValue,.greenBtnValue, .greenBtn1Value, .greenBtn2Value, .greenBtn3Value, .greenBtnSubmit {
+    height: 30px;
+    width: 80px;
+    padding: 5px;
+}
+/* General Positioning */
+.dashMainSection {
+    margin-left: 40px;
+}
+
+.head {
+    margin-left: 40px;
+}
+
+/* Modals */
+.modalWrapper, .viewModa, .modalWrapper1, .modalWrapper2, .modalWrapper3 {
+    position: absolute;
+    display: none;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color:  rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.formModal {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 90%;
+    margin-top: 30px;
+}
+
+/* close */
+.close,.close1 {
+    float: right;
+    color: black;
+    font-size: 1.8rem;
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.close:hover,
+.close:focus {
+  color: #5463FF;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.close1:hover,
+.close1:focus {
+  color: #5463FF;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* index/dashboard style*/
+
+/* aside */
+
+ .asideWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+    background-color: black;
+    width: 263px;
+ }
+
+ .menuHome {
+    margin-bottom: 25px;
+    margin-top: 25px;
+    display: flex;
+ }
+
+ .asideNav {
+    margin-left: 15px;
+ }
+ .menuHome a {
+    font-size: 36px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s;
+    color: white;
+    margin: auto;
+ }
+
+ .asideNav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 100%;
+ }
+
+ .asideNav ul li {
+    width: 100%;
+    display: flex;
+    align-content: center;
+ }
+
+ .asideNav ul li a img, .asideNav ul li .logoutBtn img{
+    width: 18px;
+    height: 19px;
+ }
+ 
+ .asideNav ul li a {
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+    color: black;
+    width: 80%;
+    height: 100%;
+    text-align:  start;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+ }
+
+ .asideNav ul li a.active {
+    background-color: black;
+    color: white;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+ }
+
+ .logout {
+     margin-bottom: 30px;
+ }
+
+ .logoutBtn {
+    font-size: 14px;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+ } 
+
+ /* login and signUp */
+
+.wraplogin{
+    height: 100vh;
+}
+
+
+.formWrapper {
+    position: absolute;
+    display: flex;
+    width: 500px;
+    height: 550px;
+    align-items: center;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 20px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.formWrapper .logo {
+    margin-top: 1.25rem;
+}
+
+#loginLogo {
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+    margin-top: 30px;
+}
+.formWrapper .logo span {
+    color: #5463FF;
+}
+
+.signUpLoginBtnWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin-top: 15px;
+}
+
+.loginBtnWrapper, .signUpBtnWrapper {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.loginBtnWrapper {
+    border-radius: 10px;
+    background-color: #5463FF;
+}
+
+.signUpBtn, .loginBtn{
+    font-size: 2rem;
+    background-color:  transparent;
+    width: 100%;
+    padding: 5px 0px;
+}
+
+#submitLoginBtn {
+    font-size: 1.5rem;
+    height: 50px;
+    width: 130px;
+}
+
+#submitSignUpBtn {
+    font-size: 1.5rem;
+    height: 50px;
+    width: 130px;
+}
+
+
+.signUpBtn a, .loginBtn a{
+    text-decoration: none;
+}
+
+.loginBtn a {
+    color: white;
+}
+
+.loginBtn {
+    color: black;
+}
+
+.signUpBtn a {
+    color: black;
+}
+
+.formWrapper form {
+    width: 90%;
+}
+.formInput {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.25rem;
+    margin-top: 1.2rem;
+
+}
+
+.inputl {
+    border-radius: 10px;
+    font-size: 1.25rem;
+    border: 1px solid black;
+    height: 2.3rem;
+    margin-top:2px;
+    padding-left: 10px;
+}
+
+.submitBtn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.btnform {
+    color: #FF1818;
+    background-color:#FFC300;
+    font-size: 1.3rem;
+    padding: 13px 40px 13px 40px;
+    border-radius: 20px;
+}
+
+/* new Dashboard */
+
+#barChartWrapper, #lineChartWrapper {
+    width: 444px;
+    height: 371px;
+}
+.sectionChart {
+    display: flex;
+}
+.dashboardPage {
+    width: calc(100% - 263px);
+}
+.dashSect1 {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.dashboardInfo {
+    width: 190px;
+    height: 60px;
+    display: flex;
+    gap: 15px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 30px;
+    padding: 10px;
+}
+
+.dashboardInfo div {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dashboardInfo img{
+    width: 18px;
+    height: 19px;
+}
+
+.dashGraph {
+    margin-right: 30px;
+    margin-left: 30px;
+    height: 410px;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-top: 30px;
+    text-align: center;
+    padding: 10px;
+}
+
+.dashGraph span {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.dashGraphWrap {
+    height: calc(100% - 46px);
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.dashPie {
+    width: 100%;
+    height: 100%;
+}
+
+.dashSect3{
+    margin-right: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    display: flex;
+    gap: 30px;
+} 
+
+.dashSect3Box {
+    width: 490px;
+    height: 200px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.dashSect3Box span{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.dashSect3Info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.dashSect3Info span{
+    font-size: 14px;
+    font-weight: 600;
+}
+/*leaderboard page*/
+.dashLeaderboard {
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
+}
+
+.dashLeaderboard span{
+    font-weight: bold;
+    font-size:22px;
+    margin-bottom: 10px;
+}
+
+.leaderboardWrapper {
+    width: 98%;
+    height: 500px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin-top: 0.5rem;
+}
+
+.userWrapper {
+    margin: auto;
+    margin-top: 1.25rem;
+    width: 95%;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+}
+
+.userInfo1, .userInfo {
+    width: 125px;
+    text-align: center;
+}
+
+.userInfo {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.userInfo1 {
+    font-size: 14px;
+    font-weight: medium;
+}
+.profileImg-sm{
+    width: 35px;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+/* TASK page */
+.taskMainSection {
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+}
+
+.categoryTask {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 30rem;
+    background-color: #ffffff;
+    border-radius: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+    min-width: 260px;
+    max-width: 320px;
+}
+
+.tasks span {
+    align-self: center;
+    font-size: 1.5rem;
+    margin-top: 15px;
+}
+
+.taskHolder {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 90%;
+    margin: auto;
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.taskHolder .btnFormR{
+    margin-left: auto;
+    margin-right: 15px;
+    margin-top: 0px;
+}
+.taskHolder:hover {
+    border-color: #5463FF;
+}
+
+.taskHolder:active {
+    border-color: #FF1818;
+}
+
+.taskHolder label {
+    font-size: 1.25rem;
+}
+.addCategoryBtn, .addTaskBtn {
+    background-color: #FFC300;
+    padding: 10px 25px;
+    border-radius: 20px;
+}
+
+.addCategoryBtn {
+    width: 200px;
+}
+
+.addTaskWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.addTaskBtn {
+    font-size: 1rem;
+}
+
+.addTaskBtn a {
+    text-decoration: none;
+    color: #FF1818;
+}
+
+.addCategoryBtn a{
+    color:#FF1818;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+
+
+.addCategory {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 5rem;
+    row-gap: 5rem;
+    column-gap: 5rem;
+}
+
+/* add Category */
+
+.categoryModal, .viewTaskModal {
+     position: absolute; 
+     top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%); 
+    width: 300px;
+    height: 350px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.viewTaskModal {}
+
+.viewTaskModal {
+    width: 600px;
+    height: 700px;
+}
+
+.modalWrapper, .viewModal {
+    position: absolute;
+    display: none;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color:  rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.viewMOdal {
+    display: block;
+}
+
+.viewModal {
+    z-index: 2;
+}
+.categoryModal .logo, .viewTaskModal .logo{
+    display: flex;
+    flex-direction: row;
+}
+
+.categoryModal .logo span, .viewTaskModal .logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.addCategoryBtn {
+    color: #FF1818;
+}
+
+.viewTaskModal p {
+    border: 1px solid black;
+    padding-left: 10px;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.dueDateWrap, .taskTitleWrap, .descriptionWrap {
+    width: 90%;
+}
+
+.descriptionWrap p{
+    height: 250px;
+}
+
+.viewTaskModal .btnFormR {
+    font-size: 1.5rem;
+    padding: 0.75rem 1.5rem;
+}
+
+/*New Add Category Modal*/
+#categoryModal {
+    height: 250px;
+}
+#categoryModalBtnWrapper{
+    margin-top: 30px;
+}
+/* add Task */
+#addTaskMain {
+    height: 100vh;
+    margin-top: 0px;
+}
+#addTaskFormWrapper {
+    position: relative;
+    height: 600px;
+}
+.taskDescription, .taskTitle, .taskDueDate {
+    display: flex;
+    flex-direction: column;
+}
+
+.addTaskForm label {
+   margin-bottom: 5px;
+}
+
+ .btnFormR, .btnFormRR {
+    color: #FF1818;
+    background-color: #FFC300;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-top: 10px; 
+}
+
+.field {
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 5px 0px;
+    padding: 10px 10px;
+    font-size: 1rem;
+}
+
+.formBtnWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.taskHolder .btnFormRR {
+    margin-top: 0px;
+}
+
+.taskHolder .btnFormRR  a{
+    text-decoration: none;
+    color: #FF1818;
+    font-size: 1rem;
+    text-align: start;
+}
+
+/* New Task*/
+.main{
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
+}
+
+#addTaskBtn a{
+    color: white;
+}
+
+.taskCategory {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 42px;
+}
+
+.taskCategory div {
+    display: flex;
+    flex-direction: column;
+}
+
+.categoryLink{
+    display: flex;
+    gap: 15px;
+}
+
+.taskCategory div span{
+    font-size: 24px;
+}
+
+.categorySpan {
+    font-size: 16px !important;
+    font-weight: normal !important;
+    margin-top: 10px;
+}
+
+.categoryLink li a {
+    font-weight: medium;
+    font-size: 15px;
+    text-decoration: none;
+    color: black;
+}
+
+.taskDiv2 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.taskWrap {
+    margin-top: 15px;
+    flex-basis: 24%;
+    max-width: 24%;
+    height: 170px;
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.taskWrap div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.taskWrap > span{
+    font-size: 15px;
+    font-weight: medium;
+}
+
+.taskView {
+    background-color: white;
+    color: var(--blue);
+    font-size: 15px;
+    font-weight: bold;
+
+}
+
+.incomplete{
+    background-color: var(--orange);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.incomplete span, .overDue span, .done span {
+    margin: auto;
+    font-weight: bold;
+}
+
+.overDue{
+    background-color: var(--red);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.done{
+    background-color: var(--green);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.addTaskBtnWrapper {
+    display: flex;
+    justify-content: end;
+}
+
+#addTaskBtn {
+    margin-top: 30px;
+}
+
+.dynamicWrapper {
+    display: flex;
+
+}
+/* setting */
+.settingWrapper {
+    background-color: white;
+    width: 80%;
+    height: 700px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.settingdiv2 {
+    display: flex;
+    width: 60%;
+    flex-direction: row;
+    gap: 40px;
+    margin-bottom: 40px;
+    font-size: 1.25rem;
+    margin-left: 20px;
+}
+.settingdiv1 {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    gap: 40px;
+    font-size: 1.25rem;
+    margin-left: 20px;
+    margin-bottom: 40px;
+    width: 50%;
+}
+
+.settingdiv2 div{
+    padding-right: 20px;
+}
+
+.settingdiv1 div{
+    padding-right: 40px;
+}
+
+.settingRight {
+    border-right: 2px solid black;
+}
+
+.settingdiv3 {
+    margin-left: 20px;
+    margin-top: 60px;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.settingdiv1Wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+.settingdiv1Wrapper button {
+    padding: 4px 17px; 
+    margin: 0px;
+    height: 50px;
+
+}
+
+
+/* New Setting */
+.profileBackground {
+    background-color: var(--blue);
+    height: 109px;
+}
+
+.profileImgSetting {
+    width: 156px;
+    height: 130px;
+    border-radius: 50%;
+    margin-left: 100px;
+    margin-top: -50px;
+    object-fit: cover;
+}
+
+#editProfile{
+    margin-top: -50px;
+}
+
+.editButtonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+}
+
+.settingInfoWrap {
+    display: flex;
+    gap: 40px;
+    margin-top: 15px;
+}
+
+.settingInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    gap: 15px;
+}
+
+.settingInfoWidth{
+    width: 250px;
+    display: flex;
+    gap: 10px;
+}
+
+.label {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.value {
+    font-size: 17px;
+    font-weight: medium;
+}
+
+.profileModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 700px;
+    height: 810px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profileModal input {
+    margin-bottom: 10px;
+}
+
+.profileModal .logo span {
+    color: black;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.profileImg {
+    width: 120px;
+    height: 120px;
+    align-self: center;
+}
+
+.inputImg {
+    align-self: center;
+}
+
+.labelProfile {
+  background-color: indigo;
+  color: white;
+  padding: 0.7rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  width: 20%;
+}
+
+.imgChooseWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.spanProfile {
+    align-self: center;
+    justify-self: center;
+    margin-left: 10px;
+}
+
+.close {
+    height: 19px;
+}
+
+.formModal {
+    margin-top: 15px;
+}
+
+.formBtnWrapper {
+    margin-top: 5px;
+}
+
+/* report */
+.reportTable {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.reportTable thead{
+    color: white;
+    background-color: var(--blue);
+    width: 100%;
+}
+
+.reportTable thead tr {
+    height: 30px;
+    border-radius: 15px;
+}
+.reportTable thead tr td {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.reportBtnWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+#reportBtn {
+    background-color: var(--red);
+    margin-top: 30px;
+}
+
+#reportModal {
+    width: 450px;
+    height: 500px;
+}
+
+#submitReportBtn {
+    margin-top: 30px;
+}
+
+/* admin user page */
+#banUserBtn {
+    padding: 5px;
+    widtH: 70px;
+    height: 30px;
+}
+
+#userModal {
+    height: 200px;
+    width: 300px;
+}
+
+#userModal p{
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+}
+
+#submitBanBtn, #submitunbanBtn, #submituserBtn, #submitadminBtn {
+    margin-right: 10px;
+}
+
+#btnModalWrap, #reportModalBtn {
+    margin-top: 20px;
+}
+
+.viewTaskModal {
+    position: relative !important;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+#viewBtnWrapper{
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+#viewTaskForm {
+    width: 90%;
+}
+
+#viewMainTask {
+    height: 630px;
+}
+
+/* search */
+.searchBtn {
+    background-color: transparent;
+    width: 40px;
+    height: 100%;
+}
+
+#searchWrapper {
+    width: 300px;
+    margin-bottom: 30px;
+}
+
+#searchWrapper.focus {
+    border: 2px solid black;
+}
+
+#searchField, #category {
+    outline: none;
+}
+
+/* table */
+td {
+    border: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+

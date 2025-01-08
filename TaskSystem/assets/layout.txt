@@ -1,0 +1,22 @@
+<body id="report">
+    <div class="gridWrapper">
+    <header>
+    <?php 
+         $path .= "/yara/TaskSystem/pages/includes/header.html";
+            include_once($path);
+         $path = $pathSave;
+        ?>
+    </header>
+    <main><span>report</span></main>
+    <aside>
+    <?php 
+        $path .= "/yara/TaskSystem/pages/includes/aside.php";
+        include_once($path);
+        $path = $pathSave;
+        ?> 
+    </aside>
+    </div>
+    <script type="text/javascript"  src="/yara/TaskSystem/assets/script/script.js"></script>
+</body>
+
+copy mo lang toh para sa aside, header

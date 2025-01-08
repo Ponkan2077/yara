@@ -1,0 +1,49 @@
+ const task = document.getElementById('taskGraph');
+
+new Chart(task, {
+  type: 'doughnut',
+  data: {
+    labels: ['Completed Task', 'Pending Task', 'Overdue Task'],
+    datasets: [{
+      label: '# of Task',
+      data: [<?php echo $complete ?>, <?php echo $incomplete?>,<?php echo $overdue ?>],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero:true
+            }
+        }]
+    }
+  }
+});
+
+const taskCategory = document.getElementById('dashPie');
+
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: data.map(row => row.category_name),
+    datasets: [{
+      label: '# hours',
+      data: data.map(row => row.numTask),
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero:true
+            }
+        }]
+    }
+  }
+});
